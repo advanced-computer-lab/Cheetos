@@ -2,18 +2,32 @@ import React from 'react';
 
 class Flight extends React.Component{
     render(){
-        const{number} = this.props
+        const{number,date,airport,economy,business,firstC,dep,arrival} = this.props
         return(
             
-            <div className = "">
+            <div className = "flight-card">
                 {/* flight number, departure and arrival times, dates, number of Economy seats, number of Business class seats, and airport */}
-                <h2> Flight Number :  {number} </h2>
-                <p> Departure time :</p>
-                <p> Arrival time :</p>
-                <p> Flight Date :</p>
-                <p> Economy Class Seats : </p>
-                <p> Business Class Seats : </p>
-                <p> Airport : </p>
+                <div>
+                    <h4> Flight Number :  {number} </h4>
+                    <h5> Flight Date :{date}</h5>
+                </div>
+
+
+                <div className ="flight-card-body">
+                     <div>
+                        <p><strong> Airport :</strong> {airport}</p>
+                        <p><strong>Economy Class Seats :</strong> {economy}</p>
+                       <p> <strong>Business Class Seats : </strong>{business}</p>
+                       <p> <strong>First Class Seats : </strong> {firstC}</p>
+                    </div>
+
+                    <div>
+                        <p> <strong>Departure time : </strong>{dep}</p>
+                        <p> <strong>Arrival time :</strong> {arrival}</p>
+                    </div>
+                    
+                </div>
+                
                 
             </div>
         )

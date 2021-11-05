@@ -1,7 +1,10 @@
+.body{
+  margin:0;
+  font-family: "Montserrat", sans-serif;
+}
 .flex-col {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   gap: 1rem;
 }
@@ -15,12 +18,17 @@
 }
 .flight-list {
   border-radius: 5px;
-  gap: 15rem;
+  gap: 2rem;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); */
+  border-width: 1px ;
+  border-style: solid;
+  border-color:gainsboro;
   width: 70%;
   height: 65vh;
   overflow: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 .flight-list::-webkit-scrollbar {
   width: 5px;
@@ -28,7 +36,7 @@
 
 /* Add a thumb */
 .flight-list::-webkit-scrollbar-thumb {
-  background: #c9c9c9;
+  background:gainsboro;
   border-radius: 10px;
 }
 .flight-list::-webkit-scrollbar-thumb:hover {
@@ -44,4 +52,20 @@
 
   transition: all 0.2s linear;
   overflow-wrap: anywhere;
+}
+
+.flight-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  width:90%;
+  border-radius: 0.5rem;
+
+}
+.flight-card-body{
+  display: flex;
+  gap: 4rem;
 }
