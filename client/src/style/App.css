@@ -17,7 +17,7 @@
 }
 
 .admin-header {
-  background-color: #14279B;
+  background-color: #14279b;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -59,54 +59,62 @@
   border: 1px solid darkgray;
   width: 90%;
   height: 60vh;
-  overflow:auto;
+  overflow: auto;
   padding-bottom: 1rem;
   border-radius: 5px;
 }
-.flight-table{
-  width:100%;
+.flight-table {
+  width: 100%;
 }
-th,td{
-  padding:1rem;
+th,
+td {
+  padding: 1rem;
   text-align: left;
 }
-tr:nth-child(even) {background-color: #f2f2f2;}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
 /* .buttons{
   display:flex;
   gap: 5px;
 } */
-.icon{
-  color:rgb(137, 136, 143)
+.icon {
+  color: rgb(137, 136, 143);
 }
-.icon:hover{
-  color:#14279B;
+.icon:hover {
+  color: #14279b;
+  cursor: pointer;
   /* color:#35619e; */
 }
-.danger:hover{
-  color:rgb(201, 6, 6);
+.danger:hover {
+  color: rgb(201, 6, 6);
 }
 th {
-
   font-size: large;
-  color:#14279B ;
+  color: #14279b;
   font-weight: 650;
+  position: -webkit-sticky; 
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: white;
 }
-
 
 /* no touch 7gat mark */
 .add-flight {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
- 
-  
 }
 /* no touch 7gat mark */
-.add-flight-body{
+.add-flight-body {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  gap : 1rem
+  gap: 1rem;
 }
 
+td > input {
+  margin : 0 ;
+}

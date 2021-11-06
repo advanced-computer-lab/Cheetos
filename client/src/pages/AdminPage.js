@@ -182,7 +182,7 @@ export default class AdminPage extends Component {
           <div className="flight-list">
             <table className="flight-table">
               <tr>
-                <th>Flight Number</th>
+                <th>Flight <br/> Number</th>
                 <th>Date</th>
                 <th>Airport</th>
                 <th>Economy</th>
@@ -190,6 +190,8 @@ export default class AdminPage extends Component {
                 <th>First Class</th>
                 <th>Arrival</th>
                 <th>Departure</th>
+                <th></th>
+                <th></th>
               </tr>
               {flightArr.map((f) => (
                 <Flight
