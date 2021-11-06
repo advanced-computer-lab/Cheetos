@@ -5,33 +5,35 @@ import { red } from '@mui/material/colors';
 
 class Flight extends React.Component{
     handleEdit(){
-        
+
     }
     render(){
         const{number,date,airport,economy,business,firstC,dep,arrival} = this.props
         
         return(
             
-            <div className = "flight-card">
+            <>
                 {/* flight number, departure and arrival times, dates, number of Economy seats, number of Business class seats, and airport */}
                 
-                <div className="flight-card-body">
-                    <p>{number} </p>
-                    <p>{date}</p>
-                    <p>{airport}</p>
-                    <p>{economy}</p>
-                    <p>{business}</p>
-                    <p>{firstC}</p>
-                    <p>{dep}</p>
-                    <p>{arrival}</p>
-                </div>
+                <tr className="flight-card">
+                    <td>{number} </td>
+                    <td>{date}</td>
+                    <td>{airport}</td>
+                    <td>{economy}</td>
+                    <td>{business}</td>
+                    <td>{firstC}</td>
+                    <td>{dep}</td>
+                    <td>{arrival}</td>
+                    <td><EditIcon className="icon" onClick={this.handleEdit.bind(this)}/></td>
+                    <td><DeleteIcon className="icon danger"/></td>
+                </tr>
 
-                <div className="buttons">
+                {/* <div className="buttons">
                     <EditIcon className="icon" onClick={this.handleEdit.bind(this)}/>
                     <DeleteIcon className="icon danger"/>
-                </div>
+                </div> */}
             
-            </div>
+             </> 
         )
     }
   }
