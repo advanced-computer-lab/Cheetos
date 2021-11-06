@@ -216,6 +216,7 @@ export default class AdminPage extends Component {
               color: "black",
               width: "25%",
               height: "10vh",
+              fontSize:"large"
             }}
             variant="contained"
           >

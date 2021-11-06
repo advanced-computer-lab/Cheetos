@@ -3,9 +3,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { red } from '@mui/material/colors';
 import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
 class Flight extends React.Component {
     state = {
-        edit: false
+        edit: false,
+        showModal : false
     }
     handleEdit() {
         this.setState(
@@ -14,9 +18,16 @@ class Flight extends React.Component {
             }
         )
     }
+
+    handleModalShow() {
+        this.setState({
+          showModal: this.state.showModal ? false : true,
+        });
+      }
     render() {
         const { number, date, airport, economy, business, firstC, dep, arrival } = this.props
-        const { edit } = this.state
+        const { edit ,showModal} = this.state
+
         return (
 
             <>
@@ -52,8 +63,24 @@ class Flight extends React.Component {
                             <EditIcon className="icon" onClick={this.handleEdit.bind(this)} />
                             : <p style = {{margin : '0' , fontWeight : 'bold'}}className="icon"> save </p>}
                     </td>
-                    <td><DeleteIcon className="icon danger" /></td>
+                    <td><DeleteIcon className="icon danger" onClick={this.handleModalShow.bind(this)} /></td>
+
                 </tr>
+
+                <Modal centered show={showModal} onHide={this.handleModalShow.bind(this)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Heads up!!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this flight?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.handleModalShow.bind(this)}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
                 {/* <div className="buttons">
                     <EditIcon className="icon" onClick={this.handleEdit.bind(this)}/>
