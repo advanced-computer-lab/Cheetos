@@ -12,8 +12,99 @@ import TimePicker from '@mui/lab/TimePicker';
 
 export default class AdminPage extends Component {
   state = {
-    showModal: true,
+    showModal: false,
     flightArr: [
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
+      {
+        number: 123213,
+        date: "11/3/2101",
+        airport: "lax",
+        economy: 20,
+        business: 30,
+        firstC: 20,
+        dep: "20.30",
+        arrival: "2.30",
+      },
       {
         number: 123213,
         date: "11/3/2101",
@@ -84,18 +175,37 @@ export default class AdminPage extends Component {
     return (
       <div>
         <div className="flex-container flex-col">
-          <h1>Admin Panel</h1>
-          <div className="flex-row search-bar">
-            <p>hh</p>
-            <p>hh</p>
-            <p>hh</p>
-            <p>hh</p>
+          <div className="admin-header">
+            <h1>ADMIN PANEL</h1>
+            <div className="flex-row search-bar">
+              <p>hh</p>
+              <p>hh</p>
+              <p>hh</p>
+              <p>hh</p>
+            </div>
           </div>
-          <div className="flex-col flight-list">
-            {flightArr.map((f) => (
-              <Flight number={f.number} date={f.date} airport={f.airport} economy={f.economy} business={f.business} firstC={f.firstC} dep={f.dep} arrival={f.arrival} />
-            ))}
-          </div>
+         
+            <div className="flex-col flight-list">
+
+            <div className="flight-card-body sticky">
+
+                  <p>Flight Number</p>
+                  <p>Date</p>
+                  <p>Airport</p>
+                  <p>Economy</p>
+                  <p>Business</p>
+                  <p>First Class</p>
+                  <p>Arrival</p>
+                  <p>Departure</p>
+
+                  </div>
+
+              {flightArr.map((f) => (
+                <Flight number={f.number} date={f.date} airport={f.airport} economy={f.economy} business={f.business} firstC={f.firstC} dep={f.dep} arrival={f.arrival} />
+              ))}
+            </div>
+
+        
           <Button
             onClick={this.handleModalShow.bind(this)}
             style={{ width: "70%" }}
@@ -119,18 +229,12 @@ export default class AdminPage extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/* <div>
-              <label htmlFor="start">Date:</label>
-              <input
-                type="date"
-                id="start"
-                name="trip-start"
-                defaultValue="2018-07-22"
-                min="2018-01-01"
-                max="2018-12-31"
-              />
-            </div> */}
-            <Form className = "add-flight">
+
+          
+            <Form>
+
+            
+  <Form className = "add-flight">
               <div className="add-flight-body">
                 <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Flight number </Form.Label>
