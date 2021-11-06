@@ -43,7 +43,8 @@
   overflow-wrap: anywhere;
 }
 .flight-list::-webkit-scrollbar {
-  width: 3px;
+  width: 5px;
+  height: 5px;
 }
 /* Add a thumb */
 .flight-list::-webkit-scrollbar-thumb {
@@ -55,43 +56,26 @@
 }
 
 .flight-list {
-  border-radius: 5px;
-  gap: 0.5rem;
-  background-color: #ffffff;
-  border-width: 1px;
-  border-style: solid;
-  border-color: gainsboro;
-  width: 80%;
-  height: 60vh;
-  overflow: auto;
-  /* padding-top: 1rem; */
-  padding-bottom: 1rem;
-}
-
-.flight-card {
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-
-  justify-content: space-evenly;
-  background-color: #f4f3f3;
-  width: 95%;
-  border-radius: 3px;
-}
-
-.flight-card-body {
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 1rem;
-  /* padding: 1rem; */
+  border: 1px solid darkgray;
   width: 90%;
+  height: 60vh;
+  overflow:auto;
+  padding-bottom: 1rem;
+  border-radius: 5px;
 }
-.buttons{
+.flight-table{
+  width:100%;
+}
+th,td{
+  padding:1rem;
+  text-align: left;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+/* .buttons{
   display:flex;
   gap: 5px;
-}
+} */
 .icon{
   color:rgb(137, 136, 143)
 }
@@ -102,13 +86,11 @@
 .danger:hover{
   color:rgb(201, 6, 6);
 }
-.sticky {
-  /* position: fixed; */
-  background-color: white;
-  padding-top: 1rem;
-  margin: 5px;
+th {
+
+  font-size: large;
   color:#14279B ;
-  font-weight: 600;
+  font-weight: 650;
 }
 
 

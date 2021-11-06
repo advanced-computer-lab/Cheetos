@@ -4,12 +4,11 @@ import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
 import { TextField } from "@mui/material";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Form from 'react-bootstrap/Form';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import TimePicker from '@mui/lab/TimePicker';
-
+import Form from "react-bootstrap/Form";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import TimePicker from "@mui/lab/TimePicker";
 
 export default class AdminPage extends Component {
   state = {
@@ -147,13 +146,8 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
     ],
-    date: new Date('2014-08-18T21:11:54'),
-    time: new Date('2014-08-18T21:11:54')
-
-
-
-
-
+    date: new Date("2014-08-18T21:11:54"),
+    time: new Date("2014-08-18T21:11:54"),
   };
   handleModalShow() {
     this.setState({
@@ -165,11 +159,10 @@ export default class AdminPage extends Component {
     this.handleModalShow();
   }
   handleDateChange(newDate) {
-
     console.log(newDate);
     this.setState({
-      date: newDate
-    })
+      date: newDate,
+    });
   }
   render() {
     const { flightArr, date, time } = this.state;
@@ -185,31 +178,43 @@ export default class AdminPage extends Component {
               <p>hh</p>
             </div>
           </div>
-         
-            <div className="flex-col flight-list">
 
-              <div className="flight-card-body sticky">
-
-                  <p>Flight Number</p>
-                  <p>Date</p>
-                  <p>Airport</p>
-                  <p>Economy</p>
-                  <p>Business</p>
-                  <p>First Class</p>
-                  <p>Arrival</p>
-                  <p>Departure</p>
-
-                  </div>
-
+          <div className="flight-list">
+            <table className="flight-table">
+              <tr>
+                <th>Flight Number</th>
+                <th>Date</th>
+                <th>Airport</th>
+                <th>Economy</th>
+                <th>Business</th>
+                <th>First Class</th>
+                <th>Arrival</th>
+                <th>Departure</th>
+              </tr>
               {flightArr.map((f) => (
-                <Flight number={f.number} date={f.date} airport={f.airport} economy={f.economy} business={f.business} firstC={f.firstC} dep={f.dep} arrival={f.arrival} />
+                <Flight
+                  number={f.number}
+                  date={f.date}
+                  airport={f.airport}
+                  economy={f.economy}
+                  business={f.business}
+                  firstC={f.firstC}
+                  dep={f.dep}
+                  arrival={f.arrival}
+                />
               ))}
-            </div>
+            </table>
+          </div>
 
-        
           <Button
             onClick={this.handleModalShow.bind(this)}
-            style={{ width: "80% ",backgroundColor:"#bed0df",color:"black" ,width:"25%",height:"10vh"}}
+            style={{
+              width: "80% ",
+              backgroundColor: "#bed0df",
+              color: "black",
+              width: "25%",
+              height: "10vh",
+            }}
             variant="contained"
           >
             Create a Flight{" "}
@@ -230,18 +235,21 @@ export default class AdminPage extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-
-          
-            
-
-            
-  <Form className = "add-flight">
+            <Form className="add-flight">
               <div className="add-flight-body">
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Flight number </Form.Label>
                   <Form.Control type="text" />
                 </Form.Group>
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Airport </Form.Label>
                   <Form.Control type="text" />
                 </Form.Group>
@@ -253,7 +261,9 @@ export default class AdminPage extends Component {
                       inputFormat="dd/MM/yyyy"
                       value={date}
                       onChange={this.handleDateChange.bind(this)}
-                      renderInput={(params) => <TextField size="small" {...params} />}
+                      renderInput={(params) => (
+                        <TextField size="small" {...params} />
+                      )}
                     />
                   </LocalizationProvider>
                 </Form.Group>
@@ -282,25 +292,27 @@ export default class AdminPage extends Component {
                   <Form.Label>Departure time : </Form.Label>
                   <Form.Control type="text" />
                 </Form.Group> */}
-                <Form.Group  className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Departure  : </Form.Label>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Departure : </Form.Label>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimePicker
-                      
                       value={time}
                       onChange={this.handleDateChange.bind(this)}
-                      renderInput={(params) => <TextField size="small" {...params} />}
+                      renderInput={(params) => (
+                        <TextField size="small" {...params} />
+                      )}
                     />
                   </LocalizationProvider>
                 </Form.Group>
-                <Form.Group  className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Arrival  : </Form.Label>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Arrival : </Form.Label>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimePicker
-                      
                       value={time}
                       onChange={this.handleDateChange.bind(this)}
-                      renderInput={(params) => <TextField size="small" {...params} />}
+                      renderInput={(params) => (
+                        <TextField size="small" {...params} />
+                      )}
                     />
                   </LocalizationProvider>
                 </Form.Group>
@@ -308,7 +320,6 @@ export default class AdminPage extends Component {
                   <Form.Label>Terminal :</Form.Label>
                   <Form.Control type="text" />
                 </Form.Group>
-                
               </div>
             </Form>
             {/* <DesktopDatePicker
@@ -320,7 +331,9 @@ export default class AdminPage extends Component {
                         /> */}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleAddFlight.bind(this)}>Add fLight</Button>
+            <Button onClick={this.handleAddFlight.bind(this)}>
+              Add fLight
+            </Button>
           </Modal.Footer>
         </Modal>
       </div>
