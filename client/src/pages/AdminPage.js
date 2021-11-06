@@ -3,11 +3,15 @@ import Flight from "../components/Flight";
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
 import { TextField } from "@mui/material";
-import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Form from 'react-bootstrap/Form';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+
 export default class AdminPage extends Component {
   state = {
-    showModal: false,
+    showModal: true,
     flightArr: [
       {
         number: 123213,
@@ -50,6 +54,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
     ],
+    date: new Date('2014-08-18T21:11:54'),
   };
   handleModalShow() {
     this.setState({
@@ -57,9 +62,14 @@ export default class AdminPage extends Component {
     });
   }
 
-  handleAddFlight() {}
+  handleAddFlight() {
+    this.handleModalShow();
+  }
+  handleDateChange() {
+    console.log("changed");
+  }
   render() {
-    const { flightArr } = this.state;
+    const { flightArr, date } = this.state;
     return (
       <div>
         <div className="flex-container flex-col">
@@ -72,7 +82,7 @@ export default class AdminPage extends Component {
           </div>
           <div className="flex-col flight-list">
             {flightArr.map((f) => (
-              <Flight number={f.number} date ={f.date} airport={f.airport} economy={f.economy} business={f.business} firstC={f.firstC} dep={f.dep} arrival={f.arrival} />
+              <Flight number={f.number} date={f.date} airport={f.airport} economy={f.economy} business={f.business} firstC={f.firstC} dep={f.dep} arrival={f.arrival} />
             ))}
           </div>
           <Button
@@ -98,7 +108,7 @@ export default class AdminPage extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div>
+            {/* <div>
               <label htmlFor="start">Date:</label>
               <input
                 type="date"
@@ -108,7 +118,55 @@ export default class AdminPage extends Component {
                 min="2018-01-01"
                 max="2018-12-31"
               />
-            </div>
+            </div> */}
+            <Form>
+              <div className="add-flight-body">
+                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Flight number </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Airport </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+              </div>
+              <div className="add-flight-body">
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Arrival time : </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Departure time : </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Flight date : </Form.Label>
+                  {/* <Form.Control type="text"   /> */}
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DesktopDatePicker
+                      inputFormat="MM/dd/yyyy"
+                      value={date}
+                      onChange={this.handleDateChange.bind(this)}
+                      renderInput={(params) => <TextField size="small" {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Form.Group>
+              </div>
+              <div className="add-flight-body">
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Number of economy seats : </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Number of business seats : </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Number of first class seats :</Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+              </div>
+            </Form>
             {/* <DesktopDatePicker
                             label="Date desktop"
                             inputFormat="MM/dd/yyyy"
@@ -118,7 +176,7 @@ export default class AdminPage extends Component {
                         /> */}
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleModalShow.bind(this)}>Close</Button>
+            <Button onClick={this.handleAddFlight.bind(this)}>Add fLight</Button>
           </Modal.Footer>
         </Modal>
       </div>
