@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
+import TimePicker from '@mui/lab/TimePicker';
 
 export default class AdminPage extends Component {
   state = {
@@ -146,6 +147,12 @@ export default class AdminPage extends Component {
       },
     ],
     date: new Date('2014-08-18T21:11:54'),
+    time: new Date('2014-08-18T21:11:54')
+
+
+
+
+
   };
   handleModalShow() {
     this.setState({
@@ -156,11 +163,15 @@ export default class AdminPage extends Component {
   handleAddFlight() {
     this.handleModalShow();
   }
-  handleDateChange() {
-    console.log("changed");
+  handleDateChange(newDate) {
+
+    console.log(newDate);
+    this.setState({
+      date: newDate
+    })
   }
   render() {
-    const { flightArr, date } = this.state;
+    const { flightArr, date, time } = this.state;
     return (
       <div>
         <div className="flex-container flex-col">
@@ -197,8 +208,8 @@ export default class AdminPage extends Component {
         
           <Button
             onClick={this.handleModalShow.bind(this)}
-            style={{ width: "65%" }}
-            variant="outlined"
+            style={{ width: "70%" }}
+            variant="contained"
           >
             Add Flight{" "}
           </Button>
@@ -218,8 +229,12 @@ export default class AdminPage extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
+
           
             <Form>
+
+            
+  <Form className = "add-flight">
               <div className="add-flight-body">
                 <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Flight number </Form.Label>
@@ -229,22 +244,12 @@ export default class AdminPage extends Component {
                   <Form.Label>Airport </Form.Label>
                   <Form.Control type="text" />
                 </Form.Group>
-              </div>
-              <div className="add-flight-body">
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Arrival time : </Form.Label>
-                  <Form.Control type="text" />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Departure time : </Form.Label>
-                  <Form.Control type="text" />
-                </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Flight date : </Form.Label>
                   {/* <Form.Control type="text"   /> */}
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DesktopDatePicker
-                      inputFormat="MM/dd/yyyy"
+                      inputFormat="dd/MM/yyyy"
                       value={date}
                       onChange={this.handleDateChange.bind(this)}
                       renderInput={(params) => <TextField size="small" {...params} />}
@@ -252,6 +257,7 @@ export default class AdminPage extends Component {
                   </LocalizationProvider>
                 </Form.Group>
               </div>
+
               <div className="add-flight-body">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Number of economy seats : </Form.Label>
@@ -265,6 +271,43 @@ export default class AdminPage extends Component {
                   <Form.Label>Number of first class seats :</Form.Label>
                   <Form.Control type="text" />
                 </Form.Group>
+              </div>
+              <div className="add-flight-body">
+                {/* <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Arrival time : </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Departure time : </Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group> */}
+                <Form.Group  className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Departure  : </Form.Label>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <TimePicker
+                      label="Time"
+                      value={time}
+                      onChange={this.handleDateChange.bind(this)}
+                      renderInput={(params) => <TextField size="small" {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Form.Group>
+                <Form.Group  className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Arrival  : </Form.Label>
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <TimePicker
+                      label="Time"
+                      value={time}
+                      onChange={this.handleDateChange.bind(this)}
+                      renderInput={(params) => <TextField size="small" {...params} />}
+                    />
+                  </LocalizationProvider>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Terminal :</Form.Label>
+                  <Form.Control type="text" />
+                </Form.Group>
+                
               </div>
             </Form>
             {/* <DesktopDatePicker
