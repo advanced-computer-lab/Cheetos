@@ -209,10 +209,10 @@ export default class AdminPage extends Component {
         
           <Button
             onClick={this.handleModalShow.bind(this)}
-            style={{ width: "80% ",backgroundColor:"#bed0df",color:"black" }}
+            style={{ width: "80% ",backgroundColor:"#bed0df",color:"black" ,width:"25%",height:"10vh"}}
             variant="contained"
           >
-            Add Flight{" "}
+            Create a Flight{" "}
           </Button>
         </div>
 
