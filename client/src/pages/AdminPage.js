@@ -10,6 +10,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import TimePicker from '@mui/lab/TimePicker';
 
+
 export default class AdminPage extends Component {
   state = {
     showModal: false,
@@ -187,7 +188,7 @@ export default class AdminPage extends Component {
          
             <div className="flex-col flight-list">
 
-            <div className="flight-card-body sticky">
+              <div className="flight-card-body sticky">
 
                   <p>Flight Number</p>
                   <p>Date</p>
@@ -208,7 +209,7 @@ export default class AdminPage extends Component {
         
           <Button
             onClick={this.handleModalShow.bind(this)}
-            style={{ width: "70%" }}
+            style={{ width: "80% ",backgroundColor:"#bed0df",color:"black" }}
             variant="contained"
           >
             Add Flight{" "}
@@ -285,7 +286,7 @@ export default class AdminPage extends Component {
                   <Form.Label>Departure  : </Form.Label>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimePicker
-                      label="Time"
+                      
                       value={time}
                       onChange={this.handleDateChange.bind(this)}
                       renderInput={(params) => <TextField size="small" {...params} />}
@@ -296,7 +297,7 @@ export default class AdminPage extends Component {
                   <Form.Label>Arrival  : </Form.Label>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <TimePicker
-                      label="Time"
+                      
                       value={time}
                       onChange={this.handleDateChange.bind(this)}
                       renderInput={(params) => <TextField size="small" {...params} />}
