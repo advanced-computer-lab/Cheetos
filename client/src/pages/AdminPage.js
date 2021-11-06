@@ -231,7 +231,7 @@ export default class AdminPage extends Component {
           <Modal.Body>
 
           
-            <Form>
+            
 
             
   <Form className = "add-flight">
