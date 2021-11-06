@@ -10,7 +10,9 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 
+
 export default class AdminPage extends Component {
+
   state = {
     showModal: false,
     flightArr: [
@@ -25,7 +27,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 111111,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -35,7 +37,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 2222,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -45,7 +47,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 33333,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -56,7 +58,7 @@ export default class AdminPage extends Component {
       },
 
       {
-        number: 123213,
+        number: 4444,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -66,7 +68,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 77777,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -76,7 +78,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 99999,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -86,7 +88,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 88888,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -96,7 +98,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 446967,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -106,7 +108,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 9939393,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -116,7 +118,7 @@ export default class AdminPage extends Component {
         arrival: "2.30",
       },
       {
-        number: 123213,
+        number: 33333,
         date: "11/3/2101",
         airport: "lax",
         economy: 20,
@@ -148,6 +150,7 @@ export default class AdminPage extends Component {
     ],
     date: new Date("2014-08-18T21:11:54"),
     time: new Date("2014-08-18T21:11:54"),
+    flightSearch: ""
   };
   handleModalShow() {
     this.setState({
@@ -164,25 +167,39 @@ export default class AdminPage extends Component {
       date: newDate,
     });
   }
+  handleFlightSearch(event) {
+    event.preventDefault();
+    this.setState(
+      {
+        flightSearch: event.target.value
+      }
+    )
+  }
   render() {
-    const { flightArr, date, time } = this.state;
+
+    const { flightArr, date, time, flightSearch } = this.state;
     return (
       <div>
         <div className="flex-container flex-col">
           <div className="admin-header">
             <h1>ADMIN PANEL</h1>
-            <div className="flex-row search-bar">
-              <p>hh</p>
-              <p>hh</p>
-              <p>hh</p>
-              <p>hh</p>
+            <div className=" search-bar">
+              <h2 >Search: </h2>
+              <Form.Control  style = {{width : '25%'}} type="text" placeholder="Flight number . . ."
+                value={flightSearch}
+                onChange={this.handleFlightSearch.bind(this)}
+              />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Date(dd/MM/YY). . ." />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Departure time . . ." />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Arrival time . . ." />
+
             </div>
           </div>
 
           <div className="flight-list">
             <table className="flight-table">
               <tr>
-                <th>Flight <br/> Number</th>
+                <th>Flight <br /> Number</th>
                 <th>Date</th>
                 <th>Airport</th>
                 <th>Economy</th>
@@ -193,18 +210,40 @@ export default class AdminPage extends Component {
                 <th></th>
                 <th></th>
               </tr>
-              {flightArr.map((f) => (
-                <Flight
-                  number={f.number}
-                  date={f.date}
-                  airport={f.airport}
-                  economy={f.economy}
-                  business={f.business}
-                  firstC={f.firstC}
-                  dep={f.dep}
-                  arrival={f.arrival}
-                />
-              ))}
+              {
+                flightSearch == ""
+                  ?
+                  flightArr.map((f) => (
+                    <Flight
+                      number={f.number}
+                      date={f.date}
+                      airport={f.airport}
+                      economy={f.economy}
+                      business={f.business}
+                      firstC={f.firstC}
+                      dep={f.dep}
+                      arrival={f.arrival}
+                    />
+                  ))
+                  :
+                  (flightArr.filter((f) => f.number.toString().includes(flightSearch))).map((f) => (
+                    <Flight
+                      number={f.number}
+                      date={f.date}
+                      airport={f.airport}
+                      economy={f.economy}
+                      business={f.business}
+                      firstC={f.firstC}
+                      dep={f.dep}
+                      arrival={f.arrival}
+                    />
+                  ))
+
+
+
+
+
+              }
             </table>
           </div>
 
@@ -216,7 +255,7 @@ export default class AdminPage extends Component {
               color: "black",
               width: "25%",
               height: "10vh",
-              fontSize:"large"
+              fontSize: "large"
             }}
             variant="contained"
           >
