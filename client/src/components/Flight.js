@@ -57,6 +57,7 @@ class Flight extends React.Component {
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={firstC} /></td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={dep} /></td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={arrival} /></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={terminal} /></td>
                         </>
                     }
                     <td onClick={this.handleEdit.bind(this)}>

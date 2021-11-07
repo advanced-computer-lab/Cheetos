@@ -126,3 +126,9 @@ th {
 td > input {
   margin : 0 ;
 }
+.msg-header {
+  background-color: #12228f;
+  color: #ffffff;
+  text-align: center;
+ 
+}
