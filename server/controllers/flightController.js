@@ -25,8 +25,15 @@ updateFlight = async (req, res) => {
            flight.DepartureTime = body.departure
         } 
         if(body.arrival){
-            flight.ArrivalTime = body.arrival
-        } 
+            flight.ArrivalDate = body.arrival
+        }
+        if(body.dDate){
+            flight.DepartureDate = body.dDate
+        }
+        if(body.aDate){
+            flight.ArrivalTime = body.aDate
+        }
+        
         if(body.economy){
             flight.EconomySeats = body.economy
         } 
@@ -36,6 +43,12 @@ updateFlight = async (req, res) => {
        if(body.business){
            flight.BusinessSeats = body.business
        } 
+       if(body.firstClass){
+        flight.FirstClassSeats = body.firstClass
+       }
+       if(body.terminal){
+        flight.Terminal = body.terminal
+        }
         flight
             .save()
             .then(() => {

@@ -14,12 +14,12 @@ const FlightSchema = new mongoose.Schema({
     required: true
   },
   DepartureDate: {
-    type: Date,
+    type: String,
     required: true
   },
 
   ArrivalDate: {
-    type: Date,
+    type: String,
     required: true
   },
 
@@ -35,6 +35,11 @@ const FlightSchema = new mongoose.Schema({
   },
 
   FirstClassSeats: {
+    type: Number,
+    required: true
+  },
+
+  Terminal: {
     type: Number,
     required: true
   },
