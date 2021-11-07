@@ -9,7 +9,16 @@ import Button from "react-bootstrap/Button";
 class Flight extends React.Component {
     state = {
         edit: false,
-        showModal : false
+        showModal : false,
+        number:this.props.number, 
+        date:this.props.date,
+        airport :this.props.airport, 
+        economy:this.props.economy, 
+        business:this.props.business, 
+        firstC:this.props.firstC, 
+        dep:this.props.dep, 
+        arrival:this.props.arrival,
+        terminal:this.props.terminal,
     }
     handleEdit() {
         this.setState(
@@ -18,6 +27,16 @@ class Flight extends React.Component {
             }
         )
     }
+
+    handleEditChange(e) {
+        // e.target byshoof anhi textbox .value => acesses the value getting from change event w7na bn7shrha tb2a bt3t textbox
+        const value = e.target.value;
+        this.setState({
+            //spreading state 
+          ...this.state,
+          [e.target.name]: value,
+        });
+      }
 
     handleModalShow() {
         this.setState({
@@ -50,15 +69,15 @@ class Flight extends React.Component {
 
                         <>
                         {/* Edit text boxes */}
-                            <td> <Form.Control style={{ width: '60%'  }} size="sm" type="text" placeholder="Small text" value={number} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={date} /> </td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={airport} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={economy} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={business} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={firstC} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={dep} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={arrival} /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={terminal} /></td>
+                            <td> <Form.Control style={{ width: '60%'  }} size="sm" type="text"   value={this.state.number} name="number" onChange={this.handleEditChange.bind(this)}  /></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="date"   value={this.state.date} name="date" onChange={this.handleEditChange.bind(this)}/> </td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="text"   value={this.state.airport} name="airport" onChange={this.handleEditChange.bind(this)} /></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="number"   value={this.state.economy} name="economy" onChange={this.handleEditChange.bind(this)} /></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="number"   value={this.state.business} name="business" onChange={this.handleEditChange.bind(this)}/></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="number"   value={this.state.firstC} name="firstC" onChange={this.handleEditChange.bind(this)} /></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="time"   value={this.state.dep} name="dep" onChange={this.handleEditChange.bind(this)}/></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.arrival} name="arrival" onChange={this.handleEditChange.bind(this)}/></td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="number"  value={this.state.terminal} name="terminal" onChange={this.handleEditChange.bind(this)}/></td>
                         </>
                     }
                     <td onClick={this.handleEdit.bind(this)}>

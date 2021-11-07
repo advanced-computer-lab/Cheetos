@@ -10,190 +10,134 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 
-
 export default class AdminPage extends Component {
-
   state = {
     showModal: false,
     flightArr: [
       {
         number: 123213,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        date: "2011-11-4",
+        airport: "laax",
+        economy: 201,
+        business: 300,
+        firstC: 203,
+        dep: "20:31",
+        arrival: "21:30",
+        terminal: "32",
       },
       {
         number: 111111,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        date: "2001-11-5",
+        airport: "la",
+        economy: 2,
+        business: 730,
+        firstC: 260,
+        dep: "06:00",
+        arrival: "7:30",
+        terminal: "3",
       },
       {
         number: 2222,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
+        date: "2021-11-5",
+        airport: "muh",
+        economy: 30,
+        business: 730,
         firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        dep: "07:30",
+        arrival: "02:30",
+        terminal: "55",
       },
       {
-        number: 33333,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
+        number: 2722,
+        date: "2001-01-5",
+        airport: "muh",
+        economy: 30,
+        business: 930,
         firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
-      },
-
-      {
-        number: 4444,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        dep: "07:30",
+        arrival: "02:30",
+        terminal: "55",
       },
       {
-        number: 77777,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
+        number: 2222,
+        date: "2021-11-5",
+        airport: "muh",
+        economy: 30,
+        business: 730,
         firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        dep: "07:30",
+        arrival: "02:30",
+        terminal: "55",
       },
       {
-        number: 99999,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
+        number: 2222,
+        date: "2021-11-5",
+        airport: "muh",
+        economy: 30,
+        business: 730,
         firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        dep: "07:30",
+        arrival: "02:30",
+        terminal: "55",
       },
       {
-        number: 88888,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
+        number: 2222,
+        date: "2021-11-5",
+        airport: "muh",
+        economy: 30,
+        business: 730,
         firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        dep: "07:30",
+        arrival: "02:30",
+        terminal: "55",
       },
       {
-        number: 446967,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
+        number: 2222,
+        date: "2021-11-5",
+        airport: "muh",
+        economy: 30,
+        business: 730,
         firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
+        dep: "07:30",
+        arrival: "02:30",
+        terminal: "55",
       },
-      {
-        number: 9939393,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
-      },
-      {
-        number: 33333,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
-      },
-      {
-        number: 123213,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
-      },
-      {
-        number: 123213,
-        date: "11/3/2101",
-        airport: "lax",
-        economy: 20,
-        business: 30,
-        firstC: 20,
-        dep: "20.30",
-        arrival: "2.30",
-        terminal: "3"
-      },
+    
+    
     ],
-    //states for testing should be removed 
-    date: new Date("2014-08-18T21:11:54"),
-    time: new Date("2014-08-18T21:11:54"),
+    filteredArr: [],
+        //searching flight states
     flightSearch: "",
-    departureSearch:"",
-    arrivalSearch:"",
-    terminalSearch:"",
-    // add-flight states 
-    flightNumber: '',
-    flightAirport: '',
-    flightDate: '',
+    departureSearch: "",
+    arrivalSearch: "",
+    terminalSearch: "",
+    dateSearch:"2021-11-03",
+    // add-flight states
+    flightNumber: "",
+    flightAirport: "",
+    flightDate: "",
     ecSeats: 0,
     buSeats: 0,
     fcSeats: 0,
-    depTime: '',
-    arrTime: '',
-    flightTerminal: '',
+    depTime: "",
+    arrTime: "",
+    flightTerminal: "",
     errMsg: "",
-    //searching flight states 
-    flightSearch: ""
+
+  
   };
   handleModalShow() {
     this.setState({
-      errMsg: '',
-      flightNumber: '',
-      flightAirport: '',
-      flightDate: '',
+      errMsg: "",
+      flightNumber: "",
+      flightAirport: "",
+      flightDate: "",
       ecSeats: 0,
       buSeats: 0,
       fcSeats: 0,
-      depTime: '',
-      arrTime: '' ,
-      flightTerminal: '',
+      depTime: "",
+      arrTime: "",
+      flightTerminal: "",
       showModal: this.state.showModal ? false : true,
     });
   }
@@ -201,13 +145,13 @@ export default class AdminPage extends Component {
     const value = e.target.value;
     this.setState({
       ...this.state,
-      [e.target.name]: value
+      [e.target.name]: value,
     });
   }
 
-
   handleAddFlight() {
-    if (!this.state.flightNumber ||
+    if (
+      !this.state.flightNumber ||
       !this.state.flightAirport ||
       !this.state.flightDate ||
       !this.state.ecSeats ||
@@ -215,17 +159,14 @@ export default class AdminPage extends Component {
       !this.state.fcSeats ||
       !this.state.depTime ||
       !this.state.arrTime ||
-      !this.state.flightTerminal) {
-      this.setState(
-        {
-          errMsg: "flight info can not be empty !"
-        }
-      )
+      !this.state.flightTerminal
+    ) {
+      this.setState({
+        errMsg: "flight info can not be empty !",
+      });
     } else {
-
       this.handleModalShow();
     }
-
   }
   handleDateChange(newDate) {
     console.log(newDate);
@@ -233,17 +174,51 @@ export default class AdminPage extends Component {
       date: newDate,
     });
   }
-  handleFlightSearch(event) {
-    event.preventDefault();
-    this.setState(
-      {
-        flightSearch: event.target.value
-      }
-    )
-  }
-  render() {
+  
+  handleFlightSearch(e) {
+    e.preventDefault();
 
-    const { flightArr, flightSearch,
+
+    // const name = e.target.name
+    const value = e.target.value;
+    this.setState({
+      //spreading state
+      ...this.state,
+      [e.target.name]: value,
+
+      
+    });
+    console.log(e.target.name);
+    switch(e.target.name){
+      case('flightSearch'):
+      this.setState({filteredArr:this.state.flightArr.filter((f) => f.number.toString().includes(value))});
+      break;
+
+      case('arrivalSearch'):
+      this.setState({filteredArr:this.state.flightArr.filter((f) => f.arrival.toString().includes(value))});
+      break;
+
+      case('departureSearch'):
+      this.setState({filteredArr:this.state.flightArr.filter((f) => f.dep.toString().includes(value))});
+      break;
+
+      case('dateSearch'):
+      this.setState({filteredArr:this.state.flightArr.filter((f) => f.date===(value))});
+      break;
+
+      case('terminalSearch'):
+      this.setState({filteredArr:this.state.flightArr.filter((f) => f.terminal.toString().includes(value))});
+      break;
+    }
+      
+
+
+    
+  }
+
+  render() {
+    const {
+      flightArr,
       errMsg,
       flightNumber,
       flightAirport,
@@ -253,7 +228,13 @@ export default class AdminPage extends Component {
       fcSeats,
       depTime,
       arrTime,
-      flightTerminal
+      flightTerminal,
+      flightSearch,
+      dateSearch,
+      arrivalSearch,
+      departureSearch,
+      terminalSearch,
+      filteredArr,
     } = this.state;
     return (
       <div>
@@ -262,25 +243,55 @@ export default class AdminPage extends Component {
             <h1>ADMIN PANEL</h1>
             <div className=" search-bar">
               {/* <h2 >Search: </h2> */}
-              <Form.Control style={{ width: '25%' }} type="text" placeholder="Flight number . . ."
+              <Form.Control
+                style={{ width: "25%" }}
+                type="text"
+                placeholder="Flight number . . ."
                 value={flightSearch}
+                name="flightSearch"
                 onChange={this.handleFlightSearch.bind(this)}
               />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Date (dd/MM/YY). . ." />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Departure time . . ." 
-              value={departureSearch} onChange={this.handleTimeSearch.bind(this)} />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Arrival time . . ."
-              value={arrivalSearch} onChange={this.handleTimeSearch.bind(this)} />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Terminal . . ." 
-              value={terminalSearch} onChange={this.handleTimeSearch.bind(this)}/>
-
+              <Form.Control
+                style={{ width: "25%" }}
+                type="date"
+                placeholder="Date (dd/MM/YY). . ."
+                value={dateSearch}
+                name="dateSearch"
+                onChange={this.handleFlightSearch.bind(this)}
+              />
+              <Form.Control
+                style={{ width: "25%" }}
+                type="time"
+                placeholder="Departure time . . ."
+                value={departureSearch}
+                name="departureSearch"
+                onChange={this.handleFlightSearch.bind(this)}
+              />
+              <Form.Control
+                style={{ width: "25%" }}
+                type="time"
+                placeholder="Arrival time . . ."
+                value={arrivalSearch}
+                name="arrivalSearch"
+                onChange={this.handleFlightSearch.bind(this)}
+              />
+              <Form.Control
+                style={{ width: "25%" }}
+                type="text"
+                placeholder="Terminal . . ."
+                value={terminalSearch}
+                name="terminalSearch"
+                onChange={this.handleFlightSearch.bind(this)}
+              />
             </div>
           </div>
 
           <div className="flight-list">
             <table className="flight-table">
               <tr>
-                <th>Flight <br /> Number</th>
+                <th>
+                  Flight <br /> Number
+                </th>
                 <th>Date</th>
                 <th>Airport</th>
                 <th>Economy</th>
@@ -292,45 +303,33 @@ export default class AdminPage extends Component {
                 <th></th>
                 <th></th>
               </tr>
-              {
-                flightSearch == ""
-                  ?
-                  flightArr.map((f) => (
-                    <Flight
-                      number={f.number}
-                      date={f.date}
-                      airport={f.airport}
-                      economy={f.economy}
-                      business={f.business}
-                      firstC={f.firstC}
-                      dep={f.dep}
-                      arrival={f.arrival}
-                      terminal={f.terminal}
-
-                    />
-                  ))
-                  :
-                  (flightArr.filter((f) => f.number.toString().includes(flightSearch))).map((f) => (
-                    <Flight
-                      number={f.number}
-                      date={f.date}
-                      airport={f.airport}
-                      economy={f.economy}
-                      business={f.business}
-                      firstC={f.firstC}
-                      dep={f.dep}
-                      arrival={f.arrival}
-                      terminal={f.terminal}
-
-
-                    />
-                  ))
-
-
-
-
-
-              }
+              {filteredArr.length==0?
+              flightArr.map((f) => (
+                <Flight
+                  number={f.number}
+                  date={f.date}
+                  airport={f.airport}
+                  economy={f.economy}
+                  business={f.business}
+                  firstC={f.firstC}
+                  dep={f.dep}
+                  arrival={f.arrival}
+                  terminal={f.terminal}
+                />
+              )):
+              filteredArr.map((f) => (
+                <Flight
+                  number={f.number}
+                  date={f.date}
+                  airport={f.airport}
+                  economy={f.economy}
+                  business={f.business}
+                  firstC={f.firstC}
+                  dep={f.dep}
+                  arrival={f.arrival}
+                  terminal={f.terminal}
+                />
+              ))}
             </table>
           </div>
 
@@ -344,8 +343,7 @@ export default class AdminPage extends Component {
               width: "25%",
               height: "10vh",
               fontSize: "large",
-              fontWeight:"bold",
-      
+              fontWeight: "bold",
             }}
             variant="contained"
           >
@@ -367,20 +365,17 @@ export default class AdminPage extends Component {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-
             <Form className="add-flight">
-
               <div className="add-flight-body">
-
-                <Form.Group
-                  style={{ flexGrow: 1 }}
-                  className="mb-3"
-
-                >
+                <Form.Group style={{ flexGrow: 1 }} className="mb-3">
                   <Form.Label>Flight number </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="flightNumber" value={flightNumber} type="text" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="flightNumber"
+                    value={flightNumber}
+                    type="text"
+                  />
                 </Form.Group>
-
 
                 <Form.Group
                   style={{ flexGrow: 1 }}
@@ -388,19 +383,27 @@ export default class AdminPage extends Component {
                   controlId="formBasicEmail"
                 >
                   <Form.Label>Airport </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="flightAirport" value={flightAirport} type="text" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="flightAirport"
+                    value={flightAirport}
+                    type="text"
+                  />
                 </Form.Group>
-
 
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
                   controlId="formBasicEmail"
                 >
-                  <Form.Label>Flight date :  </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="flightDate" value={flightDate} type="date" />
+                  <Form.Label>Flight date : </Form.Label>
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="flightDate"
+                    value={flightDate}
+                    type="date"
+                  />
                 </Form.Group>
-
 
                 {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Flight date : </Form.Label>
@@ -421,35 +424,62 @@ export default class AdminPage extends Component {
               <div className="add-flight-body">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Number of economy seats : </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="ecSeats" value={ecSeats} type="number" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="ecSeats"
+                    value={ecSeats}
+                    type="number"
+                  />
                 </Form.Group>
-
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Number of business seats : </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="buSeats" value={buSeats} type="number" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="buSeats"
+                    value={buSeats}
+                    type="number"
+                  />
                 </Form.Group>
-
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Number of first class seats :</Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="fcSeats" value={fcSeats} type="number" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="fcSeats"
+                    value={fcSeats}
+                    type="number"
+                  />
                 </Form.Group>
-
               </div>
               <div className="add-flight-body">
-
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Arrival time : </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="arrTime" value={arrTime} type="time" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="arrTime"
+                    value={arrTime}
+                    type="time"
+                  />
                 </Form.Group>
 
-
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3" controlId="formBasicEmail">
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Departure time : </Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="depTime" value={depTime} type="time" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="depTime"
+                    value={depTime}
+                    type="time"
+                  />
                 </Form.Group>
-
 
                 {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Departure : </Form.Label>
@@ -475,9 +505,18 @@ export default class AdminPage extends Component {
                     />
                   </LocalizationProvider>
                 </Form.Group> */}
-                <Form.Group style={{ flexGrow: '1' }} className="mb-3" controlId="formBasicEmail">
+                <Form.Group
+                  style={{ flexGrow: "1" }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Terminal :</Form.Label>
-                  <Form.Control onChange={this.handleAddFlightChange.bind(this)} name="flightTerminal" value={flightTerminal} type="number" />
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="flightTerminal"
+                    value={flightTerminal}
+                    type="number"
+                  />
                 </Form.Group>
               </div>
             </Form>
@@ -489,11 +528,15 @@ export default class AdminPage extends Component {
                             renderInput={(params) => <TextField {...params} />}
                         /> */}
           </Modal.Body>
-          <Modal.Footer >
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
-              <p style={{ color: 'red' }}>
-                {errMsg}
-              </p>
+          <Modal.Footer>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <p style={{ color: "red" }}>{errMsg}</p>
               <Button onClick={this.handleAddFlight.bind(this)}>
                 Add fLight
               </Button>
