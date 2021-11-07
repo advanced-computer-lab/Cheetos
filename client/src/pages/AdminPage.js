@@ -16,7 +16,7 @@ export default class AdminPage extends Component {
     flightArr: [
       {
         number: 123213,
-        date: "2011-11-4",
+        date: '2011-11-4',
         airport: "laax",
         economy: 201,
         business: 300,
@@ -191,7 +191,12 @@ export default class AdminPage extends Component {
     console.log(e.target.name);
     switch(e.target.name){
       case('flightSearch'):
-      this.setState({filteredArr:this.state.flightArr.filter((f) => f.number.toString().includes(value))});
+      if(this.state.filteredArr.length != 0){
+        this.setState({filteredArr:this.state.filteredArr.filter((f) => f.number.toString().includes(value))});
+      }else{
+        this.setState({filteredArr:this.state.flightArr.filter((f) => f.number.toString().includes(value))});
+      }
+      
       break;
 
       case('arrivalSearch'):
@@ -203,7 +208,10 @@ export default class AdminPage extends Component {
       break;
 
       case('dateSearch'):
-      this.setState({filteredArr:this.state.flightArr.filter((f) => f.date===(value))});
+      console.log(e.target.value) ;
+      this.setState({filteredArr:this.state.flightArr.filter((f) => f.date.toString() === (value))});
+      console.log(this.state.filteredArr) ;
+      console.log(this.state.flightArr) ;
       break;
 
       case('terminalSearch'):
