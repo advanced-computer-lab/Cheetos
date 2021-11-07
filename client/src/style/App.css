@@ -26,22 +26,28 @@
   text-align: center;
   height: 20vh;
 }
+
+@media only screen and (max-width: 1300px) {
+  .admin-header{
+    height:35vh;
+  }
+
+}
 .admin-header > h1 {
   font-weight: 700;
 }
 
 .search-bar {
   display: flex;
-  /* justify-content: space-around; */
   align-items: center;
   gap: 0.5rem;
   width: 90%;
-  border-radius: 5px; /* 5px rounded corners */
-  /* background-color: rgb(110, 76, 76); */
   align-self: center;
+  flex-wrap: wrap;
 
  
 }
+
 .flight-list::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -69,7 +75,7 @@
 th,
 td {
   padding: 1rem;
-  text-align: left;
+  text-align: center !important;
   
 }
 tr:nth-child(even) {
