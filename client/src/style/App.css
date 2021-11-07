@@ -79,6 +79,9 @@ tr:nth-child(odd) {
   background-color: #a8c9f56b;
   
 }
+td{
+  font-family: Arial, Helvetica, sans-serif;
+}
 
 /* .buttons{
   display:flex;

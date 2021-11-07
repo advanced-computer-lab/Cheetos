@@ -49,6 +49,7 @@ class Flight extends React.Component {
                         :
 
                         <>
+                        {/* Edit text boxes */}
                             <td> <Form.Control style={{ width: '60%'  }} size="sm" type="text" placeholder="Small text" value={number} /></td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={date} /> </td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" placeholder="Small text" value={airport} /></td>

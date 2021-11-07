@@ -163,7 +163,10 @@ export default class AdminPage extends Component {
     ],
     date: new Date("2014-08-18T21:11:54"),
     time: new Date("2014-08-18T21:11:54"),
-    flightSearch: ""
+    flightSearch: "",
+    departureSearch:"",
+    arrivalSearch:"",
+    terminalSearch:""
   };
   handleModalShow() {
     this.setState({
@@ -202,9 +205,13 @@ export default class AdminPage extends Component {
                 value={flightSearch}
                 onChange={this.handleFlightSearch.bind(this)}
               />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Date(dd/MM/YY). . ." />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Departure time . . ." />
-              <Form.Control style = {{width : '25%'}} type="text" placeholder="Arrival time . . ." />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Date (dd/MM/YY). . ." />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Departure time . . ." 
+              value={departureSearch} onChange={this.handleTimeSearch.bind(this)} />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Arrival time . . ."
+              value={arrivalSearch} onChange={this.handleTimeSearch.bind(this)} />
+              <Form.Control style = {{width : '25%'}} type="text" placeholder="Terminal . . ." 
+              value={terminalSearch} onChange={this.handleTimeSearch.bind(this)}/>
 
             </div>
           </div>
@@ -238,7 +245,7 @@ export default class AdminPage extends Component {
                       dep={f.dep}
                       arrival={f.arrival}
                       terminal={f.terminal}
-                      
+
                     />
                   ))
                   :
@@ -276,7 +283,8 @@ export default class AdminPage extends Component {
               width: "25%",
               height: "10vh",
               fontSize: "large",
-              fontWeight:"bold"
+              fontWeight:"bold",
+      
             }}
             variant="contained"
           >
