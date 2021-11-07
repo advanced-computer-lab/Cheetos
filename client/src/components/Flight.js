@@ -25,7 +25,7 @@ class Flight extends React.Component {
         });
       }
     render() {
-        const { number, date, airport, economy, business, firstC, dep, arrival } = this.props
+        const { number, date, airport, economy, business, firstC, dep, arrival,terminal } = this.props
         const { edit ,showModal} = this.state
 
         return (
@@ -44,6 +44,7 @@ class Flight extends React.Component {
                             <td>{firstC}</td>
                             <td>{dep}</td>
                             <td>{arrival}</td>
+                            <td>{terminal}</td>
                         </>
                         :
 

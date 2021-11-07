@@ -25,6 +25,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 111111,
@@ -35,6 +36,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 2222,
@@ -45,6 +47,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 33333,
@@ -55,6 +58,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
 
       {
@@ -66,6 +70,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 77777,
@@ -76,6 +81,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 99999,
@@ -86,6 +92,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 88888,
@@ -96,6 +103,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 446967,
@@ -106,6 +114,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 9939393,
@@ -116,6 +125,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 33333,
@@ -126,6 +136,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 123213,
@@ -136,6 +147,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
       {
         number: 123213,
@@ -146,6 +158,7 @@ export default class AdminPage extends Component {
         firstC: 20,
         dep: "20.30",
         arrival: "2.30",
+        terminal : "3"
       },
     ],
     date: new Date("2014-08-18T21:11:54"),
@@ -184,7 +197,7 @@ export default class AdminPage extends Component {
           <div className="admin-header">
             <h1>ADMIN PANEL</h1>
             <div className=" search-bar">
-              <h2 >Search: </h2>
+              {/* <h2 >Search: </h2> */}
               <Form.Control  style = {{width : '25%'}} type="text" placeholder="Flight number . . ."
                 value={flightSearch}
                 onChange={this.handleFlightSearch.bind(this)}
@@ -207,6 +220,7 @@ export default class AdminPage extends Component {
                 <th>First Class</th>
                 <th>Arrival</th>
                 <th>Departure</th>
+                <th>Terminal</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -223,6 +237,8 @@ export default class AdminPage extends Component {
                       firstC={f.firstC}
                       dep={f.dep}
                       arrival={f.arrival}
+                      terminal={f.terminal}
+                      
                     />
                   ))
                   :
@@ -236,6 +252,9 @@ export default class AdminPage extends Component {
                       firstC={f.firstC}
                       dep={f.dep}
                       arrival={f.arrival}
+                      terminal={f.terminal}
+
+
                     />
                   ))
 
@@ -247,15 +266,17 @@ export default class AdminPage extends Component {
             </table>
           </div>
 
+          {/* create flight button */}
           <Button
             onClick={this.handleModalShow.bind(this)}
             style={{
               width: "80% ",
-              backgroundColor: "#bed0df",
-              color: "black",
+              backgroundColor: "#14279b",
+              // color: "black",
               width: "25%",
               height: "10vh",
-              fontSize: "large"
+              fontSize: "large",
+              fontWeight:"bold"
             }}
             variant="contained"
           >
