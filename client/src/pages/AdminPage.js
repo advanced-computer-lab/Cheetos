@@ -9,102 +9,12 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TimePicker from "@mui/lab/TimePicker";
+import api from '../api'
 
 export default class AdminPage extends Component {
   state = {
     showModal: false,
-    flightArr: [
-      {
-        number: 123213,
-        date: '2011-11-4',
-        airport: "laax",
-        economy: 201,
-        business: 300,
-        firstC: 203,
-        dep: "20:31",
-        arrival: "21:30",
-        terminal: "32",
-      },
-      {
-        number: 111111,
-        date: "2001-11-5",
-        airport: "la",
-        economy: 2,
-        business: 730,
-        firstC: 260,
-        dep: "06:00",
-        arrival: "7:30",
-        terminal: "3",
-      },
-      {
-        number: 2222,
-        date: "2021-11-5",
-        airport: "muh",
-        economy: 30,
-        business: 730,
-        firstC: 20,
-        dep: "07:30",
-        arrival: "02:30",
-        terminal: "55",
-      },
-      {
-        number: 2722,
-        date: "2001-01-5",
-        airport: "muh",
-        economy: 30,
-        business: 930,
-        firstC: 20,
-        dep: "07:30",
-        arrival: "02:30",
-        terminal: "55",
-      },
-      {
-        number: 2222,
-        date: "2021-11-5",
-        airport: "muh",
-        economy: 30,
-        business: 730,
-        firstC: 20,
-        dep: "07:30",
-        arrival: "02:30",
-        terminal: "55",
-      },
-      {
-        number: 2222,
-        date: "2021-11-5",
-        airport: "muh",
-        economy: 30,
-        business: 730,
-        firstC: 20,
-        dep: "07:30",
-        arrival: "02:30",
-        terminal: "55",
-      },
-      {
-        number: 2222,
-        date: "2021-11-5",
-        airport: "muh",
-        economy: 30,
-        business: 730,
-        firstC: 20,
-        dep: "07:30",
-        arrival: "02:30",
-        terminal: "55",
-      },
-      {
-        number: 2222,
-        date: "2021-11-5",
-        airport: "muh",
-        economy: 30,
-        business: 730,
-        firstC: 20,
-        dep: "07:30",
-        arrival: "02:30",
-        terminal: "55",
-      },
-    
-    
-    ],
+    flightArr: [],
     filteredArr: [],
         //searching flight states
     flightSearch: "",
@@ -126,6 +36,23 @@ export default class AdminPage extends Component {
 
   
   };
+
+  async componentDidMount(){
+    await api.getAllFlights().then(flights => {
+      console.log(flights)
+      this.setState({
+          flightArr: flights.data,
+      })
+  })
+  }
+
+
+
+
+
+
+
+
   handleModalShow() {
     this.setState({
       errMsg: "",
@@ -300,7 +227,7 @@ export default class AdminPage extends Component {
                 <th>
                   Flight <br /> Number
                 </th>
-                <th>Date</th>
+                {/* <th>Date</th> */}
                 <th>Airport</th>
                 <th>Economy</th>
                 <th>Business</th>
@@ -311,31 +238,34 @@ export default class AdminPage extends Component {
                 <th></th>
                 <th></th>
               </tr>
-              {filteredArr.length==0?
+              {filteredArr.length==0 ?
               flightArr.map((f) => (
                 <Flight
-                  number={f.number}
-                  date={f.date}
-                  airport={f.airport}
-                  economy={f.economy}
-                  business={f.business}
-                  firstC={f.firstC}
-                  dep={f.dep}
-                  arrival={f.arrival}
-                  terminal={f.terminal}
+                  number={f.FlightNumber}
+                  arrDate={f.ArrivalDate}
+                  depDate={f.DepartureDate}
+                  airport={f.Airport}
+                  economy={f.EconomySeats}
+                  business={f.BusinessSeats}
+                  firstC={f.FirstClassSeats}
+                  dep={f.DepartureTime}
+                  arrival={f.ArrivalTime}
+                  terminal={f.Terminal}
+                  id = {f._id}
                 />
               )):
               filteredArr.map((f) => (
                 <Flight
-                  number={f.number}
-                  date={f.date}
-                  airport={f.airport}
-                  economy={f.economy}
-                  business={f.business}
-                  firstC={f.firstC}
-                  dep={f.dep}
-                  arrival={f.arrival}
-                  terminal={f.terminal}
+                  number={f.FlightNumber}
+                  arrDate={f.ArrivalDate}
+                  depDate={f.DepartureDate}
+                  airport={f.Airport}
+                  economy={f.EconomySeats}
+                  business={f.BusinessSeats}
+                  firstC={f.FirstClassSeats}
+                  dep={f.DepartureTime}
+                  arrival={f.ArrivalTime}
+                  terminal={f.Terminal}
                 />
               ))}
             </table>

@@ -5,13 +5,14 @@ import { red } from '@mui/material/colors';
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-
+import api from '../api'
 class Flight extends React.Component {
     state = {
         edit: false,
         showModal : false,
         number:this.props.number, 
-        date:this.props.date,
+        arrDate : this.props.arrDate,
+        depDate : this.props.depDate,
         airport :this.props.airport, 
         economy:this.props.economy, 
         business:this.props.business, 
@@ -19,6 +20,15 @@ class Flight extends React.Component {
         dep:this.props.dep, 
         arrival:this.props.arrival,
         terminal:this.props.terminal,
+        id : this.props.id
+    }
+    async handleDelete(){
+      await api.deleteFlightById(this.state.id).then(
+        
+        window.location.reload()
+        )
+
+        this.handleModalShow();
     }
     handleEdit() {
         this.setState(
@@ -44,7 +54,7 @@ class Flight extends React.Component {
         });
       }
     render() {
-        const { number, date, airport, economy, business, firstC, dep, arrival,terminal } = this.props
+        const { number, arrDate, depDate, airport, economy, business, firstC, dep, arrival,terminal } = this.props
         const { edit ,showModal} = this.state
 
         return (
@@ -56,13 +66,13 @@ class Flight extends React.Component {
                     {!edit ?
                         <>
                             <td> {number}</td>
-                            <td>{date}</td>
+                            {/* <td>{date}</td> */}
                             <td>{airport}</td>
                             <td>{economy}</td>
                             <td>{business}</td>
                             <td>{firstC}</td>
-                            <td>{dep}</td>
-                            <td>{arrival}</td>
+                            <td>{arrDate}: {dep}</td>
+                            <td>{depDate}: {arrival}</td>
                             <td>{terminal}</td>
                         </>
                         :
@@ -70,7 +80,7 @@ class Flight extends React.Component {
                         <>
                         {/* Edit text boxes */}
                             <td> <Form.Control style={{ width: '60%'  }} size="sm" type="text"   value={this.state.number} name="number" onChange={this.handleEditChange.bind(this)}  /></td>
-                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="date"   value={this.state.date} name="date" onChange={this.handleEditChange.bind(this)}/> </td>
+                            <td> <Form.Control style={{ width: '60%' }} size="sm" type="date"   value={this.state.arrDate} name="arrDate" onChange={this.handleEditChange.bind(this)}/> </td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="text"   value={this.state.airport} name="airport" onChange={this.handleEditChange.bind(this)} /></td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="number"   value={this.state.economy} name="economy" onChange={this.handleEditChange.bind(this)} /></td>
                             <td> <Form.Control style={{ width: '60%' }} size="sm" type="number"   value={this.state.business} name="business" onChange={this.handleEditChange.bind(this)}/></td>
@@ -98,7 +108,7 @@ class Flight extends React.Component {
           <Button variant="secondary" onClick={this.handleModalShow.bind(this)}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
+          <Button variant="primary" onClick={this.handleDelete.bind(this)}>
             Yes
           </Button>
         </Modal.Footer>
