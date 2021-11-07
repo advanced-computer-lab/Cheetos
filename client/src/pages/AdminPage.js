@@ -16,16 +16,17 @@ export default class AdminPage extends Component {
     showModal: false,
     flightArr: [],
     filteredArr: [],
-        //searching flight states
+    //searching flight states
     flightSearch: "",
     departureSearch: "",
     arrivalSearch: "",
     terminalSearch: "",
-    dateSearch:"2021-11-03",
+    dateSearch: "2021-11-03",
     // add-flight states
     flightNumber: "",
     flightAirport: "",
-    flightDate: "",
+    arrDate: "",
+    depDate :"" , 
     ecSeats: 0,
     buSeats: 0,
     fcSeats: 0,
@@ -34,16 +35,16 @@ export default class AdminPage extends Component {
     flightTerminal: "",
     errMsg: "",
 
-  
+
   };
 
-  async componentDidMount(){
+  async componentDidMount() {
     await api.getAllFlights().then(flights => {
       console.log(flights)
       this.setState({
-          flightArr: flights.data,
+        flightArr: flights.data,
       })
-  })
+    })
   }
 
 
@@ -76,11 +77,12 @@ export default class AdminPage extends Component {
     });
   }
 
-  handleAddFlight() {
+  async handleAddFlight() {
     if (
       !this.state.flightNumber ||
       !this.state.flightAirport ||
-      !this.state.flightDate ||
+      !this.state.depDate ||
+      !this.state.arrDate ||
       !this.state.ecSeats ||
       !this.state.buSeats ||
       !this.state.fcSeats ||
@@ -92,6 +94,31 @@ export default class AdminPage extends Component {
         errMsg: "flight info can not be empty !",
       });
     } else {
+      const flight = { 
+        "FlightNumber":  this.state.flightNumber,
+        "DepartureTime":  this.state.depTime,
+        "ArrivalTime":  this.state.arrTime,
+        "DepartureDate": this.state.depDate,
+        "ArrivalDate": this.state.arrDate,
+        "EconomySeats": this.state.ecSeats,
+        "BusinessSeats":     this.state.buSeats,
+        "FirstClassSeats": this.state.fcSeats,
+        "Terminal": this.state.flightTerminal , 
+        "Airport": this.state.flightAirport,
+      }
+      await api.insertFlight(flight).then(
+        (res) => {
+          console.log(res)
+          this.setState({
+            flightArr: [...this.state.flightArr, res.data.data],
+          })
+        }
+      )
+
+
+
+
+
       this.handleModalShow();
     }
   }
@@ -101,7 +128,7 @@ export default class AdminPage extends Component {
       date: newDate,
     });
   }
-  
+
   handleFlightSearch(e) {
     e.preventDefault();
 
@@ -113,42 +140,42 @@ export default class AdminPage extends Component {
       ...this.state,
       [e.target.name]: value,
 
-      
+
     });
     console.log(e.target.name);
-    switch(e.target.name){
-      case('flightSearch'):
-      if(this.state.filteredArr.length != 0){
-        this.setState({filteredArr:this.state.filteredArr.filter((f) => f.number.toString().includes(value))});
-      }else{
-        this.setState({filteredArr:this.state.flightArr.filter((f) => f.number.toString().includes(value))});
-      }
-      
-      break;
+    switch (e.target.name) {
+      case ('flightSearch'):
+        if (this.state.filteredArr.length != 0) {
+          this.setState({ filteredArr: this.state.filteredArr.filter((f) => f.number.toString().includes(value)) });
+        } else {
+          this.setState({ filteredArr: this.state.flightArr.filter((f) => f.number.toString().includes(value)) });
+        }
 
-      case('arrivalSearch'):
-      this.setState({filteredArr:this.state.flightArr.filter((f) => f.arrival.toString().includes(value))});
-      break;
+        break;
 
-      case('departureSearch'):
-      this.setState({filteredArr:this.state.flightArr.filter((f) => f.dep.toString().includes(value))});
-      break;
+      case ('arrivalSearch'):
+        this.setState({ filteredArr: this.state.flightArr.filter((f) => f.arrival.toString().includes(value)) });
+        break;
 
-      case('dateSearch'):
-      console.log(e.target.value) ;
-      this.setState({filteredArr:this.state.flightArr.filter((f) => f.date.toString() === (value))});
-      console.log(this.state.filteredArr) ;
-      console.log(this.state.flightArr) ;
-      break;
+      case ('departureSearch'):
+        this.setState({ filteredArr: this.state.flightArr.filter((f) => f.dep.toString().includes(value)) });
+        break;
 
-      case('terminalSearch'):
-      this.setState({filteredArr:this.state.flightArr.filter((f) => f.terminal.toString().includes(value))});
-      break;
+      case ('dateSearch'):
+        console.log(e.target.value);
+        this.setState({ filteredArr: this.state.flightArr.filter((f) => f.date.toString() === (value)) });
+        console.log(this.state.filteredArr);
+        console.log(this.state.flightArr);
+        break;
+
+      case ('terminalSearch'):
+        this.setState({ filteredArr: this.state.flightArr.filter((f) => f.terminal.toString().includes(value)) });
+        break;
     }
-      
 
 
-    
+
+
   }
 
   render() {
@@ -157,7 +184,8 @@ export default class AdminPage extends Component {
       errMsg,
       flightNumber,
       flightAirport,
-      flightDate,
+      arrDate,
+      depDate,
       ecSeats,
       buSeats,
       fcSeats,
@@ -238,36 +266,36 @@ export default class AdminPage extends Component {
                 <th></th>
                 <th></th>
               </tr>
-              {filteredArr.length==0 ?
-              flightArr.map((f) => (
-                <Flight
-                  number={f.FlightNumber}
-                  arrDate={f.ArrivalDate}
-                  depDate={f.DepartureDate}
-                  airport={f.Airport}
-                  economy={f.EconomySeats}
-                  business={f.BusinessSeats}
-                  firstC={f.FirstClassSeats}
-                  dep={f.DepartureTime}
-                  arrival={f.ArrivalTime}
-                  terminal={f.Terminal}
-                  id = {f._id}
-                />
-              )):
-              filteredArr.map((f) => (
-                <Flight
-                  number={f.FlightNumber}
-                  arrDate={f.ArrivalDate}
-                  depDate={f.DepartureDate}
-                  airport={f.Airport}
-                  economy={f.EconomySeats}
-                  business={f.BusinessSeats}
-                  firstC={f.FirstClassSeats}
-                  dep={f.DepartureTime}
-                  arrival={f.ArrivalTime}
-                  terminal={f.Terminal}
-                />
-              ))}
+              {filteredArr.length == 0 ?
+                flightArr.map((f) => (
+                  <Flight
+                    number={f.FlightNumber}
+                    arrDate={f.ArrivalDate}
+                    depDate={f.DepartureDate}
+                    airport={f.Airport}
+                    economy={f.EconomySeats}
+                    business={f.BusinessSeats}
+                    firstC={f.FirstClassSeats}
+                    dep={f.DepartureTime}
+                    arrival={f.ArrivalTime}
+                    terminal={f.Terminal}
+                    id={f._id}
+                  />
+                )) :
+                filteredArr.map((f) => (
+                  <Flight
+                    number={f.FlightNumber}
+                    arrDate={f.ArrivalDate}
+                    depDate={f.DepartureDate}
+                    airport={f.Airport}
+                    economy={f.EconomySeats}
+                    business={f.BusinessSeats}
+                    firstC={f.FirstClassSeats}
+                    dep={f.DepartureTime}
+                    arrival={f.ArrivalTime}
+                    terminal={f.Terminal}
+                  />
+                ))}
             </table>
           </div>
 
@@ -330,16 +358,16 @@ export default class AdminPage extends Component {
                 </Form.Group>
 
                 <Form.Group
-                  style={{ flexGrow: 1 }}
+                  style={{ flexGrow: "1" }}
                   className="mb-3"
                   controlId="formBasicEmail"
                 >
-                  <Form.Label>Flight date : </Form.Label>
+                  <Form.Label>Terminal :</Form.Label>
                   <Form.Control
                     onChange={this.handleAddFlightChange.bind(this)}
-                    name="flightDate"
-                    value={flightDate}
-                    type="date"
+                    name="flightTerminal"
+                    value={flightTerminal}
+                    type="number"
                   />
                 </Form.Group>
 
@@ -419,6 +447,32 @@ export default class AdminPage extends Component {
                   />
                 </Form.Group>
 
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Arrival date : </Form.Label>
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="arrDate"
+                    value={arrDate}
+                    type="date"
+                  />
+                </Form.Group>
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Departure date : </Form.Label>
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="depDate"
+                    value={depDate}
+                    type="date"
+                  />
+                </Form.Group>
                 {/* <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Departure : </Form.Label>
                   <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -443,19 +497,7 @@ export default class AdminPage extends Component {
                     />
                   </LocalizationProvider>
                 </Form.Group> */}
-                <Form.Group
-                  style={{ flexGrow: "1" }}
-                  className="mb-3"
-                  controlId="formBasicEmail"
-                >
-                  <Form.Label>Terminal :</Form.Label>
-                  <Form.Control
-                    onChange={this.handleAddFlightChange.bind(this)}
-                    name="flightTerminal"
-                    value={flightTerminal}
-                    type="number"
-                  />
-                </Form.Group>
+
               </div>
             </Form>
             {/* <DesktopDatePicker

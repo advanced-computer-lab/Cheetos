@@ -10,7 +10,7 @@ updateFlight = async (req, res) => {
         })
     }
 
-    Flight.findOne({id: req.params.id }, (err, flight) => {
+    Flight.findOne({ id: req.params.id }, (err, flight) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -18,36 +18,36 @@ updateFlight = async (req, res) => {
             })
         }
         console.log(flight)
-        if(body.number){
+        if (body.number) {
             flight.FlightNumber = body.number
-        } 
-        if(body.departure){
-           flight.DepartureTime = body.departure
-        } 
-        if(body.arrival){
+        }
+        if (body.departure) {
+            flight.DepartureTime = body.departure
+        }
+        if (body.arrival) {
             flight.ArrivalDate = body.arrival
         }
-        if(body.dDate){
+        if (body.dDate) {
             flight.DepartureDate = body.dDate
         }
-        if(body.aDate){
+        if (body.aDate) {
             flight.ArrivalTime = body.aDate
         }
-        
-        if(body.economy){
+
+        if (body.economy) {
             flight.EconomySeats = body.economy
-        } 
-        if(body.airport){
+        }
+        if (body.airport) {
             flight.Airport = body.airport
-        } 
-       if(body.business){
-           flight.BusinessSeats = body.business
-       } 
-       if(body.firstClass){
-        flight.FirstClassSeats = body.firstClass
-       }
-       if(body.terminal){
-        flight.Terminal = body.terminal
+        }
+        if (body.business) {
+            flight.BusinessSeats = body.business
+        }
+        if (body.firstClass) {
+            flight.FirstClassSeats = body.firstClass
+        }
+        if (body.terminal) {
+            flight.Terminal = body.terminal
         }
         flight
             .save()
@@ -65,9 +65,9 @@ updateFlight = async (req, res) => {
                     message: 'Flight not updated!',
                 })
             })
-            
+
     })
-    
+
 }
 
 deleteFlight = async (req, res) => {
@@ -84,23 +84,23 @@ deleteFlight = async (req, res) => {
 
         return res.status(200).json({ success: true, data: flight })
     })
-    .catch(err => console.log(err))
+        .catch(err => console.log(err))
 }
 
 createFlight = (req, res) => {
     Flight.create(req.body)
-      .then((user) => res.json({ msg: "Flight added successfully" }))
-      .catch((err) =>
-        res.status(400).json({ error: "Unable to add this flight" })
-      )
-  }
-getFlights = (req,res)=>{
-        Flight.find()
-          .then((flights) => res.json(flights))
-          .catch((err) =>
+        .then((user) => res.json({ msg: "Flight added successfully"  , data : req.body}))
+        .catch((err) =>
+            res.status(400).json({ error: "Unable to add this flight" })
+        )
+}
+getFlights = (req, res) => {
+    Flight.find()
+        .then((flights) => res.json(flights))
+        .catch((err) =>
             res.status(404).json({ noflightsfound: "No Flights found" })
-          );
-      }
+        );
+}
 
 module.exports = {
     updateFlight,
