@@ -7,7 +7,7 @@ const api = axios.create({
 export const insertFlight = payload => api.post(`/create`, payload)
 export const getAllFlights = () => api.get(`/`)
 export const updateFlightbyId = (id, payload) => api.put(`/update/${id}`, payload)
-export const deleteFlightById = id => api.delete(`/delete/?id=${id}`)
+export const deleteFlightById = id => api.delete(`/delete/${id}`)
 
 
 const apis = {

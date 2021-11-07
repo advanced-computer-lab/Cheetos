@@ -10,7 +10,7 @@ updateFlight = async (req, res) => {
         })
     }
 
-    Flight.findOne({ id: req.params.id }, (err, flight) => {
+    Flight.findOne({ _id: req.params.id }, (err, flight) => {
         if (err) {
             return res.status(404).json({
                 err,
@@ -18,37 +18,34 @@ updateFlight = async (req, res) => {
             })
         }
         console.log(flight)
-        if (body.number) {
-            flight.FlightNumber = body.number
-        }
-        if (body.departure) {
-            flight.DepartureTime = body.departure
-        }
-        if (body.arrival) {
-            flight.ArrivalDate = body.arrival
-        }
-        if (body.dDate) {
-            flight.DepartureDate = body.dDate
-        }
-        if (body.aDate) {
-            flight.ArrivalTime = body.aDate
-        }
 
-        if (body.economy) {
-            flight.EconomySeats = body.economy
-        }
-        if (body.airport) {
-            flight.Airport = body.airport
-        }
-        if (body.business) {
-            flight.BusinessSeats = body.business
-        }
-        if (body.firstClass) {
-            flight.FirstClassSeats = body.firstClass
-        }
-        if (body.terminal) {
-            flight.Terminal = body.terminal
-        }
+        flight.FlightNumber = body.FlightNumber
+
+
+        flight.DepartureTime = body.DepartureTime
+
+
+        flight.ArrivalDate = body.ArrivalDate
+
+
+        flight.DepartureDate = body.DepartureDate
+
+
+        flight.ArrivalTime = body.ArrivalTime
+
+        flight.EconomySeats = body.EconomySeats
+
+
+        flight.Airport = body.Airport
+
+
+        flight.BusinessSeats = body.BusinessSeats
+
+        flight.FirstClassSeats = body.FirstClassSeats
+
+
+        flight.Terminal = body.Terminal
+
         flight
             .save()
             .then(() => {
@@ -71,7 +68,7 @@ updateFlight = async (req, res) => {
 }
 
 deleteFlight = async (req, res) => {
-    await Flight.findOneAndDelete({ id: req.params.id }, (err, flight) => {
+    await Flight.findByIdAndDelete({ _id: req.params.id }, (err, flight) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -89,7 +86,7 @@ deleteFlight = async (req, res) => {
 
 createFlight = (req, res) => {
     Flight.create(req.body)
-        .then((user) => res.json({ msg: "Flight added successfully"  , data : req.body}))
+        .then((user) => res.json({ msg: "Flight added successfully", data: req.body }))
         .catch((err) =>
             res.status(400).json({ error: "Unable to add this flight" })
         )

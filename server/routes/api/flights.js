@@ -10,8 +10,8 @@ router.get("/", flightController.getFlights)
 
 router.post("/create",flightController.createFlight )
 
-router.delete("/delete",flightController.deleteFlight )
+router.delete("/delete/:id",flightController.deleteFlight )
 
-router.put('/update',flightController.updateFlight)
+router.put('/update/:id',flightController.updateFlight)
 
 module.exports = router;
