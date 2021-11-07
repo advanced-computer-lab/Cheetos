@@ -22,22 +22,38 @@ class Flight extends React.Component {
     terminal: this.props.terminal,
     id: this.props.id
   }
-  
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      number: nextProps.number,
+      arrDate: nextProps.arrDate,
+      depDate: nextProps.depDate,
+      airport: nextProps.airport,
+      economy: nextProps.economy,
+      business: nextProps.business,
+      firstC: nextProps.firstC,
+       dep: nextProps.dep,
+      arrival:  nextProps.arrival,
+       terminal: nextProps.terminal,
+       id: nextProps.id
+      });  
+  }
   async handleSave() {
-    const flight = { 
-      "FlightNumber":  this.state.number,
-      "DepartureTime":  this.state.dep,
-      "ArrivalTime":  this.state.arrival,
+    console.log(this.state.id)
+    const flight = {
+      "FlightNumber": this.state.number,
+      "DepartureTime": this.state.dep,
+      "ArrivalTime": this.state.arrival,
       "DepartureDate": this.state.depDate,
       "ArrivalDate": this.state.arrDate,
       "EconomySeats": this.state.economy,
-      "BusinessSeats":     this.state.business,
+      "BusinessSeats": this.state.business,
       "FirstClassSeats": this.state.firstC,
-      "Terminal": this.state.terminal , 
+      "Terminal": this.state.terminal,
       "Airport": this.state.airport,
     }
-    await api.updateFlightbyId(this.state.id , flight ).then(
-      
+    await api.updateFlightbyId(this.state.id, flight).then(
+
       window.location.reload()
     )
 
@@ -51,6 +67,7 @@ class Flight extends React.Component {
     this.handleModalShow();
   }
   handleEdit() {
+    console.log(this.state.id)
     this.setState(
       {
         edit: !this.state.edit
@@ -91,8 +108,8 @@ class Flight extends React.Component {
               <td>{economy}</td>
               <td>{business}</td>
               <td>{firstC}</td>
-              <td>{arrDate}: {dep}</td>
-              <td>{depDate}: {arrival}</td>
+              <td>{arrDate}: {arrival}</td>
+              <td>{depDate}: {dep}</td>
               <td>{terminal}</td>
             </>
             :
@@ -108,11 +125,12 @@ class Flight extends React.Component {
 
               <td>
                 <Form.Control style={{ width: '60%' }} size="sm" type="date" value={this.state.arrDate} name="arrDate" onChange={this.handleEditChange.bind(this)} />
-                <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.dep} name="dep" onChange={this.handleEditChange.bind(this)} />
+                <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.arrival} name="arrival" onChange={this.handleEditChange.bind(this)} />
+
               </td>
               <td>
-                <Form.Control style={{ width: '60%' }} size="sm" type="date" value={this.state.depDate} name="arrDate" onChange={this.handleEditChange.bind(this)} />
-                <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.arrival} name="arrival" onChange={this.handleEditChange.bind(this)} />
+                <Form.Control style={{ width: '60%' }} size="sm" type="date" value={this.state.depDate} name="depDate" onChange={this.handleEditChange.bind(this)} />
+                <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.dep} name="dep" onChange={this.handleEditChange.bind(this)} />
               </td>
               <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.terminal} name="terminal" onChange={this.handleEditChange.bind(this)} /></td>
             </>
