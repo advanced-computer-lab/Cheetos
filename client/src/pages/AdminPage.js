@@ -22,12 +22,12 @@ export default class AdminPage extends Component {
     arrivalSearch: "",
     terminalSearch: "",
     arrDateSearch: "",
-    depDateSearch : "" , 
+    depDateSearch: "",
     // add-flight states
     flightNumber: "",
     flightAirport: "",
     arrDate: "",
-    depDate :"" , 
+    depDate: "",
     ecSeats: 0,
     buSeats: 0,
     fcSeats: 0,
@@ -44,6 +44,7 @@ export default class AdminPage extends Component {
       console.log(flights)
       this.setState({
         flightArr: flights.data,
+        filteredArr : flights.data
       })
     })
   }
@@ -95,16 +96,16 @@ export default class AdminPage extends Component {
         errMsg: "flight info can not be empty !",
       });
     } else {
-      const flight = { 
-        "FlightNumber":  this.state.flightNumber,
-        "DepartureTime":  this.state.depTime,
-        "ArrivalTime":  this.state.arrTime,
+      const flight = {
+        "FlightNumber": this.state.flightNumber,
+        "DepartureTime": this.state.depTime,
+        "ArrivalTime": this.state.arrTime,
         "DepartureDate": this.state.depDate,
         "ArrivalDate": this.state.arrDate,
         "EconomySeats": this.state.ecSeats,
-        "BusinessSeats":     this.state.buSeats,
+        "BusinessSeats": this.state.buSeats,
         "FirstClassSeats": this.state.fcSeats,
-        "Terminal": this.state.flightTerminal , 
+        "Terminal": this.state.flightTerminal,
         "Airport": this.state.flightAirport,
       }
       await api.insertFlight(flight).then(
@@ -124,48 +125,31 @@ export default class AdminPage extends Component {
     }
   }
 
- foundResult(){
-  // 
-  
-   if(this.state.filteredArr.length=== 0 && 
-    (this.state.departureSearch!="" ||
-    this.state.flightSearch!=""||
-    this.state.arrivalSearch!=""||
-    this.state.terminalSearch!=""||
-    this.state.depDateSearch!=""||
-    this.state.arrDateSearch!="")){
+  fieldsEmpty() {
+    // 
+
+    if (
+      this.state.departureSearch != "" ||
+      this.state.flightSearch != "" ||
+      this.state.arrivalSearch != "" ||
+      this.state.terminalSearch != "" ||
+      this.state.depDateSearch != "" ||
+      this.state.arrDateSearch != "") {
       return false;
-   }
-   return true;
+    }
+    return true;
 
- }
-
-  handleDateChange(newDate) {
-    console.log(newDate);
-    this.setState({
-      date: newDate,
-    });
   }
 
-  handleFlightSearch(e) {
-   
-    e.preventDefault();
-    console.log(this.foundResult());
-    console.log("flight arr" , this.state.flightArr)
-    console.log("filtered arr" , this.state.filteredArr)
-    // const name = e.target.name
+
+
+  switchSearch(e) {
     const value = e.target.value;
-    this.setState({
-      //spreading state
-      ...this.state,
-      [e.target.name]: value,
-
-
-    });
     console.log(e.target.name);
     switch (e.target.name) {
       case ('flightSearch'):
         if (this.state.filteredArr.length != 0) {
+
           this.setState({ filteredArr: this.state.filteredArr.filter((f) => f.FlightNumber.toString().includes(value)) });
         } else {
           this.setState({ filteredArr: this.state.flightArr.filter((f) => f.FlightNumber.toString().includes(value)) });
@@ -180,7 +164,7 @@ export default class AdminPage extends Component {
           this.setState({ filteredArr: this.state.flightArr.filter((f) => f.ArrivalTime.toString().includes(value)) });
         }
 
-        
+
         break;
 
       case ('departureSearch'):
@@ -189,7 +173,7 @@ export default class AdminPage extends Component {
         } else {
           this.setState({ filteredArr: this.state.flightArr.filter((f) => f.DepartureTime.toString().includes(value)) });
         }
-       
+
         break;
 
       case ('arrDateSearch'):
@@ -199,14 +183,14 @@ export default class AdminPage extends Component {
           this.setState({ filteredArr: this.state.flightArr.filter((f) => f.ArrivalDate.toString().includes(value)) });
         }
         break;
-        
-        case ('depDateSearch'):
-          if (this.state.filteredArr.length != 0) {
-            this.setState({ filteredArr: this.state.filteredArr.filter((f) => f.DepartureDate.toString().includes(value)) });
-          } else {
-            this.setState({ filteredArr: this.state.flightArr.filter((f) => f.DepartureDate.toString().includes(value)) });
-          }
-       
+
+      case ('depDateSearch'):
+        if (this.state.filteredArr.length != 0) {
+          this.setState({ filteredArr: this.state.filteredArr.filter((f) => f.DepartureDate.toString().includes(value)) });
+        } else {
+          this.setState({ filteredArr: this.state.flightArr.filter((f) => f.DepartureDate.toString().includes(value)) });
+        }
+
         break;
 
       case ('terminalSearch'):
@@ -215,11 +199,91 @@ export default class AdminPage extends Component {
         } else {
           this.setState({ filteredArr: this.state.flightArr.filter((f) => f.Terminal.toString().includes(value)) });
         }
-       
+
         break;
     }
+  }
 
 
+filterSearch(value){
+    const {filteredArr , flightSearch, departureSearch ,  arrivalSearch , terminalSearch  , arrDateSearch , depDateSearch} = this.state
+    this.setState({
+      filteredArr : this.state.flightArr
+    })
+    if(flightSearch != ""){
+      this.setState({
+        filteredArr : this.filteredArr.filter((f) => f.FlightNumber.toString().includes(value))
+      })
+    }
+    if(departureSearch != ""){
+      this.setState({
+        filteredArr : this.filteredArr.filter((f) => f.DepartureTime.toString().includes(value))
+      })
+    }
+    if(arrivalSearch != ""){
+      this.setState({
+        filteredArr : this.filteredArr.filter((f) => f.ArrivalTime.toString().includes(value))
+      })
+    }
+    if(terminalSearch != ""){
+      this.setState({
+        filteredArr : this.filteredArr.filter((f) => f.Terminal.toString().includes(value))
+      })
+    }
+    if(arrDateSearch != "" ){
+      this.setState({
+        filteredArr : this.filteredArr.filter((f) => f.ArrivalDate.toString().includes(value))
+      })
+    }
+    if(depDateSearch!= "" ){
+      this.setState({
+        filteredArr : this.filteredArr.filter((f) => f.DepartureDate.toString().includes(value))
+      })
+    }
+    
+  }
+
+  andSearch(){
+    const {flightArr , flightSearch, departureSearch ,  arrivalSearch , terminalSearch  , arrDateSearch , depDateSearch} = this.state
+
+    console.log(flightSearch ,arrDateSearch ,arrivalSearch ,depDateSearch ,departureSearch ,terminalSearch )
+    this.setState({
+      filteredArr : flightArr.filter((f) => 
+             f.FlightNumber.toString().includes(flightSearch)
+        &&   f.ArrivalDate.toString().includes(arrDateSearch)
+        &&   f.ArrivalTime.toString().includes(arrivalSearch)
+        &&   f.DepartureDate.toString().includes(depDateSearch)  
+        &&   f.DepartureTime.toString().includes(departureSearch)  
+        &&   f.Terminal.toString().includes(terminalSearch) 
+      
+ 
+      )
+    })
+  }
+
+  handleFlightSearch(e) {
+
+    e.preventDefault();
+    console.log(this.fieldsEmpty());
+    console.log("flight arr", this.state.flightArr)
+    console.log("filtered arr", this.state.filteredArr)
+    // const name = e.target.name
+    //--- setting the state of search fields upon change 
+    //doing the search and filtering 
+    const value = e.target.value;
+    this.setState({
+      //spreading state
+      ...this.state,
+      [e.target.name] : value,
+
+
+    } , () =>{
+      this.andSearch() ;
+    });
+
+   
+
+    
 
 
   }
@@ -241,7 +305,7 @@ export default class AdminPage extends Component {
       flightSearch,
       arrDateSearch,
       arrivalSearch,
-      depDateSearch ,
+      depDateSearch,
       departureSearch,
       terminalSearch,
       filteredArr,
@@ -254,77 +318,77 @@ export default class AdminPage extends Component {
             <div className=" search-bar">
               {/* <h2 >Search: </h2> */}
               <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-              <Form.Label>Flight number : </Form.Label>
-              <Form.Control
-            
-                type="text"
-                placeholder="ex: 12AS3"
-                value={flightSearch}
-                name="flightSearch"
-                onChange={this.handleFlightSearch.bind(this)}
-              />
+                <Form.Label>Flight number : </Form.Label>
+                <Form.Control
+
+                  type="text"
+                  placeholder="ex: 12AS3"
+                  value={flightSearch}
+                  name="flightSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
               </Form.Group>
 
               <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-              <Form.Label>Arrival date : </Form.Label>
-              <Form.Control
-                style={{ width: "" }}
-                type="date"
-                placeholder="Date (dd/MM/YY). . ."
-                value={arrDateSearch}
-                name="arrDateSearch"
-                onChange={this.handleFlightSearch.bind(this)}
-              />
-               </Form.Group>
-              
-
-               <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-              <Form.Label>Arrival time : </Form.Label>
-              <Form.Control
-               
-                type="time"
-                value={arrivalSearch}
-                name="arrivalSearch"
-                onChange={this.handleFlightSearch.bind(this)}
-              />
+                <Form.Label>Arrival date : </Form.Label>
+                <Form.Control
+                  style={{ width: "" }}
+                  type="date"
+                  placeholder="Date (dd/MM/YY). . ."
+                  value={arrDateSearch}
+                  name="arrDateSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
               </Form.Group>
 
 
-             <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-              <Form.Label>departure date : </Form.Label>
-              <Form.Control
-                
-                type="date"
-                placeholder="Date (dd/MM/YY). . ."
-                value={depDateSearch}
-                name="depDateSearch"
-                onChange={this.handleFlightSearch.bind(this)}
-              />
-            </Form.Group> 
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Arrival time : </Form.Label>
+                <Form.Control
 
-            <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-              <Form.Label>departure time : </Form.Label>
-              <Form.Control
-                
-                type="time"
-                placeholder="Departure time . . ."
-                value={departureSearch}
-                name="departureSearch"
-                onChange={this.handleFlightSearch.bind(this)}
-              />
-               </Form.Group> 
+                  type="time"
+                  value={arrivalSearch}
+                  name="arrivalSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
 
-             <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-              <Form.Label>terminal : </Form.Label>
-              <Form.Control
-             
-                type="text"
-                placeholder="ex: 3"
-                value={terminalSearch}
-                name="terminalSearch"
-                onChange={this.handleFlightSearch.bind(this)}
-              />
-               </Form.Group> 
+
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Departure date : </Form.Label>
+                <Form.Control
+
+                  type="date"
+                  placeholder="Date (dd/MM/YY). . ."
+                  value={depDateSearch}
+                  name="depDateSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
+
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Departure time : </Form.Label>
+                <Form.Control
+
+                  type="time"
+                  placeholder="Departure time . . ."
+                  value={departureSearch}
+                  name="departureSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
+
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Terminal : </Form.Label>
+                <Form.Control
+
+                  type="text"
+                  placeholder="ex: 3"
+                  value={terminalSearch}
+                  name="terminalSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
 
             </div>
           </div>
@@ -346,7 +410,7 @@ export default class AdminPage extends Component {
                 <th></th>
                 <th></th>
               </tr>
-              { !this.foundResult()?
+              {
                 filteredArr.map((f) => (
                   <Flight
                     number={f.FlightNumber}
@@ -359,22 +423,6 @@ export default class AdminPage extends Component {
                     dep={f.DepartureTime}
                     arrival={f.ArrivalTime}
                     terminal={f.Terminal}
-                    id={f._id}
-                  />
-                )) :
-              
-                flightArr.map((f) => (
-                  <Flight
-                    number={f.FlightNumber}
-                    arrDate={f.ArrivalDate}
-                    depDate={f.DepartureDate}
-                    airport={f.Airport}
-                    economy={f.EconomySeats}
-                    business={f.BusinessSeats}
-                    firstC={f.FirstClassSeats}
-                    dep={f.DepartureTime}
-                    arrival={f.ArrivalTime}
-                    terminal={f.Terminal} 
                     id={f._id}
                   />
                 ))}
@@ -428,7 +476,7 @@ export default class AdminPage extends Component {
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
-                  
+
                 >
                   <Form.Label>Airport </Form.Label>
                   <Form.Control
@@ -442,7 +490,7 @@ export default class AdminPage extends Component {
                 <Form.Group
                   style={{ flexGrow: "1" }}
                   className="mb-3"
-                   
+
                 >
                   <Form.Label>Terminal :</Form.Label>
                   <Form.Control
@@ -504,7 +552,7 @@ export default class AdminPage extends Component {
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
-                   
+
                 >
                   <Form.Label>Arrival time : </Form.Label>
                   <Form.Control
@@ -518,7 +566,7 @@ export default class AdminPage extends Component {
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
-                   
+
                 >
                   <Form.Label>Departure time : </Form.Label>
                   <Form.Control
@@ -532,7 +580,7 @@ export default class AdminPage extends Component {
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
-                   
+
                 >
                   <Form.Label>Arrival date : </Form.Label>
                   <Form.Control
@@ -545,7 +593,7 @@ export default class AdminPage extends Component {
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
-                   
+
                 >
                   <Form.Label>Departure date : </Form.Label>
                   <Form.Control
