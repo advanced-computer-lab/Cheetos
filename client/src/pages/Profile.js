@@ -107,9 +107,10 @@ export default class Profile extends Component {
                             </tr>
                         </table>
                     </div>
-                    {/* */}
+                    
                     <div style={{width:"50%"}}><img className="p-img" src={img} style={{width:"100%",height:"100%"}}/> </div>
                 </div>
+              
             </div>
         )
     }
