@@ -1,0 +1,32 @@
+.trip-card{
+    background-color: white;
+    border : 1px solid rgb(182, 182, 182) ;
+    
+    width: 50vw;
+    height: 25vh;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.trip-flex-col{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+     
+}
+
+.trip-flight{
+    margin-top: 25px;
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.vl{
+    border-left: 1px solid rgb(226, 226, 226);
+    height: 90%;
+}
