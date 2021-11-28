@@ -13,7 +13,7 @@ import api from '../api'
 
 export default class AdminPage extends Component {
   state = {
-    showModal: false,
+    showModal: true,
     flightArr: [],
     filteredArr: [],
     //searching flight states
@@ -25,7 +25,8 @@ export default class AdminPage extends Component {
     depDateSearch: "",
     // add-flight states
     flightNumber: "",
-    flightAirport: "",
+    departureAirport: "",
+    arrivalAirport: "",
     arrDate: "",
     depDate: "",
     ecSeats: 0,
@@ -33,7 +34,8 @@ export default class AdminPage extends Component {
     fcSeats: 0,
     depTime: "",
     arrTime: "",
-    flightTerminal: "",
+    departureTerminal: "",
+    arrivalTerminal: "",
     errMsg: "",
 
 
@@ -44,7 +46,7 @@ export default class AdminPage extends Component {
       console.log(flights)
       this.setState({
         flightArr: flights.data,
-        filteredArr : flights.data
+        filteredArr: flights.data
       })
     })
   }
@@ -60,14 +62,14 @@ export default class AdminPage extends Component {
     this.setState({
       errMsg: "",
       flightNumber: "",
-      flightAirport: "",
+      departureAirport: "",
       flightDate: "",
       ecSeats: 0,
       buSeats: 0,
       fcSeats: 0,
       depTime: "",
       arrTime: "",
-      flightTerminal: "",
+      departureTerminal: "",
       showModal: this.state.showModal ? false : true,
     });
   }
@@ -82,7 +84,10 @@ export default class AdminPage extends Component {
   async handleAddFlight() {
     if (
       !this.state.flightNumber ||
-      !this.state.flightAirport ||
+      !this.state.departureAirport ||
+      !this.state.arrivalAirport ||
+      !this.state.departureTerminal ||
+      !this.state.arrivalTerminal||
       !this.state.depDate ||
       !this.state.arrDate ||
       !this.state.ecSeats ||
@@ -90,7 +95,7 @@ export default class AdminPage extends Component {
       !this.state.fcSeats ||
       !this.state.depTime ||
       !this.state.arrTime ||
-      !this.state.flightTerminal
+      !this.state.departureTerminal
     ) {
       this.setState({
         errMsg: "flight info can not be empty !",
@@ -105,8 +110,10 @@ export default class AdminPage extends Component {
         "EconomySeats": this.state.ecSeats,
         "BusinessSeats": this.state.buSeats,
         "FirstClassSeats": this.state.fcSeats,
-        "Terminal": this.state.flightTerminal,
-        "Airport": this.state.flightAirport,
+        "DepartureTerminal": this.state.departureTerminal,
+        "ArrivalTerminal": this.state.arrivalTerminal,
+        "DepartureAirport": this.state.departureAirport,
+        "ArrivalAirport": this.state.arrivalAirport,
       }
       await api.insertFlight(flight).then(
         (res) => {
@@ -205,58 +212,58 @@ export default class AdminPage extends Component {
   }
 
 
-filterSearch(value){
-    const {filteredArr , flightSearch, departureSearch ,  arrivalSearch , terminalSearch  , arrDateSearch , depDateSearch} = this.state
+  filterSearch(value) {
+    const { filteredArr, flightSearch, departureSearch, arrivalSearch, terminalSearch, arrDateSearch, depDateSearch } = this.state
     this.setState({
-      filteredArr : this.state.flightArr
+      filteredArr: this.state.flightArr
     })
-    if(flightSearch != ""){
+    if (flightSearch != "") {
       this.setState({
-        filteredArr : this.filteredArr.filter((f) => f.FlightNumber.toString().includes(value))
+        filteredArr: this.filteredArr.filter((f) => f.FlightNumber.toString().includes(value))
       })
     }
-    if(departureSearch != ""){
+    if (departureSearch != "") {
       this.setState({
-        filteredArr : this.filteredArr.filter((f) => f.DepartureTime.toString().includes(value))
+        filteredArr: this.filteredArr.filter((f) => f.DepartureTime.toString().includes(value))
       })
     }
-    if(arrivalSearch != ""){
+    if (arrivalSearch != "") {
       this.setState({
-        filteredArr : this.filteredArr.filter((f) => f.ArrivalTime.toString().includes(value))
+        filteredArr: this.filteredArr.filter((f) => f.ArrivalTime.toString().includes(value))
       })
     }
-    if(terminalSearch != ""){
+    if (terminalSearch != "") {
       this.setState({
-        filteredArr : this.filteredArr.filter((f) => f.Terminal.toString().includes(value))
+        filteredArr: this.filteredArr.filter((f) => f.Terminal.toString().includes(value))
       })
     }
-    if(arrDateSearch != "" ){
+    if (arrDateSearch != "") {
       this.setState({
-        filteredArr : this.filteredArr.filter((f) => f.ArrivalDate.toString().includes(value))
+        filteredArr: this.filteredArr.filter((f) => f.ArrivalDate.toString().includes(value))
       })
     }
-    if(depDateSearch!= "" ){
+    if (depDateSearch != "") {
       this.setState({
-        filteredArr : this.filteredArr.filter((f) => f.DepartureDate.toString().includes(value))
+        filteredArr: this.filteredArr.filter((f) => f.DepartureDate.toString().includes(value))
       })
     }
-    
+
   }
 
-  andSearch(){
-    const {flightArr , flightSearch, departureSearch ,  arrivalSearch , terminalSearch  , arrDateSearch , depDateSearch} = this.state
+  andSearch() {
+    const { flightArr, flightSearch, departureSearch, arrivalSearch, terminalSearch, arrDateSearch, depDateSearch } = this.state
 
-    console.log(flightSearch ,arrDateSearch ,arrivalSearch ,depDateSearch ,departureSearch ,terminalSearch )
+    console.log(flightSearch, arrDateSearch, arrivalSearch, depDateSearch, departureSearch, terminalSearch)
     this.setState({
-      filteredArr : flightArr.filter((f) => 
-             f.FlightNumber.toString().includes(flightSearch)
-        &&   f.ArrivalDate.toString().includes(arrDateSearch)
-        &&   f.ArrivalTime.toString().includes(arrivalSearch)
-        &&   f.DepartureDate.toString().includes(depDateSearch)  
-        &&   f.DepartureTime.toString().includes(departureSearch)  
-        &&   f.Terminal.toString().includes(terminalSearch) 
-      
- 
+      filteredArr: flightArr.filter((f) =>
+        f.FlightNumber.toString().includes(flightSearch)
+        && f.ArrivalDate.toString().includes(arrDateSearch)
+        && f.ArrivalTime.toString().includes(arrivalSearch)
+        && f.DepartureDate.toString().includes(depDateSearch)
+        && f.DepartureTime.toString().includes(departureSearch)
+        && f.Terminal.toString().includes(terminalSearch)
+
+
       )
     })
   }
@@ -274,16 +281,16 @@ filterSearch(value){
     this.setState({
       //spreading state
       ...this.state,
-      [e.target.name] : value,
+      [e.target.name]: value,
 
 
-    } , () =>{
-      this.andSearch() ;
+    }, () => {
+      this.andSearch();
     });
 
-   
 
-    
+
+
 
 
   }
@@ -293,7 +300,8 @@ filterSearch(value){
       flightArr,
       errMsg,
       flightNumber,
-      flightAirport,
+      departureAirport,
+      arrivalAirport,
       arrDate,
       depDate,
       ecSeats,
@@ -301,7 +309,8 @@ filterSearch(value){
       fcSeats,
       depTime,
       arrTime,
-      flightTerminal,
+      departureTerminal,
+      arrivalTerminal,
       flightSearch,
       arrDateSearch,
       arrivalSearch,
@@ -443,7 +452,7 @@ filterSearch(value){
             }}
             variant="contained"
           >
-            Create a Flight{" "}
+            Create a Flight
           </Button>
         </div>
 
@@ -462,8 +471,8 @@ filterSearch(value){
           </Modal.Header>
           <Modal.Body>
             <Form className="add-flight">
-              <div className="add-flight-body">
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+
+            <Form.Group style={{ flexGrow: 1 }} className="mb-3">
                   <Form.Label>Flight number </Form.Label>
                   <Form.Control
                     onChange={this.handleAddFlightChange.bind(this)}
@@ -473,16 +482,46 @@ filterSearch(value){
                   />
                 </Form.Group>
 
+
+              <div className="add-flight-body">
+
+
+                
+
                 <Form.Group
                   style={{ flexGrow: 1 }}
                   className="mb-3"
 
                 >
-                  <Form.Label>Airport </Form.Label>
+                  <Form.Label>Departure Airport </Form.Label>
                   <Form.Control
                     onChange={this.handleAddFlightChange.bind(this)}
-                    name="flightAirport"
-                    value={flightAirport}
+                    name="departureAirport"
+                    value={departureAirport}
+                    type="text"
+                  />
+                </Form.Group>
+                <Form.Group
+                  style={{ flexGrow: "1" }}
+                  className="mb-3"
+                >
+                  <Form.Label>Departure Terminal :</Form.Label>
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="departureTerminal"
+                    value={departureTerminal}
+                    type="number"
+                  />
+                </Form.Group>
+                <Form.Group
+                  style={{ flexGrow: 1 }}
+                  className="mb-3"
+                >
+                  <Form.Label>Arrival Airport </Form.Label>
+                  <Form.Control
+                    onChange={this.handleAddFlightChange.bind(this)}
+                    name="arrivalAirport"
+                    value={arrivalAirport}
                     type="text"
                   />
                 </Form.Group>
@@ -490,13 +529,12 @@ filterSearch(value){
                 <Form.Group
                   style={{ flexGrow: "1" }}
                   className="mb-3"
-
                 >
-                  <Form.Label>Terminal :</Form.Label>
+                  <Form.Label>Arrival Terminal :</Form.Label>
                   <Form.Control
                     onChange={this.handleAddFlightChange.bind(this)}
-                    name="flightTerminal"
-                    value={flightTerminal}
+                    name="arrivalTerminal"
+                    value={arrivalTerminal}
                     type="number"
                   />
                 </Form.Group>
@@ -648,7 +686,7 @@ filterSearch(value){
             >
               <p style={{ color: "red" }}>{errMsg}</p>
               <Button onClick={this.handleAddFlight.bind(this)}>
-                Add fLight
+                Add flight
               </Button>
             </div>
           </Modal.Footer>
