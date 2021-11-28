@@ -141,3 +141,22 @@ td > input {
   text-align: center;
  
 }
+
+.logo-buttons-search{
+  height: 30vh;
+  text-align: left;
+  padding-bottom: 1rem;
+}
+
+.logo-buttons{
+  height: 50%;
+  display: flex;
+  justify-content: flex-end;
+  width:90%;
+  margin-top: 2rem;
+  align-self: center;
+}
+
+.select{
+  gap:0;
+}

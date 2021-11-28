@@ -5,6 +5,7 @@ import '../style/profile.css';
 import EditIcon from '@mui/icons-material/Edit';
 import img from '../images/background.jpg';
 import { fontSize } from '@mui/system';
+import MyHeader from '../components/MyHeader';
 
 export default class Profile extends Component {
   
@@ -54,16 +55,16 @@ export default class Profile extends Component {
         const { fname,lname,passport,email} = this.props
         const{editName,editPassport,editEmail} = this.state;
         return (
-            <div className = "flex-col">
-                <div className="header"> search bar goes here</div>
-                <div className="flex-row">
+            <div className = "flex-col-profile" >
+                <div className="header"> <MyHeader /></div>
+                <div className="flex-row-profile">
                     
                     <div className = "profile">
                         <table style={{width:"100%"}}>
                             <tr className="user-name" >
                                 {!editName?
                                 <>
-                                <th><AccountCircleIcon style ={{ color: "#12228F", fontSize:"13rem" }} /></th>
+                                <th><AccountCircleIcon style ={{ color: "#12228F", fontSize:"10rem" }} /></th>
                                 <td>{fname} <br/>{lname}</td>
                                 <td><EditIcon className="icon" onClick={this.handleEditName.bind(this)} /></td>
                                 </>:
@@ -108,7 +109,7 @@ export default class Profile extends Component {
                         </table>
                     </div>
                     
-                    <div style={{width:"50%"}}><img className="p-img" src={img} style={{width:"100%",height:"100%"}}/> </div>
+                   
                 </div>
               
             </div>

@@ -1,17 +1,27 @@
+body,html{
+   height:100vh !important;
+   margin:0 !important;
+}
 
-.flex-col {
+
+.flex-col-profile {
 
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    height:100vh;
+    background-image:url(../images/background.jpg) ;
+    background-size:100%;
+    background-repeat:"no-repeat"
   }
 
-.flex-row {
+.flex-row-profile {
     width:80%;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    
   }
 
 .header{
@@ -23,21 +33,22 @@
 .profile{
     width:40%;
     padding-right: 2rem;
+    border-radius: 10px;
 }
 
 .icon{
     color:black
 }
-/* .icon:hover{
 
 
-} */
+
+
 th,
 td {
   padding: 1rem;
   text-align: left !important;
   border-bottom: 1px solid black;
-  background:  #37A1E2 ;
+  background:  white ;
   color: black;
   
 }
@@ -55,7 +66,7 @@ td {
  }
  .user-name > td{
     background-color: white !important ;
-    font-size: 350%;
+    font-size: 300%;
     height: 30vh;
     padding-left: 0;
     /* border-top: 1px solid black; */
