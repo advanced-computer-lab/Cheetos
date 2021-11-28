@@ -5,15 +5,16 @@ body,html{
 
 
 .flex-col-profile {
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     height:100vh;
-    background-image:url(../images/background.jpg) ;
-    background-size:100%;
-    background-repeat:"no-repeat";
+    background:url(../images/background.jpg)no-repeat center top fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     
 
   }

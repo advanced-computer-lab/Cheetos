@@ -144,19 +144,35 @@ td > input {
 
 .logo-buttons-search{
   height: 30vh;
-  text-align: left;
   padding-bottom: 1rem;
 }
 
 .logo-buttons{
   height: 50%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   width:90%;
   margin-top: 2rem;
   align-self: center;
 }
 
-.select{
-  gap:0;
+header-buttons-container{
+  padding-right: 1rem;
+  width:50%;
+}
+
+
+.header-buttons{
+  background-color: #37A1E2;
+  width: 120px;
+  height: 7vh;
+  text-transform: capitalize !important;
+  padding-right: 10px;
+}
+
+.logo{
+  display: flex;
+  justify-content:space-around ;
+  font-size: 30px;
+  font-weight: 600;
 }

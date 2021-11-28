@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import PersonIcon from '@mui/icons-material/Person';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
+import SearchIcon from '@mui/icons-material/Search';
+import Logo from '../components/Logo';
 
 
 export default class MyHeader extends Component {
@@ -13,33 +15,42 @@ export default class MyHeader extends Component {
     handleProfileClick(){
 
     }
+    andSearch(){
+
+    }
     render() {
         return (
             <div className="admin-header logo-buttons-search">
                 
-                    <div className="logo-buttons"> <Button
-            onClick={this.handleProfileClick}
-            style={{
-             
-              backgroundColor: "#37A1E2",
-              width: "12%",
-              height: "7vh",
-              fontSize: "medium",
+                    <div className="logo-buttons"> 
 
-            }}
-            variant="contained"
-          >
-            <PersonIcon style={{marginRight:"5px" , fontSize:"xx-large"}}/>Profile{" "}
-          </Button>
+                    <Logo/>
+
+                    <div className="header-buttons-container">
+                      <Button className="header-buttons" style={{marginRight:"20px"}}
+                      onClick={this.handleProfileClick} variant="contained" >
+                                        My bookings{" "}
+                                        </Button>
+                      <Button className="header-buttons"
+                                  onClick={this.handleProfileClick} variant="contained" >
+                                  <PersonIcon style={{marginRight:"5px" , fontSize:"x-large"}}/>Profile{" "}
+                                </Button>
+                    </div>
+
+                    
+
+          
+
+
           </div>
-                    <div className="search-bar">
+                    <div className="search-bar" style={{alignItems:"flex-start"}}>
                         {/* n of passengers , dep airport , arr air , dep date ,arr date ,cabin class  */}
                 <Form.Group style={{ flexGrow: 1 ,width:"12%" }} className="mb-3">
-                    <Form.Label>Adult passengers: </Form.Label>
+                    {/* <Form.Label>Adult passengers: </Form.Label> */}
                     <Form.Control
 
                     type="number"
-                         placeholder="ex: 1"
+                         placeholder="Adult Passengers"
                     // value={}
                     // name=""
                     onChange={this.handleSearch.bind(this)}
@@ -47,10 +58,10 @@ export default class MyHeader extends Component {
                 </Form.Group>
 
                 <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
-                    <Form.Label>Child passengers: </Form.Label>
+                    {/* <Form.Label>Child passengers: </Form.Label> */}
                     <Form.Control
                     type="number"
-                        placeholder="ex: 2"
+                        placeholder="Child passengers"
                     // value={}
                     // name=""
                     onChange={this.handleSearch.bind(this)}
@@ -58,10 +69,10 @@ export default class MyHeader extends Component {
                 </Form.Group>
 
                 <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
-                 <Form.Label>Departure Airport: </Form.Label>
+                 {/* <Form.Label>Departure Airport: </Form.Label> */}
                  <Form.Control
                     type="text"
-                    placeholder="ex: LAX"
+                    placeholder="Departure airport"
                     // value={}
                     // name=""
                     onChange={this.handleSearch.bind(this)}
@@ -69,10 +80,10 @@ export default class MyHeader extends Component {
                 </Form.Group>
 
               <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
-                <Form.Label>Arrival airport: </Form.Label>
+                {/* <Form.Label>Arrival airport: </Form.Label> */}
                 <Form.Control
                   type="text"
-                  placeholder="ex: CAI"
+                  placeholder="Arrival airport"
                 //   value={}
                 //   name=""
                   onChange={this.handleSearch.bind(this)}
@@ -80,10 +91,10 @@ export default class MyHeader extends Component {
               </Form.Group>
 
               <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
-                <Form.Label>Departure date: </Form.Label>
+                {/* <Form.Label>Departure date: </Form.Label> */}
                 <Form.Control
                   type="date"
-                  placeholder="Date (dd/MM/YY). . ."
+                  placeholder="departure date"
                 //   value={}
                 //   name=""
                   onChange={this.handleSearch.bind(this)}
@@ -92,8 +103,9 @@ export default class MyHeader extends Component {
 
 
               <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
-                <Form.Label>Arrival date: </Form.Label>
+                {/* <Form.Label>Arrival date: </Form.Label> */}
                 <Form.Control
+
                   style={{ width: "" }}
                   type="date"
                   placeholder="Date (dd/MM/YY). . ."
@@ -104,8 +116,8 @@ export default class MyHeader extends Component {
               </Form.Group>
 
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Cabin class: </Form.Label>
+              <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
+                {/* <Form.Label>Cabin class: </Form.Label> */}
                 <Form.Select aria-label="Default select example">
                 <option>click to select</option>
                 <option value="1">Economy</option>
@@ -115,7 +127,15 @@ export default class MyHeader extends Component {
               </Form.Group>
 
 
+              <Button style={{width:"10px", height:"38px"}}
+                                  onClick={this.andSearch} variant="contained" >
+                                   <SearchIcon style={{fontSize:"x-large"}}/>{" "}
+                                </Button>
+             
+
+
                     </div>
+
 
                 </div>
             

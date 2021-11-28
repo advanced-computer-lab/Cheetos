@@ -3,7 +3,6 @@ import Form from "react-bootstrap/Form";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import '../style/profile.css';
 import EditIcon from '@mui/icons-material/Edit';
-import img from '../images/background.jpg';
 import { fontSize } from '@mui/system';
 import MyHeader from '../components/MyHeader';
 
