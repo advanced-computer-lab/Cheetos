@@ -34,42 +34,42 @@ export default class MyHeader extends Component {
           </div>
                     <div className="search-bar">
                         {/* n of passengers , dep airport , arr air , dep date ,arr date ,cabin class  */}
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                    <Form.Label>Number of adult passengers: </Form.Label>
+                <Form.Group style={{ flexGrow: 1 ,width:"12%" }} className="mb-3">
+                    <Form.Label>Adult passengers: </Form.Label>
                     <Form.Control
 
                     type="number"
-                        //   placeholder="ex: 12AS"
+                         placeholder="ex: 1"
                     // value={}
                     // name=""
                     onChange={this.handleSearch.bind(this)}
                     />
                 </Form.Group>
 
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                    <Form.Label>Number of child passengers: </Form.Label>
+                <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
+                    <Form.Label>Child passengers: </Form.Label>
                     <Form.Control
                     type="number"
-                        //   placeholder="ex: 12AS"
+                        placeholder="ex: 2"
                     // value={}
                     // name=""
                     onChange={this.handleSearch.bind(this)}
                     />
                 </Form.Group>
 
-                <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
                  <Form.Label>Departure Airport: </Form.Label>
                  <Form.Control
                     type="text"
-                    placeholder="ex: Lax"
+                    placeholder="ex: LAX"
                     // value={}
                     // name=""
                     onChange={this.handleSearch.bind(this)}
                 />
                 </Form.Group>
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Arrival airport : </Form.Label>
+              <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
+                <Form.Label>Arrival airport: </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="ex: CAI"
@@ -79,8 +79,8 @@ export default class MyHeader extends Component {
                 />
               </Form.Group>
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Departure date : </Form.Label>
+              <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
+                <Form.Label>Departure date: </Form.Label>
                 <Form.Control
                   type="date"
                   placeholder="Date (dd/MM/YY). . ."
@@ -91,8 +91,8 @@ export default class MyHeader extends Component {
               </Form.Group>
 
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Arrival date : </Form.Label>
+              <Form.Group style={{ flexGrow: 1 ,width:"12%"}} className="mb-3">
+                <Form.Label>Arrival date: </Form.Label>
                 <Form.Control
                   style={{ width: "" }}
                   type="date"
@@ -103,19 +103,18 @@ export default class MyHeader extends Component {
                 />
               </Form.Group>
 
-           <div className="flex-col select">
-             <label for="cabin"> Cabin class:</label>
-              <select id="cabin" style={{height:"40px",width:"100px"}}>
-                <option value="economy">Economy</option>
-                <option value="business">Business</option>
-                <option value="firstClass">First-Class</option>
-              </select>
-           </div>
 
-            
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Cabin class: </Form.Label>
+                <Form.Select aria-label="Default select example">
+                <option>click to select</option>
+                <option value="1">Economy</option>
+                <option value="2">Business class</option>
+                <option value="3">First Class</option>
+              </Form.Select>
+              </Form.Group>
 
 
-            
                     </div>
 
                 </div>
