@@ -10,26 +10,32 @@ const mongoose = require("mongoose");
         FlightId: {
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'Flight',
+            required: true
         },
         
         CabinClass: {
             type: String,
+            required: true
         },
 
         ChosenSeat: {
             type: String,
+            required: true
         },
 
         Passenger: {
-            type: char,
+            type: String,
+            required: true
         },
 
         Price: {
             type: Number,
+            required: true
         },
 
         BaggageAllowance: {
             type: Number,
+            required: true
         }
      }]
 
