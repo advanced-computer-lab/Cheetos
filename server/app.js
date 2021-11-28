@@ -11,10 +11,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-const routes = require("./routes/api/flights");
+const flightRoutes = require("./routes/api/flights");
+const userRoutes = require("./routes/api/users");
+const reservationRoutes = require("./routes/api/reservations");
 
 connectDB()
-app.use("/api", routes);
+app.use("/api/flight", flightRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/reservation", reservationRoutes);
 
 const port = process.env.PORT;
 
