@@ -84,4 +84,8 @@ module.exports = {
   deleteUser,
   createUser,
   getUser,
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> b7354b25413185b5e92c7b704fb821b9f3860823
