@@ -17,7 +17,7 @@ export default class Trip extends Component {
                         <a href = "#">more ></a>
                     </div>
                     <div className="trip-flight"  >
-                        <h4>1124</h4>
+                        <h4>1602</h4>
                         <div className="trip-flex-col">
                             <h5>15:30-23:20</h5>
                             <p>LAX-CAI</p>
