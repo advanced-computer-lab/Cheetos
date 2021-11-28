@@ -24,17 +24,17 @@ const FlightSchema = new mongoose.Schema({
   },
 
   EconomySeats: {
-    type: Number,
+    type: Object,
     required: true,
   },
 
   BusinessSeats: {
-    type: Number,
+    type: Object,
     required: true,
   },
 
   FirstClassSeats: {
-    type: Number,
+    type: Object,
     required: true,
   },
 
@@ -56,6 +56,10 @@ const FlightSchema = new mongoose.Schema({
   ArrivalAirport: {
     type: String,
     required: true,
+  },
+
+  TripDuration: {
+    type: Number,
   },
 });
 

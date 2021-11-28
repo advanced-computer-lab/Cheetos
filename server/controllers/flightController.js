@@ -86,6 +86,7 @@ createFlight = (req, res) => {
       res.status(400).json({ error: "Unable to add this flight" })
     );
 };
+
 getFlights = (req, res) => {
   Flight.find()
     .then((flights) => res.json(flights))
@@ -94,9 +95,25 @@ getFlights = (req, res) => {
     );
 };
 
+getFlightById = async (req, res) => {
+  await Flight.findOne({ _id: req.params.id }, (err, flight) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err });
+    }
+
+    if (!flight) {
+      return res
+        .status(404)
+        .json({ success: false, error: "Flight not found" });
+    }
+    return res.status(200).json({ success: true, data: flight });
+  }).catch((err) => console.log(err));
+};
+
 module.exports = {
   updateFlight,
   deleteFlight,
   createFlight,
   getFlights,
+  getFlightById,
 };
