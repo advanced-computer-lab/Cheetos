@@ -2,18 +2,16 @@ const express = require("express");
 
 const router = express.Router();
 
-const flightController = require("../../controllers/flightController");
+const flightController = require('../../controllers/flightController')
 
 const Flight = require("../../models/Flight");
 
-router.get("/getflights", flightController.getFlights);
+router.get("/", flightController.getFlights)
 
-router.get("/getflight/:id", flightController.getFlightById);
+router.post("/create",flightController.createFlight )
 
-router.post("/createflight", flightController.createFlight);
+router.delete("/delete/:id",flightController.deleteFlight )
 
-router.delete("/deleteflight/:id", flightController.deleteFlight);
-
-router.put("/updateflight/:id", flightController.updateFlight);
+router.put('/update/:id',flightController.updateFlight)
 
 module.exports = router;
