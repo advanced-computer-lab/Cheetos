@@ -24,9 +24,9 @@ export default class MyHeader extends Component {
       <div className="admin-header logo-buttons-search">
 
         <div className="logo-buttons">
-
-          <Logo />
-
+          <Link style = {{ textDecoration: "none" , color : "white" , cursor : "pointer"}}to="/">
+            <Logo />
+          </Link>
           <div className="header-buttons-container">
             <Link to="/bookings">
               <Button className="header-buttons" style={{ marginRight: "20px" }}

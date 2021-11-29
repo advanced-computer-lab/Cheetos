@@ -15,21 +15,21 @@ export default class Trip extends Component {
         });
       }
     render() {
-        
+        const {num , } = this.props 
         return (
             <>
             <div className="trip-card ">
                 <div style={{ width: '70%'  , marginTop : '5px'}} >
 
-                    <div className="trip-flight"  >
-                        <h4>1124</h4>
+                    {/* <div className="trip-flight"  >
+                        <h4>{num}</h4>
                         <div className="trip-flex-col">
-                            <h5>04:30-06:20</h5>
-                            <p>CAI-LAX</p>
+                            <h5>{times}</h5>
+                            <p>{airports}</p>
                         </div>
                         <strong>32h 08m</strong>
                         <a href = "#" onClick={this.handleModalShow.bind(this)}>more ></a>
-                    </div>
+        </div>*/}
                     <div className="trip-flight"  >
                         <h4>1602</h4>
                         <div className="trip-flex-col">
@@ -60,7 +60,7 @@ export default class Trip extends Component {
                         View Deal
                     </Button>
                 </div>
-            </div>
+            </div> 
 
             <Modal 
           show={this.state.showModal}
@@ -100,8 +100,8 @@ export default class Trip extends Component {
                 <div className="flex-row" style={{ width: '30%' }} >
                     
                     <div className="trip-flex-col" style={{alignItems:"flex-start"}}>
-                    <div className="flex-row"><LuggageIcon/><p>Carry-on</p></div>
-                    <div className="flex-row"><LuggageIcon/><p>Checked bag</p></div>
+                    <div className="flex-row" style={{width:"10rem",justifyContent:"flex-start"}} ><LuggageIcon/><p>Carry-on</p></div>
+                    <div className="flex-row" style={{width:"10rem",justifyContent:"flex-start"}}><LuggageIcon/><p>Checked bag</p></div>
                     </div>
                     <div className="trip-flex-col"><p>2</p><p>1</p></div>
                  
