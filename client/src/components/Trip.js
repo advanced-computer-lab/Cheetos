@@ -3,19 +3,20 @@ import '../style/trip.css';
 import Button from "@mui/material/Button";
 export default class Trip extends Component {
     render() {
+        const {num , } = this.props 
         return (
             <div className="trip-card ">
                 <div style={{ width: '70%'  , marginTop : '5px'}} >
 
-                    <div className="trip-flight"  >
-                        <h4>1124</h4>
+                    {/* <div className="trip-flight"  >
+                        <h4>{num}</h4>
                         <div className="trip-flex-col">
-                            <h5>04:30-06:20</h5>
-                            <p>CAI-LAX</p>
+                            <h5>{times}</h5>
+                            <p>{airports}</p>
                         </div>
-                        <strong>32h 08m</strong>
+                        <strong>{duration}</strong>
                         <a href = "#">more ></a>
-                    </div>
+                    </div> */}
                     <div className="trip-flight"  >
                         <h4>1602</h4>
                         <div className="trip-flex-col">

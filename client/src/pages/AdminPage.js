@@ -20,7 +20,8 @@ export default class AdminPage extends Component {
     flightSearch: "",
     departureSearch: "",
     arrivalSearch: "",
-    terminalSearch: "",
+    deptTerminalSearch: "",
+    arrTerminalSearch: "",
     arrDateSearch: "",
     depDateSearch: "",
     // add-flight states
@@ -117,9 +118,10 @@ export default class AdminPage extends Component {
       }
       await api.insertFlight(flight).then(
         (res) => {
-          console.log(res)
+          console.log(res.data.data)
           this.setState({
             flightArr: [...this.state.flightArr, res.data.data],
+            filteredArr: [...this.state.filteredArr, res.data.data]
           })
         }
       )
@@ -251,18 +253,18 @@ export default class AdminPage extends Component {
   }
 
   andSearch() {
-    const { flightArr, flightSearch, departureSearch, arrivalSearch, terminalSearch, arrDateSearch, depDateSearch } = this.state
+    const { flightArr, flightSearch, departureSearch, arrivalSearch,  deptTerminalSearch , arrTerminalSearch, arrDateSearch, depDateSearch } = this.state
 
-    console.log(flightSearch, arrDateSearch, arrivalSearch, depDateSearch, departureSearch, terminalSearch)
+    console.log(flightSearch, arrDateSearch, arrivalSearch, depDateSearch, departureSearch)
     this.setState({
-      filteredArr: flightArr.filter((f) =>
+      filteredArr: flightArr.filter((f) => 
         f.FlightNumber.toString().includes(flightSearch)
         && f.ArrivalDate.toString().includes(arrDateSearch)
         && f.ArrivalTime.toString().includes(arrivalSearch)
         && f.DepartureDate.toString().includes(depDateSearch)
         && f.DepartureTime.toString().includes(departureSearch)
-        && f.Terminal.toString().includes(terminalSearch)
-
+        && f.DepartureTerminal.toString().includes(deptTerminalSearch)
+        && f.ArrivalTerminal.toString().includes(arrTerminalSearch)
 
       )
     })
@@ -278,15 +280,12 @@ export default class AdminPage extends Component {
     //--- setting the state of search fields upon change 
     //doing the search and filtering 
     const value = e.target.value;
-    this.setState({
-      //spreading state
+    this.setState(
+      {
       ...this.state,
-      [e.target.name]: value,
-
-
-    }, () => {
-      this.andSearch();
-    });
+      [e.target.name]: value } ,
+       () => {
+      this.andSearch(); });
 
 
 
@@ -316,7 +315,8 @@ export default class AdminPage extends Component {
       arrivalSearch,
       depDateSearch,
       departureSearch,
-      terminalSearch,
+      deptTerminalSearch,
+      arrTerminalSearch,
       filteredArr,
     } = this.state;
     return (
@@ -337,32 +337,6 @@ export default class AdminPage extends Component {
                   onChange={this.handleFlightSearch.bind(this)}
                 />
               </Form.Group>
-
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Arrival date : </Form.Label>
-                <Form.Control
-                  style={{ width: "" }}
-                  type="date"
-                  placeholder="Date (dd/MM/YY). . ."
-                  value={arrDateSearch}
-                  name="arrDateSearch"
-                  onChange={this.handleFlightSearch.bind(this)}
-                />
-              </Form.Group>
-
-
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Arrival time : </Form.Label>
-                <Form.Control
-
-                  type="time"
-                  value={arrivalSearch}
-                  name="arrivalSearch"
-                  onChange={this.handleFlightSearch.bind(this)}
-                />
-              </Form.Group>
-
-
               <Form.Group style={{ flexGrow: 1 }} className="mb-3">
                 <Form.Label>Departure date : </Form.Label>
                 <Form.Control
@@ -388,13 +362,51 @@ export default class AdminPage extends Component {
               </Form.Group>
 
               <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                <Form.Label>Terminal : </Form.Label>
+                <Form.Label>Departure Terminal : </Form.Label>
                 <Form.Control
 
                   type="text"
                   placeholder="ex: 3"
-                  value={terminalSearch}
-                  name="terminalSearch"
+                  value={deptTerminalSearch}
+                  name="deptTerminalSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Arrival date : </Form.Label>
+                <Form.Control
+                  style={{ width: "" }}
+                  type="date"
+                  placeholder="Date (dd/MM/YY). . ."
+                  value={arrDateSearch}
+                  name="arrDateSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
+
+
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Arrival time : </Form.Label>
+                <Form.Control
+
+                  type="time"
+                  value={arrivalSearch}
+                  name="arrivalSearch"
+                  onChange={this.handleFlightSearch.bind(this)}
+                />
+              </Form.Group>
+
+
+             
+
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label> Arrival Terminal : </Form.Label>
+                <Form.Control
+
+                  type="text"
+                  placeholder="ex: 3"
+                  value={arrTerminalSearch}
+                  name="arrTerminalSearch"
                   onChange={this.handleFlightSearch.bind(this)}
                 />
               </Form.Group>
@@ -409,13 +421,15 @@ export default class AdminPage extends Component {
                   Flight <br /> Number
                 </th>
                 {/* <th>Date</th> */}
-                <th>Airport</th>
+                <th>Departure <br />Airport</th>
+                <th>Arrival <br />Airport</th>
                 <th>Economy</th>
                 <th>Business</th>
                 <th>First Class</th>
-                <th>Arrival</th>
                 <th>Departure</th>
-                <th>Terminal</th>
+                <th>Arrival</th>
+                <th>Departure <br/> Terminal</th>
+                <th>Arrival <br/> Terminal</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -425,13 +439,15 @@ export default class AdminPage extends Component {
                     number={f.FlightNumber}
                     arrDate={f.ArrivalDate}
                     depDate={f.DepartureDate}
-                    airport={f.Airport}
+                    deptAirport={f.DepartureAirport}
+                    arrAirport = {f.ArrivalAirport}
                     economy={f.EconomySeats}
                     business={f.BusinessSeats}
                     firstC={f.FirstClassSeats}
                     dep={f.DepartureTime}
                     arrival={f.ArrivalTime}
-                    terminal={f.Terminal}
+                    deptTerminal= {f.DepartureTerminal}
+                    arrTerminal =  {f.ArrivalTerminal}
                     id={f._id}
                   />
                 ))}

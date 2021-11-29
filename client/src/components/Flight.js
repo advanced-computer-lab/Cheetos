@@ -13,13 +13,15 @@ class Flight extends React.Component {
     number: this.props.number,
     arrDate: this.props.arrDate,
     depDate: this.props.depDate,
-    airport: this.props.airport,
+    deptAirport: this.props.deptAirport,
+    arrAirport: this.props.arrAirport,
     economy: this.props.economy,
     business: this.props.business,
     firstC: this.props.firstC,
     dep: this.props.dep,
     arrival: this.props.arrival,
-    terminal: this.props.terminal,
+    deptTerminal: this.props.deptTerminal,
+    arrTerminal: this.props.arrTerminal,
     id: this.props.id
   }
 
@@ -28,15 +30,17 @@ class Flight extends React.Component {
       number: nextProps.number,
       arrDate: nextProps.arrDate,
       depDate: nextProps.depDate,
-      airport: nextProps.airport,
+      deptAirport: nextProps.deptAirport,
+      arrAirport: nextProps.arrAirport,
       economy: nextProps.economy,
       business: nextProps.business,
       firstC: nextProps.firstC,
-       dep: nextProps.dep,
-      arrival:  nextProps.arrival,
-       terminal: nextProps.terminal,
-       id: nextProps.id
-      });  
+      dep: nextProps.dep,
+      arrival: nextProps.arrival,
+      deptTerminal: nextProps.deptTerminal,
+      arrTerminal: nextProps.arrTerminal,
+      id: nextProps.id
+    });
   }
   async handleSave() {
     console.log(this.state.id)
@@ -49,8 +53,10 @@ class Flight extends React.Component {
       "EconomySeats": this.state.economy,
       "BusinessSeats": this.state.business,
       "FirstClassSeats": this.state.firstC,
-      "Terminal": this.state.terminal,
-      "Airport": this.state.airport,
+      "DepartureTerminal": this.state.deptTerminal,
+      "ArrivalTerminal": this.state.arrTerminal,
+      "DepartureAirport": this.state.deptAirport,
+      "ArrivalAirport": this.state.arrAirport,
     }
     await api.updateFlightbyId(this.state.id, flight).then(
 
@@ -91,7 +97,7 @@ class Flight extends React.Component {
     });
   }
   render() {
-    const { number, arrDate, depDate, airport, economy, business, firstC, dep, arrival, terminal } = this.props
+    const { number, arrDate, depDate, arrAirport, deptAirport, economy, business, firstC, dep, arrival, deptTerminal , arrTerminal } = this.props
     const { edit, showModal } = this.state
 
     return (
@@ -104,13 +110,15 @@ class Flight extends React.Component {
             <>
               <td> {number}</td>
               {/* <td>{date}</td> */}
-              <td>{airport}</td>
+              <td>{deptAirport}</td>
+              <td>{arrAirport}</td>
               <td>{economy}</td>
               <td>{business}</td>
               <td>{firstC}</td>
-              <td>{arrDate}: {arrival}</td>
               <td>{depDate}: {dep}</td>
-              <td>{terminal}</td>
+              <td>{arrDate}: {arrival}</td>
+              <td>{deptTerminal}</td>
+              <td>{arrTerminal}</td>
             </>
             :
 
@@ -118,21 +126,23 @@ class Flight extends React.Component {
               {/* Edit text boxes */}
               <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" value={this.state.number} name="number" onChange={this.handleEditChange.bind(this)} /></td>
 
-              <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" value={this.state.airport} name="airport" onChange={this.handleEditChange.bind(this)} /></td>
+              <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" value={this.state.deptAirport} name="deptAirport" onChange={this.handleEditChange.bind(this)} /></td>
+              <td> <Form.Control style={{ width: '60%' }} size="sm" type="text" value={this.state.arrAirport} name="arrAirport" onChange={this.handleEditChange.bind(this)} /></td>
               <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.economy} name="economy" onChange={this.handleEditChange.bind(this)} /></td>
               <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.business} name="business" onChange={this.handleEditChange.bind(this)} /></td>
               <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.firstC} name="firstC" onChange={this.handleEditChange.bind(this)} /></td>
-
+              <td>
+                <Form.Control style={{ width: '60%' }} size="sm" type="date" value={this.state.depDate} name="depDate" onChange={this.handleEditChange.bind(this)} />
+                <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.dep} name="dep" onChange={this.handleEditChange.bind(this)} />
+              </td>
               <td>
                 <Form.Control style={{ width: '60%' }} size="sm" type="date" value={this.state.arrDate} name="arrDate" onChange={this.handleEditChange.bind(this)} />
                 <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.arrival} name="arrival" onChange={this.handleEditChange.bind(this)} />
 
               </td>
-              <td>
-                <Form.Control style={{ width: '60%' }} size="sm" type="date" value={this.state.depDate} name="depDate" onChange={this.handleEditChange.bind(this)} />
-                <Form.Control style={{ width: '60%' }} size="sm" type="time" value={this.state.dep} name="dep" onChange={this.handleEditChange.bind(this)} />
-              </td>
-              <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.terminal} name="terminal" onChange={this.handleEditChange.bind(this)} /></td>
+             
+              <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.deptTerminal} name="deptTerminal" onChange={this.handleEditChange.bind(this)} /></td>
+              <td> <Form.Control style={{ width: '60%' }} size="sm" type="number" value={this.state.arrTerminal} name="arrTerminal" onChange={this.handleEditChange.bind(this)} /></td>
             </>
           }
           <td onClick={this.handleEdit.bind(this)}>
