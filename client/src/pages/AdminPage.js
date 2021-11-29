@@ -13,7 +13,7 @@ import api from '../api'
 
 export default class AdminPage extends Component {
   state = {
-    showModal: true,
+    showModal: false,
     flightArr: [],
     filteredArr: [],
     //searching flight states
