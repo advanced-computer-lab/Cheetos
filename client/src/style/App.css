@@ -164,9 +164,8 @@ header-buttons-container{
 
 .header-buttons{
   background-color: #37A1E2;
-  width: 120px;
-  height: 7vh;
-  text-transform: capitalize !important;
+  width: 150px;
+  height: 6vh;
   padding-right: 10px;
 }
 

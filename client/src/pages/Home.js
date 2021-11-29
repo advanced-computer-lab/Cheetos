@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Trip from '../components/Trip'
 import MyHeader from '../components/MyHeader'
+import Booking from '../components/Booking'
 
 export default class Home extends Component {
     render() {
@@ -14,6 +15,7 @@ export default class Home extends Component {
                     <Trip/>
                     <Trip/>
                     <Trip/>
+                    
                 </div>
             </div>
         )

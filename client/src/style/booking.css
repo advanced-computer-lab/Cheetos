@@ -1,0 +1,22 @@
+.booking-card{
+    background-color: white;
+    border : 1px solid rgb(182, 182, 182) ;
+    width: 50vw;
+    height: 28vh;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+ 
+}
+.booking-flight{
+    margin-top: 10px;
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-evenly;
+}
+
+.seats{
+   font-weight: 600; 
+}
