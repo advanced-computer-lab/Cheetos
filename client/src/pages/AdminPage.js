@@ -328,7 +328,7 @@ export default class AdminPage extends Component {
             <h1>ADMIN PANEL</h1>
             <div className=" search-bar">
               {/* <h2 >Search: </h2> */}
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label>Flight number : </Form.Label>
                 <Form.Control
 
@@ -339,7 +339,7 @@ export default class AdminPage extends Component {
                   onChange={this.handleFlightSearch.bind(this)}
                 />
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label>Departure date : </Form.Label>
                 <Form.Control
 
@@ -351,7 +351,7 @@ export default class AdminPage extends Component {
                 />
               </Form.Group>
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label>Departure time : </Form.Label>
                 <Form.Control
 
@@ -363,7 +363,7 @@ export default class AdminPage extends Component {
                 />
               </Form.Group>
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label>Departure Terminal : </Form.Label>
                 <Form.Control
 
@@ -374,7 +374,7 @@ export default class AdminPage extends Component {
                   onChange={this.handleFlightSearch.bind(this)}
                 />
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label>Arrival date : </Form.Label>
                 <Form.Control
                   style={{ width: "" }}
@@ -387,7 +387,7 @@ export default class AdminPage extends Component {
               </Form.Group>
 
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label>Arrival time : </Form.Label>
                 <Form.Control
 
@@ -401,7 +401,7 @@ export default class AdminPage extends Component {
 
              
 
-              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
                 <Form.Label> Arrival Terminal : </Form.Label>
                 <Form.Control
 

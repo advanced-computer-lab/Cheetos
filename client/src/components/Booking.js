@@ -59,7 +59,7 @@ export default class Booking extends Component {
                         </div>
 
                         <div className="trip-flex-col">
-                        <div className="emphasis" style={{width:"3rem"}}><AirlineSeatReclineNormalIcon />{b.ChosenSeat}</div>
+                        <div className="emphasis"><AirlineSeatReclineNormalIcon />{b.ChosenSeat}</div>
                         <p style={{width:"120px",textAlign:"center"}}>{b.CabinClass}</p>
                         </div>
 

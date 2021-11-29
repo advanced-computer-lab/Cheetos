@@ -8,6 +8,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import ConfirmBooking from '../pages/ConfirmBooking';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="bookings" element={<MyBookings />} />
           <Route path="admin" element={<AdminPage />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="confirm" element={<ConfirmBooking />} />
       </Routes>
 
     </div>

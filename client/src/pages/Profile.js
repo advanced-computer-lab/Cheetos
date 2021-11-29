@@ -72,7 +72,7 @@ export default class Profile extends Component {
        
           <MyHeader />
         
-        <div className="flex-row-profile">
+        <div className="flex-row-profile" style={{marginTop:"25px"}}>
 
           <div className="profile-container">
             <div className="profile">
@@ -127,12 +127,7 @@ export default class Profile extends Component {
 
 
         </div>
-        {/* <Trip/>
-            <Trip/>
-            <Trip/>
-            <Trip/>
-            <Trip/>
-            <Trip/> */}
+        
       </div>
     )
   }
