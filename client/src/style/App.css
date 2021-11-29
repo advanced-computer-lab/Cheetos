@@ -63,6 +63,7 @@
 
 .flight-list {
   border: 1px solid darkgray;
+  background-color: #ffffff;
   width: 90%;
   height: 60vh;
   overflow: auto;

@@ -64,6 +64,7 @@ export default class AdminPage extends Component {
       errMsg: "",
       flightNumber: "",
       departureAirport: "",
+      arrivalAirport: "",
       flightDate: "",
       ecSeats: 0,
       buSeats: 0,
@@ -71,6 +72,7 @@ export default class AdminPage extends Component {
       depTime: "",
       arrTime: "",
       departureTerminal: "",
+      arrivalTerminal: "",
       showModal: this.state.showModal ? false : true,
     });
   }
