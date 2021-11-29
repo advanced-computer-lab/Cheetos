@@ -31,7 +31,7 @@ export default class Booking extends Component {
             <div style={{ width: '70%'  , marginTop : '5px'}} >
 
                 <div style={{marginLeft:"4rem",marginBottom:"20px",marginTop:"15px"}}><strong>
-                    <h3>Confirmation Number : A71836782</h3>
+                    <h4>Confirmation Number : A71836782</h4>
                 </strong></div>
 
                 <div className="booking-flight"  >
