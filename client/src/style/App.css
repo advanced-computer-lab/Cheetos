@@ -172,7 +172,7 @@ header-buttons-container{
 
 .logo{
   display: flex;
-  justify-content:space-around ;
+  justify-content:flex-start ;
   font-size: 30px;
   font-weight: 600;
 }
@@ -205,4 +205,35 @@ header-buttons-container{
 }
 .trip-search-results::-webkit-scrollbar-thumb:hover {
   background-color: #aaaaaa;
+}
+
+.signin-page{
+  height:100vh;
+  background-color: #edf0f5;
+  background-size: cover;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap:5rem;
+  /* flex-direction: ; */
+}
+
+.signin-form{
+  -webkit-box-shadow: 0 0 5px gray;
+        box-shadow: 0 0 5px gray;
+  border-radius: 10px;
+    width: 25vw;
+    background-color: #ffffff;
+    padding: 20px;
+
+}
+.v2{
+  border-bottom: 1px solid rgb(226, 226, 226) !important;
+  height: 90%;
+}
+.signin-logo{
+  font-size:xx-large;
+  display: flex;
+  flex-direction: column;
 }

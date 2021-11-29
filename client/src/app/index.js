@@ -9,6 +9,7 @@ import {
   Route
 } from "react-router-dom";
 import ConfirmBooking from '../pages/ConfirmBooking';
+import SignIn from '../pages/SignIn';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="admin" element={<AdminPage />} />
           <Route path="profile" element={<Profile />} />
           <Route path="confirm" element={<ConfirmBooking />} />
+          <Route path="signIn" element={<SignIn />} />
       </Routes>
 
     </div>

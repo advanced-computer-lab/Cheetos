@@ -401,7 +401,7 @@ export default class AdminPage extends Component {
 
              
 
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1,width: "12%" }} className="mb-3">
                 <Form.Label> Arrival Terminal : </Form.Label>
                 <Form.Control
 
