@@ -5,7 +5,8 @@ import '../style/booking.css';
 import '../style/trip.css';
 import Modal from "react-bootstrap/Modal";
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
-import EventSeatIcon from '@mui/icons-material/EventSeat';
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+
 
 export default class Booking extends Component {
   
@@ -40,7 +41,7 @@ export default class Booking extends Component {
             <div style={{ width: '70%'  , marginTop : '5px'}} >
 
                 <div style={{marginLeft:"4rem",marginBottom:"20px",marginTop:"15px"}}><strong>
-                    <h3>Confirmation Number : {confirmationNum}</h3>
+                    <h5>Confirmation Number : {confirmationNum}</h5>
                 </strong></div>
 
 
@@ -57,8 +58,8 @@ export default class Booking extends Component {
                             <p>CAI-LAX</p>
                         </div>
                         
-                        <div className="seats"><AirlineSeatReclineNormalIcon />{b.ChosenSeat}</div>
-                        <h5>{b.CabinClass}</h5>
+                        <div className="seats" style={{width:"3rem"}}><AirlineSeatReclineNormalIcon />{b.ChosenSeat}</div>
+                        <h5 style={{width:"2rem"}}>{b.CabinClass}</h5>
                     </div>
 
                     
@@ -101,7 +102,7 @@ export default class Booking extends Component {
         </Modal.Header>
         <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
         <Modal.Footer>
-        <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
+        <Button variant="primary" style={{color:"red"}} onClick={this.handleModalShow.bind(this)}>
             Cancel
         </Button>
         <Button variant="secondary" onClick={this.handleDelete.bind(this)}>

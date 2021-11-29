@@ -36,7 +36,7 @@ export default class MyBookings extends Component {
         
             {
             FlightId:1223,
-            CabinClass : "Economy",
+            CabinClass : "Business class",
             ChosenSeat:"A1",
             Passenger: "",
             Price:700,
@@ -54,7 +54,7 @@ export default class MyBookings extends Component {
                 <div className="trip-search-results">
                 {
                 bookingsArr.map((b) => (
-                  <Booking confirmationNum = {b.A12344_id} userId = {b.UserId} reservation = {b.Reservation}
+                  <Booking confirmationNum = {b._id} userId = {b.UserId} reservation = {b.Reservation}
                   />
                 ))}
                 </div>
