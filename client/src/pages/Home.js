@@ -73,29 +73,27 @@ export default class Home extends Component {
 
 
     state = {
-        tripArr: [this.trip, this.trip, this.trip]
+        tripArr: [[this.trip, this.trip] , 
+        [this.trip, this.trip] , 
+        [this.trip, this.trip] , 
+        [this.trip, this.trip] , 
+    ]
 
     }
 
 
 
-render() {
-    const { tripArr } = this.state
+    render() {
+        const { tripArr } = this.state
 
-    return (
-        <div className="flex-col" >
-            <MyHeader />
-            <div className="trip-search-results">
+        return (
+            <div className="flex-col" >
+                <MyHeader />
+                <div className="trip-search-results">
 
-                <Trip />
-                <Trip />
-                <Trip />
-                <Trip />
-                <Trip />
-                <Trip />
-
+                    {tripArr.map((t) => <Trip deptFlight = {t[0]}  arrFlight = {t[1]} />)}
+                </div>
             </div>
-        </div>
-    )
-}
+        )
+    }
 }
