@@ -54,12 +54,19 @@ export default class Booking extends Component {
 
 
                         <div className="trip-flex-col">
-                            <h5>12/3/2021 : 2.30</h5>
-                            <p>CAI-LAX</p>
+                            <p className="emphasis">12-3-2021 {">"} 12-3-2021  </p>
+                            <p>2:30 {">"} 17:30</p>
                         </div>
+
+                        <div className="trip-flex-col">
+                        <div className="emphasis" style={{width:"3rem"}}><AirlineSeatReclineNormalIcon />{b.ChosenSeat}</div>
+                        <p style={{width:"120px",textAlign:"center"}}>{b.CabinClass}</p>
+                        </div>
+
+                        <p className="emphasis">13h 30m</p>
+                            {/* <p>CAI-LAX</p> */}
                         
-                        <div className="seats" style={{width:"3rem"}}><AirlineSeatReclineNormalIcon />{b.ChosenSeat}</div>
-                        <h5 style={{width:"2rem"}}>{b.CabinClass}</h5>
+                        
                     </div>
 
                     

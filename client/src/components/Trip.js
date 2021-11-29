@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "@mui/material/Button";
 import LuggageIcon from '@mui/icons-material/Luggage';
 
+
 export default class Trip extends Component {
     state={
         showModal:false,
@@ -33,11 +34,18 @@ export default class Trip extends Component {
                     <div className="trip-flight"  >
                         <h4>1602</h4>
                         <div className="trip-flex-col">
-                            <h5>15:30-23:20</h5>
-                            <p>LAX-CAI</p>
+        
+                                <h5>12-3-2021 {">"} 12-3-2021  </h5>
+                            
+                            <p>2:30 {">"} 17:30</p>
                         </div>
-                        <strong>24h 10m</strong>
-                        <a href = "#" onClick={this.handleModalShow.bind(this)}>more ></a>
+
+                        <div className="trip-flex-col">
+                            <strong>24h 10m</strong>
+                               <p>LAX-CAI</p>
+                        </div>
+
+                        <a href = "#" onClick={this.handleModalShow.bind(this)}>more  {">"}</a>
                     </div>
 
                 </div>
@@ -83,8 +91,8 @@ export default class Trip extends Component {
                     <div className="modal-trip"  >
                         
                         <div className="trip-flex-col">
-                            <strong>12-12-2021 > 12-12-2021</strong>
-                            <p>5:30 > 17:30</p>
+                            <strong>12-12-2021  {">"} 12-12-2021</strong>
+                            <p>5:30  {">"} 17:30</p>
                         </div>    
                         
                         <div >

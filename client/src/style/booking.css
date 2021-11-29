@@ -1,7 +1,7 @@
 .booking-card{
     background-color: white;
     border : 1px solid rgb(182, 182, 182) ;
-    width: 50vw;
+    width: 55rem;
     height: 28vh;
     border-radius: 7px;
     display: flex;
@@ -19,4 +19,9 @@
 
 .seats{
    font-weight: 600; 
+}
+.emphasis{
+    font-weight: 600;
+    margin-bottom: 0;
+    font-size: large;
 }
