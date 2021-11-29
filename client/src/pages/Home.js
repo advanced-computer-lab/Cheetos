@@ -4,6 +4,11 @@ import MyHeader from '../components/MyHeader'
 import Booking from '../components/Booking'
 
 export default class Home extends Component {
+    
+
+
+        
+    
     render() {
         return (
             <div className="flex-col" >
