@@ -144,7 +144,7 @@ td > input {
 }
 
 .logo-buttons-search{
-  height: 25vh;
+  height: auto;
   padding-bottom: 1rem;
 }
 
@@ -209,7 +209,9 @@ header-buttons-container{
 
 .signin-page{
   height:100vh;
-  background-color: #edf0f5;
+  background-color: #12228f;
+
+  /* background-color: #edf0f5; */
   background-size: cover;
   display: flex;
   flex-wrap: wrap;
@@ -220,20 +222,22 @@ header-buttons-container{
 }
 
 .signin-form{
-  -webkit-box-shadow: 0 0 5px gray;
-        box-shadow: 0 0 5px gray;
-  border-radius: 10px;
-    width: 25vw;
+  -webkit-box-shadow: 0 0 5px rgb(0, 0, 0);
+        box-shadow: 0 0 5px rgb(73, 73, 73);
+    border-radius: 10px;
+    height:370px;
+    width:400px;
     background-color: #ffffff;
     padding: 20px;
 
 }
 .v2{
-  border-bottom: 1px solid rgb(226, 226, 226) !important;
-  height: 90%;
+  border-bottom: 1px solid rgb(202, 202, 202) !important;
+  width: 90%;
 }
 .signin-logo{
   font-size:xx-large;
   display: flex;
   flex-direction: column;
+  color:#ffffff;
 }

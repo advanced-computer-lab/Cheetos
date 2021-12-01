@@ -4,6 +4,11 @@
     
     width: 50vw;
     height: 25vh;
+    /* padding-left: 5%;
+    padding-right: 5%;
+    row-gap:5%;
+    width: auto;
+    height: auto; */
     border-radius: 5px;
     display: flex;
     align-items: center;

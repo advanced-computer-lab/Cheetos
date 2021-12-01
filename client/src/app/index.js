@@ -9,7 +9,7 @@ import {
   Route
 } from "react-router-dom";
 import ConfirmBooking from '../pages/ConfirmBooking';
-import SignIn from '../pages/SignIn';
+import SignInPage from '../pages/SignInPage';
 
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
           <Route path="admin" element={<AdminPage />} />
           <Route path="profile" element={<Profile />} />
           <Route path="confirm" element={<ConfirmBooking />} />
-          <Route path="signIn" element={<SignIn />} />
+          <Route path="signin" element={<SignInPage />} />
       </Routes>
 
     </div>
