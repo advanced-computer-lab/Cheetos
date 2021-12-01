@@ -43,19 +43,6 @@ const ReservationSchema = new mongoose.Schema({
   ],
 });
 
-ReservationSchema.post("save", (doc, next) => {
-  const filter = { _id: doc.Reservation[0].FlightId };
-  const update = { $inc: { "EconomySeats.AvailableSeats": -1 } };
-  console.log(doc.Reservation[0].FlightId);
-  //const update = { FlightNumber: 5 };
-  Flight.findOneAndUpdate(filter, update, { new: true }, (err, newdoc) => {
-    if (err) {
-      console.log("error");
-    }
-  });
-  next();
-});
-
 ReservationSchema.post("findOneAndDelete", (reservation, next) => {
   User.findById(reservation.UserId, "Email", (err, user) => {
     if (err) {

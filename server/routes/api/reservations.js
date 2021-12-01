@@ -6,11 +6,11 @@ const reservationController = require('../../controllers/reservationController')
 
 const Reservation = require("../../models/Flight");
 
-router.get("/getreservations", reservationController.getResevations)
+router.get("/getreservation/:id", reservationController.getReservationById)
 
-router.delete("/deletereservation/:id",reservationsController.deleteReservation)
+router.delete("/deletereservation/:id",reservationController.deleteReservation)
 
-router.post("/createreservation",flightController.createReservation)
+router.post("/createreservation",reservationController.createReservation)
 
 
 module.exports = router;

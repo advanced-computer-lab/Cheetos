@@ -17,14 +17,17 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+
   Email: {
     type: String,
     required: true
   },
+
   TelephoneNumber: {
     type: Array,
     required: true
   },
+  
   PassportNumber: {
     type: String,
     required: true
@@ -36,9 +39,6 @@ const UserSchema = new mongoose.Schema({
     
   }
 
-  
-
-
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);
