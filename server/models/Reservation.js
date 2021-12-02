@@ -9,7 +9,7 @@ const Flight = require("./Flight");
 
      TotalPrice: {
          type: Number,
-         required: true
+         required: true,
      },
 
      Reservation: [{
@@ -86,9 +86,39 @@ const Flight = require("./Flight");
     });
  }
     next();
-    
   });
 
+  ReservationSchema.post("findOneAndDelete", (reservation, next) => {
+    User.findById(reservation.UserId, "Email", (err, user) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(user.Email);
+        let mailTransporter = nodemailer.createTransport({
+          service: "hotmail",
+          auth: {
+            user: "cheetosmym1@outlook.com",
+            pass: "Acltestingmail.1",
+          },
+        });
+        let mailDetails = {
+          from: "cheetosmym1@outlook.com",
+          to: user.Email,
+          subject: "cancellation confirmation",
+          text: "Dear Customer  your reservation was cancelled dollar was refunded ",
+        };
+        mailTransporter.sendMail(mailDetails, function (err, data) {
+          if (err) {
+            console.log("Error Occured", err);
+          } else {
+            console.log("Email sent successfully");
+          }
+        });
+      }
+    });
+    next();
+  });
+  
   ReservationSchema.post("findOneAndDelete", (reservation, next) => {
     var array = reservation.Reservation
     for( let i = 0;i<array.length;i++){
