@@ -10,21 +10,43 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { Link } from "react-router-dom";
 
 export default class MyHeader extends Component {
-  handleSearch() {
-
+  state = {
+    adultCount: "",
+    childCount: "",
+    deptAirport: "",
+    arrAirport: "",
+    deptDate: "",
+    retDate: "",
+    cabinClass: ""
   }
+
+  handleSearch(e) {
+    e.preventDefault();
+    // const name = e.target.name
+    //--- setting the state of search fields upon change 
+    //doing the search and filtering 
+    const value = e.target.value;
+    this.setState(
+      {
+        ...this.state,
+        [e.target.name]: value
+      });
+  }
+
+
   handleProfileClick() {
 
   }
-  andSearch() {
+  flightSearch() {
 
   }
   render() {
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass } = this.state
     return (
       <div className="admin-header logo-buttons-search">
 
         <div className="logo-buttons">
-          <Link style = {{ textDecoration: "none" , color : "white" , cursor : "pointer"}}to="/">
+          <Link style={{ textDecoration: "none", color: "white", cursor: "pointer" }} to="/">
             <Logo />
           </Link>
           <div className="header-buttons-container">
@@ -45,11 +67,6 @@ export default class MyHeader extends Component {
             </Link>
           </div>
 
-
-
-
-
-
         </div>
         <div className="flex-col" style={{ gap: 0 }}>
           <h5 style={{ alignSelf: 'flex-start', marginLeft: "5%" }}>Input fields to Search !</h5>
@@ -61,8 +78,8 @@ export default class MyHeader extends Component {
               <Form.Control
                 type="number"
                 placeholder="Adult Passengers"
-                // value={}
-                // name=""
+                value={adultCount}
+                name="adultCount"
                 onChange={this.handleSearch.bind(this)}
               />
             </Form.Group>
@@ -71,8 +88,8 @@ export default class MyHeader extends Component {
               <Form.Control
                 type="number"
                 placeholder="Child passengers"
-                // value={}
-                // name=""
+                value={childCount}
+                name="childCount"
                 onChange={this.handleSearch.bind(this)}
               />
             </Form.Group>
@@ -81,8 +98,8 @@ export default class MyHeader extends Component {
               <Form.Control
                 type="text"
                 placeholder="Departure airport"
-                // value={}
-                // name=""
+                value={deptAirport}
+                name="deptAirport"
                 onChange={this.handleSearch.bind(this)}
               />
             </Form.Group>
@@ -91,27 +108,28 @@ export default class MyHeader extends Component {
               <Form.Control
                 type="text"
                 placeholder="Arrival airport"
-                //   value={}
-                //   name=""
+                value={arrAirport}
+                name="arrAirport"
                 onChange={this.handleSearch.bind(this)}
               />
             </Form.Group>
+
+
             <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              {/* <Form.Label>Departure date: </Form.Label> */}
-
-
               <Form.Control
-                type="text" onFocus={
+                type="text"
+                onFocus={
                   (e) => {
                     e.currentTarget.type = "date";
                     e.currentTarget.focus();
                   }
                 }
                 onBlur={
-                  (e) => (e.currentTarget.type = "text")}
+                  (e) => (e.currentTarget.type = "text")
+                }
                 placeholder="Departure date"
-                //   value={}
-                //   name=""
+                value={deptDate}
+                name="deptDate"
                 onChange={this.handleSearch.bind(this)}
               />
 
@@ -131,23 +149,27 @@ export default class MyHeader extends Component {
                     e.currentTarget.type = "text";
                     e.currentTarget.blur();
                   }}
-                placeholder="Arrival date"
-                //   value={}
-                //   name=""
+                placeholder="Return date"
+                value={retDate}
+                name="retDate"
                 onChange={this.handleSearch.bind(this)}
               />
             </Form.Group>
             <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
               {/* <Form.Label>Cabin class: </Form.Label> */}
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                value={cabinClass}
+                name = "cabinClass"
+                onChange={this.handleSearch.bind(this)}
+                aria-label="Default select example">
                 <option hidden>Cabin class</option>
-                <option value="1">Economy</option>
-                <option value="2">Business class</option>
-                <option value="3">First Class</option>
+                <option value="EconomySeats">Economy</option>
+                <option value="BusinessSeats">Business class</option>
+                <option value="FirstClassSeats">First Class</option>
               </Form.Select>
             </Form.Group>
             <Button style={{ width: "10px", height: "38px" }}
-              onClick={this.andSearch} variant="contained" >
+              onClick={this.flightSearch} variant="contained" >
               <SearchIcon style={{ fontSize: "x-large" }} />{" "}
             </Button>
 

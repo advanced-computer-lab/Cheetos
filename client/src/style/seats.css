@@ -1,0 +1,17 @@
+.shuttle {
+  background-image: url(../images/shuttle.png);
+  min-height: 50vh;
+  min-width: 100vw;
+  border: 5px solid red;
+  width: auto;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+
+.seats-page{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

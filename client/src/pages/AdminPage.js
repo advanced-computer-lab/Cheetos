@@ -90,7 +90,7 @@ export default class AdminPage extends Component {
       !this.state.departureAirport ||
       !this.state.arrivalAirport ||
       !this.state.departureTerminal ||
-      !this.state.arrivalTerminal||
+      !this.state.arrivalTerminal ||
       !this.state.depDate ||
       !this.state.arrDate ||
       !this.state.ecSeats ||
@@ -255,11 +255,11 @@ export default class AdminPage extends Component {
   }
 
   andSearch() {
-    const { flightArr, flightSearch, departureSearch, arrivalSearch,  deptTerminalSearch , arrTerminalSearch, arrDateSearch, depDateSearch } = this.state
+    const { flightArr, flightSearch, departureSearch, arrivalSearch, deptTerminalSearch, arrTerminalSearch, arrDateSearch, depDateSearch } = this.state
 
     console.log(flightSearch, arrDateSearch, arrivalSearch, depDateSearch, departureSearch)
     this.setState({
-      filteredArr: flightArr.filter((f) => 
+      filteredArr: flightArr.filter((f) =>
         f.FlightNumber.toString().includes(flightSearch)
         && f.ArrivalDate.toString().includes(arrDateSearch)
         && f.ArrivalTime.toString().includes(arrivalSearch)
@@ -275,23 +275,18 @@ export default class AdminPage extends Component {
   handleFlightSearch(e) {
 
     e.preventDefault();
-    console.log(this.fieldsEmpty());
-    console.log("flight arr", this.state.flightArr)
-    console.log("filtered arr", this.state.filteredArr)
     // const name = e.target.name
     //--- setting the state of search fields upon change 
     //doing the search and filtering 
     const value = e.target.value;
     this.setState(
       {
-      ...this.state,
-      [e.target.name]: value } ,
-       () => {
-      this.andSearch(); });
-
-
-
-
+        ...this.state,
+        [e.target.name]: value
+      },
+      () => {
+        this.andSearch();
+      });
 
 
   }
@@ -328,7 +323,7 @@ export default class AdminPage extends Component {
             <h1>ADMIN PANEL</h1>
             <div className=" search-bar">
               {/* <h2 >Search: </h2> */}
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label>Flight number : </Form.Label>
                 <Form.Control
 
@@ -339,7 +334,7 @@ export default class AdminPage extends Component {
                   onChange={this.handleFlightSearch.bind(this)}
                 />
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label>Departure date : </Form.Label>
                 <Form.Control
 
@@ -351,7 +346,7 @@ export default class AdminPage extends Component {
                 />
               </Form.Group>
 
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label>Departure time : </Form.Label>
                 <Form.Control
 
@@ -363,7 +358,7 @@ export default class AdminPage extends Component {
                 />
               </Form.Group>
 
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label>Departure Terminal : </Form.Label>
                 <Form.Control
 
@@ -374,7 +369,7 @@ export default class AdminPage extends Component {
                   onChange={this.handleFlightSearch.bind(this)}
                 />
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label>Arrival date : </Form.Label>
                 <Form.Control
                   style={{ width: "" }}
@@ -387,7 +382,7 @@ export default class AdminPage extends Component {
               </Form.Group>
 
 
-              <Form.Group style={{ flexGrow: 1 ,width: "12%"}} className="mb-3">
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label>Arrival time : </Form.Label>
                 <Form.Control
 
@@ -399,9 +394,9 @@ export default class AdminPage extends Component {
               </Form.Group>
 
 
-             
 
-              <Form.Group style={{ flexGrow: 1,width: "12%" }} className="mb-3">
+
+              <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
                 <Form.Label> Arrival Terminal : </Form.Label>
                 <Form.Control
 
@@ -430,8 +425,8 @@ export default class AdminPage extends Component {
                 <th>First Class</th>
                 <th>Departure</th>
                 <th>Arrival</th>
-                <th>Departure <br/> Terminal</th>
-                <th>Arrival <br/> Terminal</th>
+                <th>Departure <br /> Terminal</th>
+                <th>Arrival <br /> Terminal</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -442,14 +437,14 @@ export default class AdminPage extends Component {
                     arrDate={f.ArrivalDate}
                     depDate={f.DepartureDate}
                     deptAirport={f.DepartureAirport}
-                    arrAirport = {f.ArrivalAirport}
+                    arrAirport={f.ArrivalAirport}
                     economy={f.EconomySeats}
                     business={f.BusinessSeats}
                     firstC={f.FirstClassSeats}
                     dep={f.DepartureTime}
                     arrival={f.ArrivalTime}
-                    deptTerminal= {f.DepartureTerminal}
-                    arrTerminal =  {f.ArrivalTerminal}
+                    deptTerminal={f.DepartureTerminal}
+                    arrTerminal={f.ArrivalTerminal}
                     id={f._id}
                   />
                 ))}
@@ -490,21 +485,21 @@ export default class AdminPage extends Component {
           <Modal.Body>
             <Form className="add-flight">
 
-            <Form.Group style={{ flexGrow: 1 }} className="mb-3">
-                  <Form.Label>Flight number </Form.Label>
-                  <Form.Control
-                    onChange={this.handleAddFlightChange.bind(this)}
-                    name="flightNumber"
-                    value={flightNumber}
-                    type="text"
-                  />
-                </Form.Group>
+              <Form.Group style={{ flexGrow: 1 }} className="mb-3">
+                <Form.Label>Flight number </Form.Label>
+                <Form.Control
+                  onChange={this.handleAddFlightChange.bind(this)}
+                  name="flightNumber"
+                  value={flightNumber}
+                  type="text"
+                />
+              </Form.Group>
 
 
               <div className="add-flight-body">
 
 
-                
+
 
                 <Form.Group
                   style={{ flexGrow: 1 }}

@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import ConfirmBooking from '../pages/ConfirmBooking';
 import SignInPage from '../pages/SignInPage';
+import ChooseSeats from '../pages/ChooseSeats';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="confirm" element={<ConfirmBooking />} />
           <Route path="signin" element={<SignInPage />} />
+          <Route path="seats" element={<ChooseSeats />} />
       </Routes>
 
     </div>

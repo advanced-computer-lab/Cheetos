@@ -192,6 +192,7 @@ header-buttons-container{
   justify-content: flex-start;
   align-items: center;
   overflow: auto;
+  
 }
 
 .trip-search-results::-webkit-scrollbar {

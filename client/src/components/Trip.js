@@ -15,9 +15,10 @@ export default class Trip extends Component {
             showModal: this.state.showModal ? false : true,
         });
     }
+    
     render() {
-        const { deptFlight,arrFlight } = this.props
-        
+        const { deptFlight, arrFlight } = this.props
+
         return (
             <>
                 <div className="trip-card ">
@@ -116,8 +117,8 @@ export default class Trip extends Component {
                             <div className="flex-row" style={{ width: '30%' }} >
 
                                 <div className="trip-flex-col" style={{ alignItems: "flex-start" }}>
-                                    <div className="flex-row" style={{ width: "10rem", justifyContent: "flex-start",alignItems:"flex-start" }} ><LuggageIcon /><p>Carry-on</p></div>
-                                    <div className="flex-row" style={{ width: "10rem", justifyContent: "flex-start",alignItems:"flex-start" }}><LuggageIcon /><p>Checked bag</p></div>
+                                    <div className="flex-row" style={{ width: "10rem", justifyContent: "flex-start" , alignItems: "flex-start" }} ><LuggageIcon /><p>Carry-on</p></div>
+                                    <div className="flex-row" style={{ width: "10rem", justifyContent: "flex-start", alignItems: "flex-start" }}><LuggageIcon /><p>Checked bag</p></div>
                                 </div>
                                 <div className="trip-flex-col"><p>2</p><p>1</p></div>
 
