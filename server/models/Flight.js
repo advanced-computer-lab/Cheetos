@@ -35,6 +35,14 @@ const FlightSchema = new mongoose.Schema({
     PriceChild: {
       type: Number,
     },
+    BaggageAllowance: {
+      Number: {
+        type: Number,
+      },
+      Size: {
+        type: String,
+      },
+    },
     Seats: [
       {
         Seat: {
@@ -60,6 +68,14 @@ const FlightSchema = new mongoose.Schema({
     PriceChild: {
       type: Number,
     },
+    BaggageAllowance: {
+      Number: {
+        type: Number,
+      },
+      Size: {
+        type: String,
+      },
+    },
     Seats: [
       {
         Seat: {
@@ -83,6 +99,14 @@ const FlightSchema = new mongoose.Schema({
     },
     PriceChild: {
       type: Number,
+    },
+    BaggageAllowance: {
+      Number: {
+        type: Number,
+      },
+      Size: {
+        type: String,
+      },
     },
     Seats: [
       {
@@ -159,10 +183,12 @@ FlightSchema.post("save", (flight, next) => {
   let condition = seats / 4 + 1;
   let array = [];
   let rows = 1;
+  let index = 0;
   for (i = 1; i < condition; i++) {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 4 && index < seats; j++) {
       var letter = String.fromCharCode(65 + j);
       array.push({ Seat: letter + i, Reserved: false });
+      index++;
     }
     rows = i + 1;
   }
@@ -182,12 +208,14 @@ FlightSchema.post("save", (flight, next) => {
   let Bseats = flight.BusinessSeats.AvailableSeats;
   condition = Bseats / 4 + rows;
   array = [];
+  index = 0;
   for (let i = rows; i < condition; i++) {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 4 && index < Bseats; j++) {
       var letter = String.fromCharCode(65 + j);
       array.push({ Seat: letter + i, Reserved: false });
+      index++;
     }
-    rows = rows + i;
+    rows = i + 1;
   }
   Flight.findByIdAndUpdate(
     { _id: flight._id },
@@ -206,10 +234,12 @@ FlightSchema.post("save", (flight, next) => {
   let Eseats = flight.EconomySeats.AvailableSeats;
   condition = rows + Eseats / 4;
   array = [];
+  index = 0;
   for (i = rows; i < condition; i++) {
-    for (let j = 0; j < 4; j++) {
+    for (let j = 0; j < 4 && index < Eseats; j++) {
       var letter = String.fromCharCode(65 + j);
       array.push({ Seat: letter + i, Reserved: false });
+      index++;
     }
   }
   Flight.findByIdAndUpdate(
@@ -237,6 +267,24 @@ FlightSchema.post("save", (flight, next) => {
   var diffDays = Math.floor(diffMs / 86400000); // days
   var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
   var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //mins
+  next();
+});
+
+FlightSchema.post("save", (fl, next) => {
+  const filter = { _id: fl._id };
+  const update = {
+    $set: {
+      "EconomySeats.BaggageAllowance": { Number: 2, Size: "25Kgs" },
+      "FirstClassSeats.BaggageAllowance": { Number: 4, Size: "35Kgs" },
+      "BusinessSeats.BaggageAllowance": { Number: 4, Size: "35Kgs" },
+    },
+  };
+  Flight.findOneAndUpdate(filter, update, { new: true }, (err, flight) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+
   next();
 });
 
