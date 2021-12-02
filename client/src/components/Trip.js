@@ -17,8 +17,11 @@ export default class Trip extends Component {
     }
     
     render() {
-        const { deptFlight, arrFlight } = this.props
-
+        const { deptFlight, arrFlight  , deptCabin , adults , children} = this.props
+        const deptPrice =  (deptFlight[deptCabin]["PriceAdult"] * adults) + (deptFlight[deptCabin]["PriceChild"] * children)
+        //const retPrice =  (arrFlight[arrCabin]["PriceAdult"] * adults) + (arrFlight[arrCabin]["PriceChild"] * children)
+        // edit later when u add retPrice ^^^ inside total price  ; 
+        const totalPrice = deptPrice ; 
         return (
             <>
                 <div className="trip-card ">
@@ -62,7 +65,7 @@ export default class Trip extends Component {
 
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
-                        <h3>10,000$</h3>
+                        <h3>{totalPrice}$</h3>
                         <Button
                             onClick={this.handleProfileClick}
                             style={{
@@ -124,7 +127,7 @@ export default class Trip extends Component {
 
                             </div>
 
-                            {/* </div> */}
+                         
                         </div>
 
                     </Modal.Body>

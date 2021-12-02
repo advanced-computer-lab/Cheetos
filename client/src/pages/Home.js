@@ -8,11 +8,12 @@ export default class Home extends Component {
         FlightNumber: "1175",
         DepartureTime: "10:10",
         ArrivalTime: "12:10",
-        DepartureDate: "2018-09-12",
+        DepartureDate: "2021-09-12",
         ArrivalDate: "2021-09-13",
         EconomySeats: {
             AvailableSeats: 20,
-            Price: 10,
+            PriceAdult: 1000,
+            PriceChild: 700,
             Seats: [
                 {
                     Seat: "A1",
@@ -29,7 +30,8 @@ export default class Home extends Component {
 
         BusinessSeats: {
             AvailableSeats: 20,
-            Price: 10,
+            PriceAdult: 1500,
+            PriceChild: 850,
             Seats: [
                 {
                     Seat: "A1",
@@ -45,7 +47,8 @@ export default class Home extends Component {
         },
         FirstClassSeats: {
             AvailableSeats: 20,
-            Price: 10,
+            PriceAdult: 2000,
+            PriceChild: 700,
             Seats: [
                 {
                     Seat: "A1",
@@ -75,11 +78,12 @@ export default class Home extends Component {
         FlightNumber: "1919",
         DepartureTime: "08:10",
         ArrivalTime: "09:10",
-        DepartureDate: "2018-10-25",
+        DepartureDate: "2021-10-25",
         ArrivalDate: "2021-10-26",
         EconomySeats: {
             AvailableSeats: 20,
-            Price: 10,
+            PriceAdult: 1000,
+            PriceChild: 700,
             Seats: [
                 {
                     Seat: "A1",
@@ -96,7 +100,8 @@ export default class Home extends Component {
 
         BusinessSeats: {
             AvailableSeats: 20,
-            Price: 10,
+            PriceAdult: 1000,
+            PriceChild: 700,
             Seats: [
                 {
                     Seat: "A1",
@@ -112,7 +117,8 @@ export default class Home extends Component {
         },
         FirstClassSeats: {
             AvailableSeats: 20,
-            Price: 10,
+            PriceAdult: 1000,
+            PriceChild: 700,
             Seats: [
                 {
                     Seat: "A1",
@@ -139,48 +145,71 @@ export default class Home extends Component {
     }
 
     state = {
-        tripArr: [[this.deptTrip, this.arrTrip],
-        [this.deptTrip, this.arrTrip],
-        [this.deptTrip, this.arrTrip],
-        [this.deptTrip, this.arrTrip],
-        ]
+        // all flights fetched from backend
+        flightArr : [this.deptTrip , this.arrTrip , this.arrTrip , this.deptTrip] ,  
+        //array containing pairs of dept and arrival flights i.e round trip ,computed at search
+        // tripArr: [[this.deptTrip, this.arrTrip],
+        // [this.deptTrip, this.arrTrip],
+        // [this.deptTrip, this.arrTrip],
+        // [this.deptTrip, this.arrTrip],
+        // ]
+        tripArr: [] ,
+
+       
 
     }
 
     componentDidMount() {
         //fetch flights from backend 
-        let flightArr = [1, 2, 3];
-        let resultArr = [];
+        //***testing with fake flights arr , remove later */
+        
+        
+
+    }
+    deptCabin  = '' 
+    adultCount = 0 
+    childCount = 0 
+    handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass ){
+        //----making the pairs of flights (round trips) from the all flights array 
+        this.deptCabin = cabinClass ; 
+        this.adultCount = adultCount ; 
+        this.childCount = childCount ; 
+        const {flightArr} = this.state ; 
+        let resultArr = [] ; //temporary array to hold all "pairs" of possible round trips
         for (let i = 0; i < flightArr.length; i++) {
             for (let j = 0; j < flightArr.length; j++) {
-                if (flightArr[i].dept == flightArr[j].arr && flightArr[i].arr == flightArr[j].dept
-                    && Date.parse(flightArr[i].arrDate) < Date.parse(flightArr[j].deptDate)) {
+                if (flightArr[i].DepartureAirport === flightArr[j].ArrivalAirport && flightArr[i].ArrivalAirport === flightArr[j].DepartureAirport
+                    && Date.parse(flightArr[i].ArrivalDate) < Date.parse(flightArr[j].DepartureDate)) {
+                    //pushing results to the result array consisting of pairs 
                     resultArr.push([flightArr[i], flightArr[j]]);
                 }
             }
         }
+        console.log(resultArr);
+        // ----handling the filtering of all possible pairs to show search results according do user input 
         this.setState(
             {
-                // tripArr: resultArr.filter((p) =>
-                //     p[0].DepartureAirport === "" && p[0].ArrivalAirport === ""
-                //     && Date.parse(p[0].DepartureDate) === Date.parse(deptDate) && Date.parse(p[1].ArrivalDate) === Date.parse(returnDate)
-                //     && p[0][cabinSearchVar][seats] > adult + children
-                //     && p[1][cabinSearchVar][seats] > adult + children)
+                tripArr: resultArr.filter((p) =>
+                    p[0].DepartureAirport === deptAirport && p[0].ArrivalAirport === arrAirport
+                    && Date.parse(p[0].DepartureDate) === Date.parse(deptDate) && Date.parse(p[1].ArrivalDate) === Date.parse(retDate)
+                    && p[0][cabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
+                    && p[1][cabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)  ), 
             }
         )
 
-    }
 
+
+    }
     render() {
-        const { tripArr } = this.state
+        const { tripArr  } = this.state
 
         return (
             <div className="flex-col" >
-                <MyHeader />
+                <MyHeader  parentSearch = {( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass ) => this.handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass )} />
 
                 <div className="trip-search-results">
 
-                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]} />)}
+                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]}  deptCabin = {this.deptCabin} adults = {this.adultCount}  children = {this.childCount}    />)}
                 </div>
             </div>
         )

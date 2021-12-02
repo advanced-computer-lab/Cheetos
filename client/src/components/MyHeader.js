@@ -38,7 +38,8 @@ export default class MyHeader extends Component {
 
   }
   flightSearch() {
-
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass } = this.state
+    this.props.parentSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass )
   }
   render() {
     const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass } = this.state
@@ -169,7 +170,7 @@ export default class MyHeader extends Component {
               </Form.Select>
             </Form.Group>
             <Button style={{ width: "10px", height: "38px" }}
-              onClick={this.flightSearch} variant="contained" >
+              onClick={this.flightSearch.bind(this)} variant="contained" >
               <SearchIcon style={{ fontSize: "x-large" }} />{" "}
             </Button>
 
