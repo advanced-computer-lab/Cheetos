@@ -17,8 +17,6 @@ deleteReservation = async (req, res) => {
     }).catch((err) => console.log(err));
   };
 
-
-
   getReservationById = (req, res) => {
      Reservation.find({UserId: req.params.id }, (err, reservation) =>{
         console.log(reservation);
@@ -43,38 +41,8 @@ deleteReservation = async (req, res) => {
         res.json({ msg: "Reservation added successfully", data: req.body })
       )
       .catch((err) =>
-        res.status(400).json({ error: "Unable to add this reservation" })
+        res.status(400).json({ error: err})
       );
-        //var seat = req.body.Reservation[0][ChosenSeat]
-       // Flight.update(
-            //{ _id: req.body.Reservation[0][FlightId]},
-            //{
-                /*$set: {
-                    "EconomySeats.Seats.$.Seat": "A2",
-                    "EconomySeats.AvailableSeats": ,
-                 }*/
-                // $inc: {"EconomySeats.$.AvailableSeats": -1}
-
-            //}
-       // )
-      /*switch(req.body.CabinClass){
-          case 'Economy':{
-              
-          }
-          case 'Business':{
-            cclass = 'BusinessSeats';break;  
-          }
-          case 'FirstClass':{
-            cclass = 'FirstClassSeats';break;
-          }
-          default: {
-              break;
-          }
-      }*/
-   
-          
-    
-
   };
 
   module.exports = {
