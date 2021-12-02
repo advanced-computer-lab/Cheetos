@@ -83,7 +83,7 @@ createFlight = (req, res) => {
       res.json({ msg: "Flight added successfully", data: req.body })
     )
     .catch((err) =>
-      res.status(400).json({ error: "Unable to add this flight" })
+      res.status(400).json({ error: err})
     );
 };
 

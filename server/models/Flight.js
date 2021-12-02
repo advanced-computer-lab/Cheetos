@@ -226,4 +226,18 @@ FlightSchema.post("save", (flight, next) => {
   next();
 });
 
+FlightSchema.post("save", (flight, next) => {
+  const departure = new Date(
+    flight.DepartureDate + " " + flight.DepartureTime + ":00"
+  );
+  const arrival = new Date(
+    flight.ArrivalDate + " " + flight.ArrivalTime + ":00"
+  );
+  var diffMs = departure - arrival;
+  var diffDays = Math.floor(diffMs / 86400000); // days
+  var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+  var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //mins
+  next();
+});
+
 module.exports = Flight = mongoose.model("Flight", FlightSchema);
