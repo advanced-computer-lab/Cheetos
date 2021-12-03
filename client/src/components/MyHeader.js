@@ -69,111 +69,132 @@ export default class MyHeader extends Component {
           </div>
 
         </div>
-        <div className="flex-col" style={{ gap: 0 }}>
-          <h5 style={{ alignSelf: 'flex-start', marginLeft: "5%" }}>Input fields to Search !</h5>
-          <div className="search-bar" style={{ alignItems: "flex-start" }}>
+        <div className="flex-col" style={{ gap: "0" , alignItems:"center" ,marginTop:"10px"}}>
+          {/* <h5 style={{ alignSelf: 'flex-start', marginLeft: "5%" }}>Input fields to Search !</h5> */}
+          <div className="search-bar"style={{ gap: 0,justifyContent:"center"}} >
             {/* n of passengers , dep airport , arr air , dep date ,arr date ,cabin class  */}
 
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              {/* <Form.Label>Adult passengers: </Form.Label> */}
-              <Form.Control
-                type="number"
-                placeholder="Adult Passengers"
-                value={adultCount}
-                name="adultCount"
-                onChange={this.handleSearch.bind(this)}
-              />
-            </Form.Group>
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              {/* <Form.Label>Child passengers: </Form.Label> */}
-              <Form.Control
-                type="number"
-                placeholder="Child passengers"
-                value={childCount}
-                name="childCount"
-                onChange={this.handleSearch.bind(this)}
-              />
-            </Form.Group>
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              {/* <Form.Label>Departure Airport: </Form.Label> */}
-              <Form.Control
-                type="text"
-                placeholder="Departure airport"
-                value={deptAirport}
-                name="deptAirport"
-                onChange={this.handleSearch.bind(this)}
-              />
-            </Form.Group>
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              {/* <Form.Label>Arrival airport: </Form.Label> */}
-              <Form.Control
-                type="text"
-                placeholder="Arrival airport"
-                value={arrAirport}
-                name="arrAirport"
-                onChange={this.handleSearch.bind(this)}
-              />
-            </Form.Group>
-
-
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              <Form.Control
-                type="text"
-                onFocus={
-                  (e) => {
-                    e.currentTarget.type = "date";
-                    e.currentTarget.focus();
+            <div className = "flex-row "style={{gap:"0.5rem",width:"100%",margin:"0"}}>
+              <Form.Group style={{ flexGrow: 1 ,width:"18%"}} className="mb-2">
+                {/* <Form.Label>Adult passengers: </Form.Label> */}
+                <Form.Control
+                  type="number"
+                  placeholder="Adult Passengers"
+                  value={adultCount}
+                  name="adultCount"
+                  onChange={this.handleSearch.bind(this)}
+                />
+              </Form.Group >
+              <Form.Group style={{ flexGrow: 1 ,width:"18%"}} className="mb-2">
+                {/* <Form.Label>Departure Airport: </Form.Label> */}
+                <Form.Control
+                  type="text"
+                  placeholder="Departure airport"
+                  value={deptAirport}
+                  name="deptAirport"
+                  onChange={this.handleSearch.bind(this)}
+                />
+              </Form.Group>
+              <Form.Group style={{ flexGrow: 1 ,width:"18%"}} className="mb-2">
+                <Form.Control
+                  type="text"
+                  onFocus={
+                    (e) => {
+                      e.currentTarget.type = "date";
+                      e.currentTarget.focus();
+                    }
                   }
-                }
-                onBlur={
-                  (e) => (e.currentTarget.type = "text")
-                }
-                placeholder="Departure date"
-                value={deptDate}
-                name="deptDate"
-                onChange={this.handleSearch.bind(this)}
-              />
-
-            </Form.Group>
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-
-              <Form.Control
-                style={{ width: "" }}
-                type="text" onFocus={
-                  (e) => {
-                    e.currentTarget.type = "date";
-                    e.currentTarget.focus();
+                  onBlur={
+                    (e) => (e.currentTarget.type = "text")
                   }
-                }
-                onBlur={
-                  (e) => {
-                    e.currentTarget.type = "text";
-                    e.currentTarget.blur();
-                  }}
-                placeholder="Return date"
-                value={retDate}
-                name="retDate"
-                onChange={this.handleSearch.bind(this)}
-              />
-            </Form.Group>
-            <Form.Group style={{ flexGrow: 1, width: "12%" }} className="mb-3">
-              {/* <Form.Label>Cabin class: </Form.Label> */}
-              <Form.Select
-                value={cabinClass}
-                name = "cabinClass"
-                onChange={this.handleSearch.bind(this)}
-                aria-label="Default select example">
-                <option hidden>Cabin class</option>
-                <option value="EconomySeats">Economy</option>
-                <option value="BusinessSeats">Business class</option>
-                <option value="FirstClassSeats">First Class</option>
-              </Form.Select>
-            </Form.Group>
-            <Button style={{ width: "10px", height: "38px" }}
-              onClick={this.flightSearch.bind(this)} variant="contained" >
-              <SearchIcon style={{ fontSize: "x-large" }} />{" "}
-            </Button>
+                  placeholder="Departure date"
+                  value={deptDate}
+                  name="deptDate"
+                  onChange={this.handleSearch.bind(this)}
+                />
+              </Form.Group>
+              <Form.Group style={{ flexGrow: 1,width:"18%"}} className="mb-2">
+                <Form.Select
+                  value={cabinClass}
+                  name = "cabinClass"
+                  onChange={this.handleSearch.bind(this)}
+                  aria-label="Default select example">
+                  <option hidden>Departure cabin </option>
+                  <option value="EconomySeats">Economy</option>
+                  <option value="BusinessSeats">Business class</option>
+                  <option value="FirstClassSeats">First Class</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
 
+            <div className="flex-row" style={{gap:" 0.5rem",width:"100%",alignItems:"stretch"}}>
+              <Form.Group style={{ flexGrow: 1 ,width:"15%"}} className="mb-2">
+                {/* <Form.Label>Child passengers: </Form.Label> */}
+                <Form.Control
+                  type="number"
+                  placeholder="Child passengers"
+                  value={childCount}
+                  name="childCount"
+                  onChange={this.handleSearch.bind(this)}
+                />
+              </Form.Group>
+              
+              <Form.Group style={{ flexGrow: 1 ,width:"15%"}} className="mb-2">
+                {/* <Form.Label>Arrival airport: </Form.Label> */}
+                <Form.Control
+                  type="text"
+                  placeholder="Arrival airport"
+                  value={arrAirport}
+                  name="arrAirport"
+                  onChange={this.handleSearch.bind(this)}
+                />
+              </Form.Group>
+              <Form.Group style={{ flexGrow: 1,width:"15%"}} className="mb-2">
+                <Form.Control
+                  style={{ width: "" }}
+                  type="text" onFocus={
+                    (e) => {
+                      e.currentTarget.type = "date";
+                      e.currentTarget.focus();
+                    }
+                  }
+                  onBlur={
+                    (e) => {
+                      e.currentTarget.type = "text";
+                      e.currentTarget.blur();
+                    }}
+                  placeholder="Return date"
+                  value={retDate}
+                  name="retDate"
+                  onChange={this.handleSearch.bind(this)}
+                />
+              </Form.Group>
+              <Form.Group style={{ flexGrow: 1 ,width:"15%"}} className="mb-2">
+                {/* <Form.Label>Cabin class: </Form.Label> */}
+                <Form.Select
+                  value={cabinClass}
+                  name = "cabinClass"
+                  onChange={this.handleSearch.bind(this)}
+                  aria-label="Default select example">
+                  <option hidden>Returning cabin</option>
+                  <option value="EconomySeats">Economy</option>
+                  <option value="BusinessSeats">Business class</option>
+                  <option value="FirstClassSeats">First Class</option>
+                </Form.Select>
+              </Form.Group>
+
+              <div >
+            <Button style={{ width: "100px", height: "38px" }}
+                  onClick={this.flightSearch.bind(this)} variant="contained" >
+                  <SearchIcon style={{ fontSize: "large" }} />{" "}
+                 Search
+                </Button>
+          </div >
+
+            </div>
+          
+
+          
           </div>
         </div>
 
