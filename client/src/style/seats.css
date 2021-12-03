@@ -1,4 +1,4 @@
-.shuttle {
+.shuttle-background {
   background-image: url(../images/shuttle.png);
   min-height: 50vh;
   min-width: 100vw;
@@ -9,9 +9,125 @@
 }
 
 
+
+
 .seats-page{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap : 1em ; 
+ 
+}
+
+
+.shuttles{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap : 10px ; 
+  align-items: center;
+  justify-content: space-evenly;
+
+}
+.seats-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  /* background-color: rgb(105, 105, 105); */
+  /* border: 1px solid rgb(146, 146, 146); */
+  flex-grow: 1;
+  width: 95% ;
+}
+.shuttle{
+  /* margin-top: 2em; */
+  width: 35%;
+  height: 55vh;
+  border: 2px solid rgb(124, 124, 124);
+  background-color: aliceblue;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 1em;
+}
+.first-class{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid rgba(255, 0, 0, 0.308); */
+  border-radius: 5px;
+  height: 100%;
+}
+
+.bus-class{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 128, 0, 0.171);
+  border-radius: 5px;
+  height: 33%;
+}
+
+
+.eco-class{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 255, 0.103);
+  border-radius: 5px;
+  height: 33%;
+}
+
+.seat{
+  text-align: center;
+  height: 50px; 
+  width: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.418);
+  background-color: hsl(232, 78%, 100%);
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(114, 114, 114, 0.2);
+  transition: 0.3s;
+}
+.chosen-seat{
+  text-align: center;
+  height: 50px; 
+  width: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.418);
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px 0 rgba(114, 114, 114, 0.2);
+ 
+  background-color: #12228f;
+  color: aliceblue;
+  box-shadow: 0 2px 4px 0 rgb(0, 0, 0);
+}
+.seat:hover {
+  box-shadow: 0 2px 4px 0 rgb(0, 0, 0);
+  
+}
+
+.taken-seat{
+  text-align: center;
+  height: 50px; 
+  width: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.418);
+  background-color: rgb(163, 163, 163);
+  border-radius: 5px;
+  
+  
+  
+}
+.chair{
+  height: 50px !important; 
+  width: 50px !important;
+  
+}
+
+.chair:hover{
+  color: aliceblue;
 }
