@@ -99,7 +99,7 @@ const nodemailer=require("nodemailer");
           from: "cheetosmym1@outlook.com",
           to: user.Email,
           subject: "cancellation confirmation",
-          text: "Dear Customer  your reservation was cancelled dollar was refunded ",
+          text: "Dear Customer  your reservation was cancelled "+reservation.TotalPrice+" dollar was refunded ",
         };
         mailTransporter.sendMail(mailDetails, function (err, data) {
           if (err) {
