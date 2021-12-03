@@ -109,17 +109,25 @@ const FlightSchema = new mongoose.Schema({
   },
 
   TripDuration: {
-    type: Number,
+    type: String,
   },
 });
 
 FlightSchema.post("save", (flight, next) => {
    const departure = new Date(flight.DepartureDate + ' ' + flight.DepartureTime + ':00')
    const arrival = new Date(flight.ArrivalDate + ' ' + flight.ArrivalTime + ':00')
-   var diffMs = (departure - arrival);
+   var diffMs = (arrival - departure);
    var diffDays = Math.floor(diffMs / 86400000); // days
    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //mins
+   for(let i = 0;i<diffDays;i++){
+     diffHrs = diffHrs + 24
+   }
+   Flight.findOneAndUpdate({_id: flight._id}, {TripDuration: diffHrs + "h" + ' ' + diffMins + 'm'}, { new: true }, (err, newflight) => {    
+    if (err) {
+      console.log("error");
+    }
+  });
 next();
 })
 module.exports = Flight = mongoose.model("Flight", FlightSchema);

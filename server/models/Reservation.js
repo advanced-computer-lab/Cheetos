@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Flight = require("./Flight");
+const nodemailer=require("nodemailer");
  const ReservationSchema = new mongoose.Schema({
      UserId : {
          type: mongoose.Schema.Types.ObjectId, 
@@ -38,11 +39,6 @@ const Flight = require("./Flight");
             type: Number,
             required: true
         },
-
-        BaggageAllowance: {
-            type: Number,
-            required: true
-        }
      }]
 
  })
@@ -52,22 +48,22 @@ const Flight = require("./Flight");
      for( let i = 0;i<array.length;i++){
     const filter = { _id: reservation.Reservation[i].FlightId };
     var filter2 = {}
-    var update = {};
-    var updateS = {};
+    var update = {}
+    var updateS = {}
     switch(reservation.Reservation[i].CabinClass){
         case 'Economy':
-            console.log('shit')
-            update = { $inc: { "EconomySeats.AvailableSeats": -1 } };
+            update = { $inc: { "EconomySeats.AvailableSeats": -1 }};
             filter2 = { _id: reservation.Reservation[i].FlightId , "EconomySeats.Seats.Seat":  reservation.Reservation[i].ChosenSeat};
             updateS = { "$set": { "EconomySeats.Seats.$.Reserved": true}};
+            console.log(updateB)
             break;
         case 'Business':
-             update = { $inc: { "BusinessSeats.AvailableSeats": -1 } };            
+             update = { $inc: { "BusinessSeats.AvailableSeats": -1 }};            
              filter2 = { _id: reservation.Reservation[i].FlightId , "BusinessSeats.Seats.Seat":  reservation.Reservation[i].ChosenSeat};
              updateS = { "$set": { "BusinessSeats.Seats.$.Reserved": true}};
             break;
         case 'FirstClass': 
-            update = { $inc: { "FirstClassSeats.AvailableSeats": -1 } };
+            update = { $inc: { "FirstClassSeats.AvailableSeats": -1 }};
             filter2 = { _id: reservation.Reservation[i].FlightId , "FirstClassSeats.Seats.Seat":  reservation.Reservation[i].ChosenSeat};
             updateS = { "$set": { "FirstClassSeats.Seats.$.Reserved": true}};
             break;
@@ -77,15 +73,13 @@ const Flight = require("./Flight");
         console.log("error");
       }
     });
-    console.log(i)
-    Flight.findOneAndUpdate(filter2, updateS, { new: true }, (err, flight) => {
-        
+    Flight.findOneAndUpdate(filter2, updateS, { new: true }, (err, flight) => {    
       if (err) {
         console.log("error");
       }
     });
- }
-    next();
+  }
+   next();
   });
 
   ReservationSchema.post("findOneAndDelete", (reservation, next) => {
@@ -128,7 +122,6 @@ const Flight = require("./Flight");
    var updateS = {};
    switch(reservation.Reservation[i].CabinClass){
        case 'Economy':
-           console.log('shit')
            update = { $inc: { "EconomySeats.AvailableSeats": 1 } };
            filter2 = { _id: reservation.Reservation[i].FlightId , "EconomySeats.Seats.Seat":  reservation.Reservation[i].ChosenSeat};
            updateS = { "$set": { "EconomySeats.Seats.$.Reserved": false}};
