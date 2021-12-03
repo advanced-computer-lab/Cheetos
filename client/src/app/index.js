@@ -11,6 +11,7 @@ import {
 import ConfirmBooking from '../pages/ConfirmBooking';
 import SignInPage from '../pages/SignInPage';
 import ChooseSeats from '../pages/ChooseSeats';
+import Tagline from '../pages/Tagline';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="confirm" element={<ConfirmBooking />} />
           <Route path="signin" element={<SignInPage />} />
           <Route path="seats" element={<ChooseSeats />} />
+          <Route path="tag" element={<Tagline />} />
       </Routes>
 
     </div>

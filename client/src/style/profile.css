@@ -3,6 +3,7 @@ html {
   height: 100vh !important;
   margin: 0 !important;
   background: url(../images/background.jpg) no-repeat center top fixed;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.281);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
