@@ -100,8 +100,8 @@ export default class Home extends Component {
 
         BusinessSeats: {
             AvailableSeats: 20,
-            PriceAdult: 1000,
-            PriceChild: 700,
+            PriceAdult: 1500,
+            PriceChild: 850,
             Seats: [
                 {
                     Seat: "A1",
@@ -117,7 +117,7 @@ export default class Home extends Component {
         },
         FirstClassSeats: {
             AvailableSeats: 20,
-            PriceAdult: 1000,
+            PriceAdult: 2000,
             PriceChild: 700,
             Seats: [
                 {
@@ -167,11 +167,13 @@ export default class Home extends Component {
 
     }
     deptCabin  = '' 
+    arrCabin = ''
     adultCount = 0 
     childCount = 0 
-    handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass ){
+    handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass ){
         //----making the pairs of flights (round trips) from the all flights array 
-        this.deptCabin = cabinClass ; 
+        this.deptCabin = deptCabinClass ; 
+        this.arrCabin = arrCabinClass ; 
         this.adultCount = adultCount ; 
         this.childCount = childCount ; 
         const {flightArr} = this.state ; 
@@ -192,8 +194,8 @@ export default class Home extends Component {
                 tripArr: resultArr.filter((p) =>
                     p[0].DepartureAirport === deptAirport && p[0].ArrivalAirport === arrAirport
                     && Date.parse(p[0].DepartureDate) === Date.parse(deptDate) && Date.parse(p[1].ArrivalDate) === Date.parse(retDate)
-                    && p[0][cabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
-                    && p[1][cabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)  ), 
+                    && p[0][deptCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
+                    && p[1][arrCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)  ), 
             }
         )
 
@@ -205,11 +207,11 @@ export default class Home extends Component {
 
         return (
             <div className="flex-col" >
-                <MyHeader  parentSearch = {( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass ) => this.handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass )} />
+                <MyHeader  parentSearch = {( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass ) => this.handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass )} />
 
                 <div className="trip-search-results">
 
-                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]}  deptCabin = {this.deptCabin} adults = {this.adultCount}  children = {this.childCount}    />)}
+                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]}  deptCabin = {this.deptCabin} arrCabin = {this.arrCabin} adults = {this.adultCount}  children = {this.childCount}    />)}
                 </div>
             </div>
         )

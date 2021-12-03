@@ -94,7 +94,7 @@ export default class Seats extends Component {
 
                 <div className="first-class">
                     <h2>{type}</h2>
-                    <h3>{seatClass}</h3>
+                    <h3>{seatClass}  : </h3>
                     {this.subs(this.busArr).map((r) =>
                         <div className="seats-row">
                             {

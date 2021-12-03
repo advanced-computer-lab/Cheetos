@@ -17,6 +17,7 @@ export default class ConfirmBooking extends Component {
       }
 
     render() {
+       
         const {showModal} = this.state
         return (
             <>
