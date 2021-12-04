@@ -72,6 +72,10 @@ export default class Home extends Component {
         ArrivalAirport: "LAX",
 
         TripDuration: "24h 30m",
+        BaggageAllowance: {
+            Number: 4 , 
+            Size: 20
+          }
     }
 
     arrTrip = {
@@ -142,7 +146,10 @@ export default class Home extends Component {
         ArrivalAirport: "CAI",
 
         TripDuration: "15h 30m",
-
+        BaggageAllowance: {
+            Number: 2 , 
+            Size: 25
+          }
         
     }
 

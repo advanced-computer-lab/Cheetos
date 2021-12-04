@@ -8,12 +8,12 @@ export default class TripDetailsModal extends Component {
 
    
     render() {
-        const {show,parentFunc,fNum,depDate,arrDate,depTime,arrTime,duration,depAirport,arrAirport,cabinClass,baggageAllowance} = this.props;
+        const {baggage  , show,fNum,depDate,arrDate,depTime,arrTime,duration,depAirport,arrAirport,cabinClass,baggageAllowance} = this.props;
         return (
             <div>
                  <Modal
                     show={show}
-                    onHide={parentFunc}
+                    onHide={() => this.props.parentFunc()}
                     size="lg"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -49,10 +49,10 @@ export default class TripDetailsModal extends Component {
                             <div className="flex-row" style={{ width: '30%' ,justifyContent:"space-evenly"}} >
 
                                 {/* <div className="trip-flex-col" style={{ alignItems: "flex-start" }}> */}
-                                    <div className="flex-row" style={{ width: "2rem", justifyContent: "flex-start" , alignItems: "flex-start" }} ><LuggageIcon /><p>3 </p></div>
+                                    <div className="flex-row" style={{ width: "2rem", justifyContent: "flex-start" , alignItems: "flex-start" }} ><LuggageIcon /><p>{baggage.Number}</p></div>
                                     <p>x</p>
                                 {/* </div> */}
-                                <div className="flex-row" style={{  alignItems: "stretch" }}><MonitorWeightIcon/> <p>20kg</p></div>
+                                <div className="flex-row" style={{  alignItems: "stretch" }}><MonitorWeightIcon/> <p>{baggage.Size}kg</p></div>
 
                             </div>
 

@@ -83,7 +83,7 @@ class ConfirmBooking extends Component {
                                 </div>
 
                                 <div className="trip-flex-col">
-                                    <div className="emphasis" ><AirlineSeatReclineNormalIcon />{deptSeatNames}</div>
+                                    <div className="emphasis" ><AirlineSeatReclineNormalIcon />{arrSeatNames}</div>
                                     <p style={{ width: "12", textAlign: "center" }}>{arrCabin}</p>
                                 </div>
 

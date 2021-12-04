@@ -13,6 +13,7 @@ export default class Trip extends Component {
 
     }
     handleModalShow(modal) {
+        console.log("modal isss " , modal)
         this.setState(
             {
               ...this.state,
@@ -93,12 +94,12 @@ export default class Trip extends Component {
                 </div>
 
                
-               <TripDetailsModal show = {this.state.showModaldept} parentFunc={()=>this.handleModalShow("showModaldept")} fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
-               depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin} / >
+               <TripDetailsModal show = {this.state.showModaldept} parentFunc={()=>this.handleModalShow("showModaldept") } fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
+               depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage = {deptFlight.BaggageAllowance} / >
                
               
-                <TripDetailsModal show = {this.state.showModaldept} parentFunc={()=>this.handleModalShow("showModalarr")} fNum ={arrFlight.FlightNumber} depDate ={arrFlight.DepartureDate} arrDate={arrFlight.ArrivalDate} depTime={arrFlight.DepartureTime} arrTime={arrFlight.ArrivalTime} duration={arrFlight.TripDuration} 
-               depAirport={arrFlight.DepartureAirport} arrAirport={arrFlight.ArrivalAirport} cabinClass={arrCabin} / >
+                <TripDetailsModal show = {this.state.showModalarr} parentFunc={()=>this.handleModalShow("showModalarr")} fNum ={arrFlight.FlightNumber} depDate ={arrFlight.DepartureDate} arrDate={arrFlight.ArrivalDate} depTime={arrFlight.DepartureTime} arrTime={arrFlight.ArrivalTime} duration={arrFlight.TripDuration} 
+               depAirport={arrFlight.DepartureAirport} arrAirport={arrFlight.ArrivalAirport} cabinClass={arrCabin}  baggage = {arrFlight.BaggageAllowance} / >
                 
             </>
 
