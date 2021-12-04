@@ -6,7 +6,8 @@ import '../style/trip.css';
 import Modal from "react-bootstrap/Modal";
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-
+import api from '../api'
+import { withRouter } from 'react-router';
 
 export default class Booking extends Component {
   
@@ -25,7 +26,18 @@ export default class Booking extends Component {
         
         this.handleModalShow();
       }
-
+      async componentDidMount() {
+        const { userId } = this.props.location.data
+        await api.getUserInfo(userId).then(user => {
+          this.setState({
+            fname: user.data.data.FirstName,
+            lname: user.data.data.LastName,
+            email: user.data.data.Email,
+            passport: user.data.data.PassportNumber
+          }, () => console.log(user.data.data))
+        })
+    
+      }
     render() {
         let price = 0;
         const{confirmationNum,userId,reservation} = this.props

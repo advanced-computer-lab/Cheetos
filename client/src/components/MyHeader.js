@@ -17,8 +17,9 @@ export default class MyHeader extends Component {
     arrAirport: "",
     deptDate: "",
     retDate: "",
-    deptCabinClass: "" , 
-    arrCabinClass : ""
+    deptCabinClass: "",
+    arrCabinClass: "" , 
+    userId : this.props.userId
   }
 
   handleSearch(e) {
@@ -39,11 +40,12 @@ export default class MyHeader extends Component {
 
   }
   flightSearch() {
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass } = this.state
-    this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass)
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
+    this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)
   }
   render() {
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass } = this.state
+    const {userId} = this.props
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
     return (
       <div className="admin-header logo-buttons-search">
 
@@ -58,7 +60,12 @@ export default class MyHeader extends Component {
                 My bookings
               </Button>
             </Link>
-            <Link to="/profile" style={{ textDecoration: 'none' }}>
+            <Link
+              to={{
+                pathname: "/profile",
+                data: {  userId } // your data array of objects
+              }}
+              style={{ textDecoration: 'none' }} >
               <Button className="header-buttons"
                 onClick={this.handleProfileClick} variant="contained" >
                 <PersonIcon style={{ marginRight: "5px", fontSize: "x-large" }} />

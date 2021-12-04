@@ -3,9 +3,9 @@ const router = express.Router();
 const userController = require('../../controllers/userController')
 
 // Load User model
-const User = require('../../models/User');
+ const User = require('../../models/User');
 
-router.get("/u", userController.getUser)
+router.get("/u/:id", userController.getUserById)
 
 router.post("/ucreate",userController.createUser)
 

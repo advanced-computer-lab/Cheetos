@@ -52,7 +52,7 @@ export default class TripDetailsModal extends Component {
                                     <div className="flex-row" style={{ width: "2rem", justifyContent: "flex-start" , alignItems: "flex-start" }} ><LuggageIcon /><p>{baggage.Number}</p></div>
                                     <p>x</p>
                                 {/* </div> */}
-                                <div className="flex-row" style={{  alignItems: "stretch" }}><MonitorWeightIcon/> <p>{baggage.Size}kg</p></div>
+                                <div className="flex-row" style={{  alignItems: "stretch" }}><MonitorWeightIcon/> <p>{baggage.Size}</p></div>
 
                             </div>
 

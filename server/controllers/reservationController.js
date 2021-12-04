@@ -37,8 +37,8 @@ deleteReservation = async (req, res) => {
    
  createReservation = (req, res) => {
    var reser =  Reservation.create(req.body)
-      .then((user) =>
-        res.json({ msg: "Reservation added successfully", data: req.body })
+      .then((reservation) =>
+        res.json({ msg: "Reservation added successfully", data: reservation._id })
       )
       .catch((err) =>
         res.status(400).json({ error: err})
