@@ -22,7 +22,7 @@ export default class Trip extends Component {
     }
 
     render() {
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = this.props
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children , userId } = this.props
         const deptPrice = (deptFlight[deptCabin]["PriceAdult"] * adults) + (deptFlight[deptCabin]["PriceChild"] * children)
         const retPrice = (arrFlight[arrCabin]["PriceAdult"] * adults) + (arrFlight[arrCabin]["PriceChild"] * children)
         // edit later when u add retPrice ^^^ inside total price  ; 
@@ -73,7 +73,7 @@ export default class Trip extends Component {
                         <h3>{totalPrice}$</h3>
                         <Link to={{
                             pathname: "/reserve",
-                            data: {...this.props , totalPrice , deptPrice , retPrice} // your data array of objects
+                            data: {...this.props , totalPrice , deptPrice , retPrice , userId } // your data array of objects
                         }}
                             style={{ textDecoration: 'none' }}>
                             <Button
@@ -95,11 +95,11 @@ export default class Trip extends Component {
 
                
                <TripDetailsModal show = {this.state.showModaldept} parentFunc={()=>this.handleModalShow("showModaldept") } fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
-               depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage = {deptFlight.BaggageAllowance} / >
+               depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage = {deptFlight[deptCabin].BaggageAllowance} / >
                
               
                 <TripDetailsModal show = {this.state.showModalarr} parentFunc={()=>this.handleModalShow("showModalarr")} fNum ={arrFlight.FlightNumber} depDate ={arrFlight.DepartureDate} arrDate={arrFlight.ArrivalDate} depTime={arrFlight.DepartureTime} arrTime={arrFlight.ArrivalTime} duration={arrFlight.TripDuration} 
-               depAirport={arrFlight.DepartureAirport} arrAirport={arrFlight.ArrivalAirport} cabinClass={arrCabin}  baggage = {arrFlight.BaggageAllowance} / >
+               depAirport={arrFlight.DepartureAirport} arrAirport={arrFlight.ArrivalAirport} cabinClass={arrCabin}  baggage = {arrFlight[arrCabin].BaggageAllowance} / >
                 
             </>
 

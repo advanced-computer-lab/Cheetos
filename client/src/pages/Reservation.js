@@ -21,7 +21,7 @@ class Reservation extends Component {
     }
     render() {
         const { step  ,deptSeats , arrSeats} = this.state
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice  } = this.props.location.data
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice , userId } = this.props.location.data
         return (
             <div>
                 <MyHeader />

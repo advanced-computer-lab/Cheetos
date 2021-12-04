@@ -4,24 +4,50 @@ import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatRecline
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
 import { withRouter } from "react-router";
-
+import api from '../api'
 class ConfirmBooking extends Component {
 
     state = {
         showModal: false,
-
+        resId : ""
     }
     handleModalShow() {
         this.setState({
             showModal: this.state.showModal ? false : true,
         });
     }
+    async handleConfirm() {
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
+        const { deptSeats, arrSeats } = this.props
+        let arrOne = deptSeats.map((s) => ({
+            FlightId : deptFlight._id,
+            CabinClass: deptCabin,
+            ChosenSeat : s.Seat
+        }) )
 
+        let arrTwo = arrSeats.map((s) => ({
+            FlightId : arrFlight._id,
+            CabinClass: arrCabin,
+            ChosenSeat : s.Seat
+        }) )
+        let newArr = arrOne.concat(arrTwo) ; 
+        const reservation = {
+            UserId: userId,
+            TotalPrice: totalPrice,
+            Reservation: newArr
+        }
+        await api.confirmFlight(reservation).then((res) => {
+            this.setState({
+                resId : res.data.data
+            })
+            this.handleModalShow();
+        })
+    }
     render() {
 
         const { showModal } = this.state
         const { deptSeats, arrSeats } = this.props
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice , deptPrice , retPrice } = this.props.location.data
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
         let deptSeatNames = "";
         let arrSeatNames = "";
         console.log("seats areeeeee ", deptSeats, arrSeats);
@@ -106,7 +132,7 @@ class ConfirmBooking extends Component {
                         <div className="trip-flex-col" style={{ width: '30%' }} >
                             <h3>{totalPrice}$</h3>
                             <Button
-                                onClick={this.handleModalShow.bind(this)}
+                                onClick={this.handleConfirm.bind(this)}
                                 style={{
                                     backgroundColor: "#447fcc",
                                     width: "170px",
@@ -128,7 +154,7 @@ class ConfirmBooking extends Component {
                     </Modal.Header>
                     <Modal.Body><h5>
                         Your flight has been been booked !<br />
-                        Here is your confirmation number : <strong>1891997776</strong>
+                        Here is your confirmation number : <strong>{this.state.resId}</strong>
                         <br />we'll also email it to you !
                     </h5>
                     </Modal.Body>

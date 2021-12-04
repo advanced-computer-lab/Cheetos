@@ -1,5 +1,5 @@
+
 const User = require("../models/User");
-const Flight = require("../models/User");
 
 updateUser = async (req, res) => {
   const body = req.body;
@@ -24,13 +24,11 @@ updateUser = async (req, res) => {
 
     user.LastName = body.LastName;
 
-    user.HomeAddress = body.HomeAddress;
-
-    user.CountryCode = body.CountryCode;
+  
 
     user.Email = body.Email;
 
-    user.TelephoneNumber = body.TelephoneNumber;
+    
 
     user.PassportNumber = body.PassportNumber;
 
@@ -78,10 +76,25 @@ getUser = (req, res) => {
     .then((users) => res.json(users))
     .catch((err) => res.status(404).json({ nousersfound: "No User found" }));
 };
+getUserById = async (req, res) => {
+  await User.findOne({ _id: req.params.id }, (err, user) => {
+    if (err) {
+      return res.status(400).json({ success: false, error: err });
+    }
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, error: "User not found" });
+    }
+    return res.status(200).json({ success: true, data: user });
+  }).catch((err) => console.log(err));
+};
 
 module.exports = {
   updateUser,
   deleteUser,
   createUser,
-  getUser,
+  getUser, 
+  getUserById
 };

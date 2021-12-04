@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Trip from '../components/Trip'
 import MyHeader from '../components/MyHeader'
 import Booking from '../components/Booking'
-
+import api from '../api'
 export default class Home extends Component {
     deptTrip = {
         FlightNumber: "1175",
@@ -155,7 +155,9 @@ export default class Home extends Component {
 
     state = {
         // all flights fetched from backend
-        flightArr : [this.deptTrip , this.arrTrip , this.arrTrip , this.deptTrip] ,  
+        // flightArr : [this.deptTrip , this.arrTrip , this.arrTrip , this.deptTrip] ,  
+        flightArr : [] ,
+        userId : "61ab9713fe61452296d667ca" , 
         //array containing pairs of dept and arrival flights i.e round trip ,computed at search
         // tripArr: [[this.deptTrip, this.arrTrip],
         // [this.deptTrip, this.arrTrip],
@@ -168,13 +170,18 @@ export default class Home extends Component {
 
     }
 
-    componentDidMount() {
-        //fetch flights from backend 
-        //***testing with fake flights arr , remove later */
-        
-        
+    async componentDidMount() {
+        await api.getAllFlights().then(flights => {
+          console.log(flights)
+          this.setState({
+            flightArr: flights.data,
+           
+          })
+        })
+        console.log(this.state.flightArr) ;
+      }
+     
 
-    }
     deptCabin  = '' 
     arrCabin = ''
     adultCount = 0 
@@ -206,21 +213,21 @@ export default class Home extends Component {
                     && p[0][deptCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
                     && p[1][arrCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)  ), 
             }
-        )
+        , () => console.log(this.state.tripArr))
 
 
 
     }
     render() {
-        const { tripArr  } = this.state
+        const { tripArr , userId  } = this.state
 
         return (
             <div className="flex-col" >
-                <MyHeader  parentSearch = {( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass ) => this.handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass )} />
+                <MyHeader userId = { userId }  parentSearch = {( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass ) => this.handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass )} />
 
                 <div className="trip-search-results">
 
-                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]}  deptCabin = {this.deptCabin} arrCabin = {this.arrCabin} adults = {this.adultCount}  children = {this.childCount}    />)}
+                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]}  deptCabin = {this.deptCabin} arrCabin = {this.arrCabin} adults = {this.adultCount}  children = {this.childCount}   userId = {this.state.userId} />)}
                 </div>
             </div>
         )

@@ -31,6 +31,6 @@
     "validation": "0.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.15"
   }
 }
