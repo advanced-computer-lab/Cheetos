@@ -63,8 +63,10 @@ export default class Booking extends Component {
                         <p style={{width:"120px",textAlign:"center"}}>{b.CabinClass}</p>
                         </div>
 
-                        <p className="emphasis">13h 30m</p>
-                            {/* <p>CAI-LAX</p> */}
+                        <div className="trip-flex-col">
+                            <p className="emphasis">13h 30m</p>
+                                 <p>CAI-LAX</p>
+                        </div>
                         
                         
                     </div>
