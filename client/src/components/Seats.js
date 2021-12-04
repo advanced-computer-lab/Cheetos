@@ -3,11 +3,12 @@ import '../style/seats.css';
 
 import ChairOutlinedIcon from '@mui/icons-material/ChairOutlined';
 import Seat from './Seat';
-export default class Seats extends Component {
+
+ class Seats extends Component {
     state = {
         chosenSeats: [],
         canChose: true,
-        passengers: 3 //should be initialised from props 
+        passengers: this.props.passengers //should be initialised from props 
 
     }
     seat = {
@@ -58,12 +59,12 @@ export default class Seats extends Component {
                         chosenSeats: [...this.state.chosenSeats, seat],
                         passengers: newPassengers , 
                         canChose  : newPassengers == 0 ? false : true 
-                    }, () => console.log(this.state.chosenSeats))
+                    }, () => this.props.parentFunc(this.props.att , this.state.chosenSeats))
                 } else {
                     this.setState({
                         chosenSeats: this.state.chosenSeats.filter((s) => s.Seat !== seat.Seat),
                         passengers: this.state.passengers + 1
-                    }, () => console.log(this.state.chosenSeats))
+                    }, () => this.props.parentFunc(this.props.att , this.state.chosenSeats))
                 }
                     
             } else {
@@ -78,7 +79,7 @@ export default class Seats extends Component {
                         chosenSeats: this.state.chosenSeats.filter((s) => s.Seat !== seat.Seat),
                         passengers: this.state.passengers + 1 , 
                         canChose : true 
-                    }, () => console.log(this.state.chosenSeats))
+                    },  () => this.props.parentFunc(this.props.att , this.state.chosenSeats))
                 }
             }
 
@@ -87,14 +88,15 @@ export default class Seats extends Component {
     }
     render() {
 
-        const { type, seatClass, color } = this.props
+        const { type, seatClass, passengers } = this.props
+      
         return (
 
             <div className="shuttle">
 
                 <div className="first-class">
                     <h2>{type}</h2>
-                    <h3>{seatClass}  : </h3>
+                    <h3>{seatClass}  : {this.state.chosenSeats.length}/{passengers} </h3>
                     {this.subs(this.busArr).map((r) =>
                         <div className="seats-row">
                             {
@@ -113,3 +115,4 @@ export default class Seats extends Component {
         )
     }
 }
+export default Seats  

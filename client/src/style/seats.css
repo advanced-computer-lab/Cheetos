@@ -50,6 +50,7 @@
   flex-direction: column;
   gap: 5px;
   padding: 1em;
+  margin-top: 2em;
 }
 .first-class{
   display: flex;
@@ -118,6 +119,7 @@
   border: 1px solid rgba(0, 0, 0, 0.418);
   background-color: rgb(163, 163, 163);
   border-radius: 5px;
+  cursor: not-allowed;
   
   
   
@@ -130,4 +132,12 @@
 
 .chair:hover{
   color: aliceblue;
+}
+
+.stepper{
+  background-color: white;
+  border-radius: 5px;
+  /* width: 100%; */
+  margin: 2em;
+  padding: 2em;
 }

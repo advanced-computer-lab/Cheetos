@@ -10,6 +10,7 @@ import SignInPage from '../pages/SignInPage';
 import ChooseSeats from '../pages/ChooseSeats';
 import Tagline from '../pages/Tagline';
 import StepperPage from '../components/StepperPage';
+import Reservation from '../pages/Reservation';
 
 
 function App() {
@@ -41,7 +42,9 @@ function App() {
       <Route path="/tag" >
         <Tagline/>
       </Route>
-       
+      <Route path="/reserve" >
+        <Reservation/>
+      </Route>
       </Switch>
 
 

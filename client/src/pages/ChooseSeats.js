@@ -3,23 +3,41 @@ import MyHeader from '../components/MyHeader'
 import Seats from '../components/Seats'
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-export default class ChooseSeats extends Component {
+import { withRouter } from "react-router";
+class ChooseSeats extends Component {
+    state = {
+        arrSeats: [],
+        deptSeats: []
+    }
     handleConfirm() {
-        console.log(this.props);
+        const {arrSeats , deptSeats} = this.state ; 
+        const {  adults, children } = this.props.location.data
+        if (arrSeats.length < Number(adults) + Number(children) ||deptSeats.length < Number(adults) + Number(children)  ) {
+            alert("you must choose all seats")
+        }else{
+            this.props.parentFunc(deptSeats , arrSeats , this.props.location.data)
+        }
+    
+    }
+    handleSeatsChange(att, seats) {
+        console.log(seats)
+        this.setState(
+            {
+                ...this.state,
+                [att]: seats
+            }
+        )
     }
     render() {
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = this.props.location.data
         return (
             <div className="seats-page">
-                <MyHeader />
+                {/* <MyHeader /> */}
                 <div className="shuttles">
-                    <Seats type="Departure flight" seatClass="First class" />
-                    <Seats type="Return flight" seatClass="Economy class" />
+                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
+                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
                 </div>
-                <Link to={{
-                    pathname: "/confirm",
-                    msg: "heoooooho" // your data array of objects
-                }}
-                    style={{ textDecoration: 'none' }}>
+               
                     <Button
                         onClick={this.handleConfirm.bind(this)}
                         style={{
@@ -33,8 +51,10 @@ export default class ChooseSeats extends Component {
                     >
                         Confirm Seats
                     </Button>
-                </Link>
+                
             </div>
         )
     }
 }
+
+export default withRouter(ChooseSeats);
