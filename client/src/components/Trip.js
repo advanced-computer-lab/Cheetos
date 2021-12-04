@@ -4,16 +4,20 @@ import Modal from "react-bootstrap/Modal";
 import Button from "@mui/material/Button";
 import LuggageIcon from '@mui/icons-material/Luggage';
 import { Link } from "react-router-dom";
+import TripDetailsModal from './TripDetailsModal';
 
 export default class Trip extends Component {
     state = {
-        showModal: false,
+        showModaldept: false,
+        showModalarr: false,
 
     }
-    handleModalShow() {
-        this.setState({
-            showModal: this.state.showModal ? false : true,
-        });
+    handleModalShow(modal) {
+        this.setState(
+            {
+              ...this.state,
+              [modal]: !this.state[modal]
+            });
     }
     
     render() {
@@ -41,7 +45,7 @@ export default class Trip extends Component {
                                 <p>{deptFlight.DepartureAirport}-{deptFlight.ArrivalAirport} </p>
                             </div>
 
-                            <a href="#" onClick={this.handleModalShow.bind(this)}>more  {">"}</a>
+                            <a href="#" onClick={this.handleModalShow.bind(this,"showModaldept")}>more  {">"}</a>
                         </div>
                         <div className="trip-flight"  >
                             <h4>{arrFlight.FlightNumber} </h4>
@@ -57,7 +61,7 @@ export default class Trip extends Component {
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport} </p>
                             </div>
 
-                            <a href="#" onClick={this.handleModalShow.bind(this)}>more  {">"}</a>
+                            <a href="#" onClick={this.handleModalShow.bind(this,"showModalarr")}>more  {">"}</a>
                         </div>
 
                     </div>
@@ -84,58 +88,14 @@ export default class Trip extends Component {
                     </div>
                 </div>
 
-                <Modal
-                    show={this.state.showModal}
-                    onHide={this.handleModalShow.bind(this)}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-
-                >
-                    <Modal.Header className="msg-header" closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Flight number : A18732
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body style={{ height: "20vh" }}>
-
-                        <div className="details-modal ">
-                            {/* <div style={{ width: '70%'  , marginTop : '5px'}} > */}
-
-                            <div className="modal-trip"  >
-
-                                <div className="trip-flex-col">
-                                    <strong>12-12-2021  {">"} 12-12-2021</strong>
-                                    <p>5:30  {">"} 17:30</p>
-                                </div>
-
-                                <div >
-                                    <strong>32h 08m</strong>
-                                    <p>CAI-LAX</p>
-                                </div>
-
-                                <strong>Economy</strong>
-
-                            </div>
-                            <div className="vl"> </div>
-
-                            <div className="flex-row" style={{ width: '30%' }} >
-
-                                <div className="trip-flex-col" style={{ alignItems: "flex-start" }}>
-                                    <div className="flex-row" style={{ width: "10rem", justifyContent: "flex-start" , alignItems: "flex-start" }} ><LuggageIcon /><p>Carry-on</p></div>
-                                    <div className="flex-row" style={{ width: "10rem", justifyContent: "flex-start", alignItems: "flex-start" }}><LuggageIcon /><p>Checked bag</p></div>
-                                </div>
-                                <div className="trip-flex-col"><p>2</p><p>1</p></div>
-
-                            </div>
-
-                         
-                        </div>
-
-                    </Modal.Body>
-
-                </Modal>
-
+               
+               <TripDetailsModal show = {this.state.showModaldept} parentFunc={()=>this.handleModalShow("showModaldept")} fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
+               depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin} / >
+               
+              
+                <TripDetailsModal show = {this.state.showModaldept} parentFunc={()=>this.handleModalShow("showModalarr")} fNum ={arrFlight.FlightNumber} depDate ={arrFlight.DepartureDate} arrDate={arrFlight.ArrivalDate} depTime={arrFlight.DepartureTime} arrTime={arrFlight.ArrivalTime} duration={arrFlight.TripDuration} 
+               depAirport={arrFlight.DepartureAirport} arrAirport={arrFlight.ArrivalAirport} cabinClass={arrCabin} / >
+                
             </>
 
 
