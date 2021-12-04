@@ -3,8 +3,9 @@ import MyHeader from '../components/MyHeader'
 import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatReclineNormal';
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
+import { withRouter } from "react-router";
 
-export default class ConfirmBooking extends Component {
+ class ConfirmBooking extends Component {
 
     state={
         showModal:false,
@@ -15,7 +16,9 @@ export default class ConfirmBooking extends Component {
           showModal: this.state.showModal ? false : true,
         });
       }
-
+    componentDidMount(){
+        alert(this.props.location.msg);
+    }
     render() {
        
         const {showModal} = this.state
@@ -116,3 +119,5 @@ export default class ConfirmBooking extends Component {
         )
     }
 }
+
+export default withRouter(ConfirmBooking) ; 
