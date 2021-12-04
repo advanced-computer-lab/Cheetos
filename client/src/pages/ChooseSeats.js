@@ -4,6 +4,9 @@ import Seats from '../components/Seats'
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 export default class ChooseSeats extends Component {
+    handleConfirm() {
+        console.log(this.props);
+    }
     render() {
         return (
             <div className="seats-page">
@@ -14,14 +17,11 @@ export default class ChooseSeats extends Component {
                 </div>
                 <Link to={{
                     pathname: "/confirm",
-                    state: {
-                         msg: "helloozz" 
-                         }
-                      }} 
-                style={{ textDecoration: 'none' }} 
-                >
+                    msg: "heoooooho" // your data array of objects
+                }}
+                    style={{ textDecoration: 'none' }}>
                     <Button
-
+                        onClick={this.handleConfirm.bind(this)}
                         style={{
                             backgroundColor: "#447fcc",
                             width: "15em",

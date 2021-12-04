@@ -71,7 +71,7 @@ export default class Trip extends Component {
                             onClick={this.handleProfileClick}
                             style={{
                                 backgroundColor: "#37A1E2",
-                                width: "60%",
+                                
                                 height: "5vh",
                                 fontSize: "small",
                             }}
