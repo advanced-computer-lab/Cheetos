@@ -68,7 +68,7 @@ export default class Trip extends Component {
                         <h3>{totalPrice}$</h3>
                         <Link to={{
                             pathname: "/reserve",
-                            data: {...this.props , totalPrice} // your data array of objects
+                            data: {...this.props , totalPrice , deptPrice , retPrice} // your data array of objects
                         }}
                             style={{ textDecoration: 'none' }}>
                             <Button

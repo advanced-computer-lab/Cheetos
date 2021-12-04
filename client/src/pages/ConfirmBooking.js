@@ -20,14 +20,15 @@ class ConfirmBooking extends Component {
     render() {
 
         const { showModal } = this.state
-        const { deptSeats, arrSeats , totalPrice } = this.props
+        const { deptSeats, arrSeats } = this.props
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice , deptPrice , retPrice } = this.props.location.data
         let deptSeatNames = "";
         let arrSeatNames = "";
         console.log("seats areeeeee ", deptSeats, arrSeats);
         if (deptSeats && arrSeats) {
             for (let i = 0; i < deptSeats.length; i++) {
                 if (i == deptSeats.length - 1) {
-                    deptSeatNames += deptSeats[i].Seat ;
+                    deptSeatNames += deptSeats[i].Seat;
                 } else {
                     deptSeatNames += deptSeats[i].Seat + ",";
                 }
@@ -35,7 +36,7 @@ class ConfirmBooking extends Component {
             }
             for (let i = 0; i < arrSeats.length; i++) {
                 if (i == arrSeats.length - 1) {
-                    arrSeatNames += arrSeats[i].Seat ;
+                    arrSeatNames += arrSeats[i].Seat;
                 } else {
                     arrSeatNames += arrSeats[i].Seat + ",";
                 }
@@ -58,16 +59,16 @@ class ConfirmBooking extends Component {
 
 
                                 <div className="trip-flex-col">
-                                    <p className="emphasis">12-3-2021 {">"} 12-3-2021  </p>
-                                    <p>2:30 {">"} 17:30</p>
+                                    <p className="emphasis">{deptFlight.DepartureDate}{">"} {deptFlight.ArrivalDate} </p>
+                                    <p>{deptFlight.DepartureTime}{">"}{deptFlight.ArrivalTime}</p>
                                 </div>
 
                                 <div className="trip-flex-col">
                                     <div className="emphasis" ><AirlineSeatReclineNormalIcon />{deptSeatNames}</div>
-                                    <p style={{ width: "12", textAlign: "center" }}>Economy</p>
+                                    <p style={{ width: "12", textAlign: "center" }}>{deptCabin}</p>
                                 </div>
 
-                                <p className="emphasis">{totalPrice}$</p>
+                                <p className="emphasis">{deptPrice}$</p>
 
 
 
@@ -77,16 +78,16 @@ class ConfirmBooking extends Component {
 
 
                                 <div className="trip-flex-col">
-                                    <p className="emphasis">12-3-2021 {">"} 12-3-2021  </p>
-                                    <p>2:30 {">"} 17:30</p>
+                                    <p className="emphasis">{arrFlight.DepartureDate}{">"} {arrFlight.ArrivalDate} </p>
+                                    <p>{arrFlight.DepartureTime}{">"}{arrFlight.ArrivalTime}</p>
                                 </div>
 
                                 <div className="trip-flex-col">
-                                    <div className="emphasis" ><AirlineSeatReclineNormalIcon />{arrSeatNames}</div>
-                                    <p style={{ width: "12", textAlign: "center" }}>Economy</p>
+                                    <div className="emphasis" ><AirlineSeatReclineNormalIcon />{deptSeatNames}</div>
+                                    <p style={{ width: "12", textAlign: "center" }}>{arrCabin}</p>
                                 </div>
 
-                                <p className="emphasis">700$</p>
+                                <p className="emphasis">{retPrice}$</p>
 
 
 
@@ -103,7 +104,7 @@ class ConfirmBooking extends Component {
 
                         </div>
                         <div className="trip-flex-col" style={{ width: '30%' }} >
-                            <h3>1400$</h3>
+                            <h3>{totalPrice}$</h3>
                             <Button
                                 onClick={this.handleModalShow.bind(this)}
                                 style={{
