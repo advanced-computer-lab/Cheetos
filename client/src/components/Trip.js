@@ -19,13 +19,13 @@ export default class Trip extends Component {
               [modal]: !this.state[modal]
             });
     }
-    
+
     render() {
-        const { deptFlight, arrFlight  , deptCabin , arrCabin , adults , children} = this.props
-        const deptPrice =  (deptFlight[deptCabin]["PriceAdult"] * adults) + (deptFlight[deptCabin]["PriceChild"] * children)
-        const retPrice =  (arrFlight[arrCabin]["PriceAdult"] * adults) + (arrFlight[arrCabin]["PriceChild"] * children)
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = this.props
+        const deptPrice = (deptFlight[deptCabin]["PriceAdult"] * adults) + (deptFlight[deptCabin]["PriceChild"] * children)
+        const retPrice = (arrFlight[arrCabin]["PriceAdult"] * adults) + (arrFlight[arrCabin]["PriceChild"] * children)
         // edit later when u add retPrice ^^^ inside total price  ; 
-        const totalPrice = deptPrice + retPrice ; 
+        const totalPrice = deptPrice + retPrice;
         return (
             <>
                 <div className="trip-card ">
@@ -70,20 +70,24 @@ export default class Trip extends Component {
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
                         <h3>{totalPrice}$</h3>
-                        <Link to="/seats" style={{ textDecoration: 'none' }}>
-                        <Button
-                            onClick={this.handleProfileClick}
-                            style={{
-                                backgroundColor: "#37A1E2",
-                                
-                                height: "5vh",
-                                fontSize: "small",
-                            }}
-                            //change for laterrrrrrrrrrrrrr
-                            variant="contained"
-                        >
-                            View Deal
-                        </Button>
+                        <Link to={{
+                            pathname: "/reserve",
+                            data: {...this.props , totalPrice} // your data array of objects
+                        }}
+                            style={{ textDecoration: 'none' }}>
+                            <Button
+                                onClick={this.handleProfileClick}
+                                style={{
+                                    backgroundColor: "#37A1E2",
+
+                                    height: "5vh",
+                                    fontSize: "small",
+                                }}
+                                //change for laterrrrrrrrrrrrrr
+                                variant="contained"
+                            >
+                                View Deal
+                            </Button>
                         </Link>
                     </div>
                 </div>
