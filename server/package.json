@@ -27,6 +27,7 @@
     "env": "^0.0.2",
     "express": "^4.17.1",
     "mongoose": "^6.0.12",
+    "nodemailer": "^6.7.2",
     "validation": "0.0.1"
   },
   "devDependencies": {
