@@ -142,6 +142,8 @@ export default class Home extends Component {
         ArrivalAirport: "CAI",
 
         TripDuration: "15h 30m",
+
+        
     }
 
     state = {
