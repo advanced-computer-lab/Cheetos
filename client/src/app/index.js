@@ -12,6 +12,7 @@ import ConfirmBooking from '../pages/ConfirmBooking';
 import SignInPage from '../pages/SignInPage';
 import ChooseSeats from '../pages/ChooseSeats';
 import Tagline from '../pages/Tagline';
+import StepperPage from '../components/StepperPage';
 
 
 function App() {
@@ -27,7 +28,9 @@ function App() {
           <Route path="signin" element={<SignInPage />} />
           <Route path="seats" element={<ChooseSeats />} />
           <Route path="tag" element={<Tagline />} />
+          <Route path="step" element={<StepperPage/>} />
       </Routes>
+
 
     </div>
   );
