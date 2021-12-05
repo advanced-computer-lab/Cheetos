@@ -33,6 +33,8 @@ class Reservation extends Component {
                 } */}
                 <ChooseSeats  parentFunc = {(deptSeats , arrSeats )=> this.handleSeatsConfirm(deptSeats , arrSeats)} />
                 {step == 1 ?
+            
+                 
                 <ConfirmBooking deptSeats = { deptSeats}  arrSeats = {arrSeats} totalPrice = {totalPrice} />
                 : ''}
 

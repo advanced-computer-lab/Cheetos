@@ -77,7 +77,7 @@ class ConfirmBooking extends Component {
                     {/* <MyHeader/> */}
 
 
-                    <div className="booking-card" style={{ marginTop: "25px" }}>
+                    <div className="booking-card" style={{ marginTop: "50px",marginBottom: "30px" }}>
                         <div style={{ width: '70%', marginTop: '5px' }} >
 
 

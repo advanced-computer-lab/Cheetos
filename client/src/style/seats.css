@@ -25,9 +25,10 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  gap : 10px ; 
+  gap : 20px ; 
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+  margin-top: 25px;
 
 }
 .seats-row{
@@ -41,16 +42,16 @@
 }
 .shuttle{
   /* margin-top: 2em; */
-  width: 35%;
+  width: 27rem;
   height: 55vh;
-  border: 2px solid rgb(124, 124, 124);
-  background-color: aliceblue;
+  /* border: 2px solid rgb(124, 124, 124); */
+  background-color: white;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   padding: 1em;
-  margin-top: 2em;
+  margin-top: 7px;
 }
 .first-class{
   display: flex;
@@ -88,7 +89,8 @@
   height: 50px; 
   width: 50px;
   border: 1px solid rgba(0, 0, 0, 0.418);
-  background-color: hsl(232, 78%, 100%);
+  /* background-color: hsl(232, 78%, 100%); */
+   background-color: #a8c9f5;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgba(114, 114, 114, 0.2);

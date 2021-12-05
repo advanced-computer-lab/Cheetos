@@ -45,6 +45,7 @@ class ChooseSeats extends Component {
                             width: "15em",
                             height: "7vh",
                             fontSize: "small",
+                            marginBottom:"15px"
                         }}
 
                         variant="contained"
