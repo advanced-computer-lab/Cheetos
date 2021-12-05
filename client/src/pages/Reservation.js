@@ -79,7 +79,7 @@ class Reservation extends Component {
         const { step, deptSeats, arrSeats, showModal } = this.state
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = sessionStorage.getItem('deal')
         return (
-            <div>
+            <div style = {{backgroundColor : "background-color: rgba(0, 0, 0, 0.575)"}}>
                 <MyHeader />
                 {/* {step == 0 ?
                     <ChooseSeats parentFunc = {()=> this.handleSeatsConfirm() } />

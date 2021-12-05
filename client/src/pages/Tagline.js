@@ -7,7 +7,7 @@ export default class Tagline extends Component {
             <>
                
 
-         <div className="flex-col">
+         <div className="flex-col" style = {{gap : 0  , margin : '0px'  , height : '100vh'}}>
              
              <MyHeader/>
              <div className=" tag-container">

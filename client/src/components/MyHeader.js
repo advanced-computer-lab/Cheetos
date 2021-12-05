@@ -51,12 +51,12 @@ class MyHeader extends Component {
   }
   flightSearch() {
     const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
-    if (this.props.location.pathname === "/") {
+    if (this.props.location.pathname === "/search") {
       this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)
     } else {
       const search = { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass }
       sessionStorage.setItem('searchQuery', JSON.stringify(search));
-      this.props.history.push("/");
+      this.props.history.push("/search");
     }
 
   }

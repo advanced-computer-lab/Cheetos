@@ -274,16 +274,23 @@ body::-webkit-scrollbar-thumb:hover {
   color:#ffffff;
 }
 .tag-container{
-  width:50vw;
+  height: 70vh;
+  flex-grow: 1;
+  width:100vw;
   justify-content: center;
   align-items: flex-start;
   gap:0;
+  background-color: rgba(0, 0, 0, 0.575);
+  padding: 4em;
+  border-radius: 10px;
+  
+
 }
 .tag{
   color: #ffffff;
   font-size: 3.5em;
   font-weight: bold;
-  padding-top: 12vh;
+  /* padding-top: 12vh; */
   padding-bottom: 0;
   margin-bottom: -20px;
   text-shadow: 0px -1px 12px rgba(58, 58, 58, 0.9);

@@ -63,7 +63,7 @@ class Profile extends Component {
   }
 
   async handleSave(att) {
-    const { userId } =sessionStorage.getItem('userId')
+    const  userId  =sessionStorage.getItem('userId')
     const { editName, editPassport, editEmail, fname, lname, email, passport } = this.state;
     const newUser = {
       FirstName: fname,

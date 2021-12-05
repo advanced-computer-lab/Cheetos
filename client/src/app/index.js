@@ -19,7 +19,7 @@ function App() {
 
       <Switch>
       <Route exact path="/" >
-        <Home/>
+        <Tagline/>
       </Route>
       <Route path="/bookings" >
         <MyBookings/>
@@ -39,8 +39,8 @@ function App() {
       <Route path="/seats" >
         <ChooseSeats/>
       </Route>
-      <Route path="/tag" >
-        <Tagline/>
+      <Route path="/search" >
+        <Home/>
       </Route>
       <Route path="/reserve" >
         <Reservation/>
