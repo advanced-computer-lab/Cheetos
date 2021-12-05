@@ -22,8 +22,8 @@ class ConfirmBooking extends Component {
     handleSignInModal() {
         this.setState({
             showSignin: !this.state.showSignin , 
-            signedIn : true 
         });
+        sessionStorage.setItem('userId', "61ab9713fe61452296d667ca");
         this.props.parentFunc()
     }
    
@@ -31,7 +31,8 @@ class ConfirmBooking extends Component {
 
         const { showModal, showSignin } = this.state
         const { deptSeats, arrSeats } = this.props
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
+        const userId = sessionStorage.getItem('userId') ; 
+        const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice, deptPrice, retPrice } = JSON.parse(sessionStorage.getItem('deal'))
         let deptSeatNames = "";
         let arrSeatNames = "";
         console.log("seats areeeeee ", deptSeats, arrSeats);

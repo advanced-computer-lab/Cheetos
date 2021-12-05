@@ -11,11 +11,11 @@ class ChooseSeats extends Component {
     }
     handleConfirm() {
         const {arrSeats , deptSeats} = this.state ; 
-        const {  adults, children } = this.props.location.data
+        const {  adults, children } = JSON.parse(sessionStorage.getItem('deal')) ; 
         if (arrSeats.length < Number(adults) + Number(children) ||deptSeats.length < Number(adults) + Number(children)  ) {
             alert("you must choose all seats")
         }else{
-            this.props.parentFunc(deptSeats , arrSeats , this.props.location.data)
+            this.props.parentFunc(deptSeats , arrSeats , JSON.parse(sessionStorage.getItem('deal')))
         }
     
     }
@@ -29,7 +29,7 @@ class ChooseSeats extends Component {
         )
     }
     render() {
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = this.props.location.data
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
        // console.log("seats are " , deptFlight[deptCabin].Seats) ; 
        // console.log("seats are " , arrFlight[arrCabin].Seats) ; 
         return (

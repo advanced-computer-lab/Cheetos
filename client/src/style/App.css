@@ -208,6 +208,23 @@ header-buttons-container{
   overflow: auto;
   
 }
+body {
+  overflow: auto;
+}
+body::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+/* Add a thumb */
+body::-webkit-scrollbar-thumb {
+  background: gainsboro;
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: #aaaaaa;
+}
+
+
 
 .trip-search-results::-webkit-scrollbar {
   width: 5px;

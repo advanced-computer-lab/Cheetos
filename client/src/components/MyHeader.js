@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
+import Modal from "react-bootstrap/Modal";
 import PersonIcon from '@mui/icons-material/Person';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -8,8 +9,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import Logo from '../components/Logo';
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { Link } from "react-router-dom";
-
-export default class MyHeader extends Component {
+import Signin from "../components/Signin"
+import { withRouter } from 'react-router';
+class MyHeader extends Component {
   state = {
     adultCount: "",
     childCount: "",
@@ -18,8 +20,10 @@ export default class MyHeader extends Component {
     deptDate: "",
     retDate: "",
     deptCabinClass: "",
-    arrCabinClass: "" , 
-    userId : this.props.userId
+    arrCabinClass: "",
+    userId: '',
+    showSignin: false,
+    signedIn: false
   }
 
   handleSearch(e) {
@@ -36,16 +40,55 @@ export default class MyHeader extends Component {
   }
 
 
-  handleProfileClick() {
+  handleSignInModal() {
+    sessionStorage.setItem('userId', "61ab9713fe61452296d667ca");
+    this.setState({
+      showSignin: !this.state.showSignin,
+      userId: sessionStorage.getItem('userId')
+    });
+
 
   }
   flightSearch() {
     const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
-    this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)
+    if (this.props.location.pathname === "/") {
+      this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)
+    } else {
+      const search = { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass }
+      sessionStorage.setItem('searchQuery', JSON.stringify(search));
+      this.props.history.push("/");
+    }
+
+  }
+  componentDidMount() {
+
+    console.log("my pathname is ", this.props.location.pathname)
+    if (sessionStorage.getItem('userId')) {
+      this.setState({
+        signedIn: true,
+        userId: sessionStorage.getItem('userId')
+      })
+    }
+    const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
+    if (searchObject) {
+      this.setState(
+        {
+          adultCount: searchObject.adultCount,
+          childCount: searchObject.childCount,
+          deptAirport: searchObject.deptAirport,
+          arrAirport: searchObject.arrAirport,
+          deptDate: searchObject.deptDate,
+          retDate: searchObject.retDate,
+          deptCabinClass: searchObject.deptCabinClass,
+          arrCabinClass: searchObject.arrCabinClass,
+        }
+      )
+
+    }
   }
   render() {
-    const {userId} = this.props
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
+    const { userId } = this.props
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn } = this.state
     return (
       <div className="admin-header logo-buttons-search">
 
@@ -54,29 +97,38 @@ export default class MyHeader extends Component {
             <Logo />
           </Link>
           <div className="header-buttons-container">
-            <Link to={{
-                pathname: "/bookings",
-                data: {  userId } // your data array of objects
-              }} style={{ textDecoration: 'none' }}>
+            {sessionStorage.getItem('userId') ?
+              <>
+                <Link to={{
+                  pathname: "/bookings",
+                  // data: { userId } // your data array of objects
+                }} style={{ textDecoration: 'none' }}>
+                  <Button className="header-buttons" style={{ marginRight: "20px" }}
+                    variant="contained" >
+                    My bookings
+                  </Button>
+                </Link>
+                <Link
+                  to={{
+                    pathname: "/profile",
+                    // data: { userId } // your data array of objects
+                  }}
+                  style={{ textDecoration: 'none' }} >
+                  <Button className="header-buttons"
+                    variant="contained" >
+                    <PersonIcon style={{ marginRight: "5px", fontSize: "x-large" }} />
+
+                    Profile
+
+                  </Button>
+                </Link>
+              </>
+              :
               <Button className="header-buttons" style={{ marginRight: "20px" }}
-                onClick={this.handleProfileClick} variant="contained" >
-                My bookings
+                onClick={this.handleSignInModal.bind(this)} variant="contained" >
+                Sign in
               </Button>
-            </Link>
-            <Link
-              to={{
-                pathname: "/profile",
-                data: {  userId } // your data array of objects
-              }}
-              style={{ textDecoration: 'none' }} >
-              <Button className="header-buttons"
-                onClick={this.handleProfileClick} variant="contained" >
-                <PersonIcon style={{ marginRight: "5px", fontSize: "x-large" }} />
-
-                Profile
-
-              </Button>
-            </Link>
+            }
           </div>
 
         </div>
@@ -209,9 +261,20 @@ export default class MyHeader extends Component {
           </div>
         </div>
 
+        <Modal
+          aria-labelledby="contained-modal-title-vcenter"
+          size="sm"
+          centered show={showSignin} onHide={this.handleSignInModal.bind(this)}>
 
+
+          <Signin />
+
+
+        </Modal>
       </div>
 
     )
   }
 }
+
+export default withRouter(MyHeader)

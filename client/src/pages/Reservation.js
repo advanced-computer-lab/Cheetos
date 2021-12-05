@@ -11,30 +11,39 @@ import Modal from "react-bootstrap/Modal";
 import api from '../api'
 class Reservation extends Component {
     state = {
-        step: 0 , 
+        step: 0,
         showModal: false,
         resId: "",
-        deptSeats : [] , 
-        arrSeats : [] 
+        deptSeats: [],
+        arrSeats: []
     }
     handleModalShow() {
-        this.setState({
-            showModal: this.state.showModal ? false : true,
-        });
+        if (this.state.showModal) {
+            this.setState({
+                showModal: false
+            });
+            this.props.history.push("/bookings")
+        } else {
+            this.setState({
+                showModal: true
+            });
+        }
+
     }
-    handleSeatsConfirm(deptSeats , arrSeats){
+    handleSeatsConfirm(deptSeats, arrSeats) {
         this.setState({
-            deptSeats : deptSeats , 
-            arrSeats : arrSeats , 
-        } , () => this.handleConfirm())
+            deptSeats: deptSeats,
+            arrSeats: arrSeats,
+        }, () => this.handleConfirm())
     }
-    handleSignedIn(){
+    handleSignedIn() {
         this.setState({
-            step : 1 
+            step: 1
         })
     }
     async handleConfirm() {
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
+       const  userId = sessionStorage.getItem('userId') ; 
+        const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = JSON.parse(sessionStorage.getItem('deal'))
         const { deptSeats, arrSeats } = this.state
         let arrOne = deptSeats.map((s) => ({
             FlightId: deptFlight._id,
@@ -67,8 +76,8 @@ class Reservation extends Component {
         })
     }
     render() {
-        const { step  ,deptSeats , arrSeats , showModal} = this.state
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice , userId } = this.props.location.data
+        const { step, deptSeats, arrSeats, showModal } = this.state
+        const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = sessionStorage.getItem('deal')
         return (
             <div>
                 <MyHeader />
@@ -78,12 +87,12 @@ class Reservation extends Component {
                         <ConfirmBooking />
                         : ''
                 } */}
-                <ConfirmBooking parentFunc = { () => this.handleSignedIn() }deptSeats = { deptSeats}  arrSeats = {arrSeats} totalPrice = {totalPrice} />
-                {step == 1 ? 
-            
-                    <ChooseSeats  deptFlight = {deptFlight }  arrFlight = {arrFlight} deptCabin = {deptCabin} arrCabin ={arrCabin}   parentFunc = {(deptSeats , arrSeats )=> this.handleSeatsConfirm(deptSeats , arrSeats)} />
-               
-                : ''}
+                <ConfirmBooking parentFunc={() => this.handleSignedIn()} deptSeats={deptSeats} arrSeats={arrSeats} totalPrice={totalPrice} />
+                {step == 1 ?
+
+                    <ChooseSeats deptFlight={deptFlight} arrFlight={arrFlight} deptCabin={deptCabin} arrCabin={arrCabin} parentFunc={(deptSeats, arrSeats) => this.handleSeatsConfirm(deptSeats, arrSeats)} />
+
+                    : ''}
 
                 <Modal
                     aria-labelledby="contained-modal-title-vcenter" centered show={showModal} onHide={this.handleModalShow.bind(this)}>

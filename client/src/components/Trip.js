@@ -20,9 +20,15 @@ export default class Trip extends Component {
               [modal]: !this.state[modal]
             });
     }
+    handleViewDeal(totalPrice , retPrice  , deptPrice , adults , children){
+        console.log("i am saving deaaaaaaaaaaaaaaaaaaaaaaaaaal ") ; 
+        const data = {...this.props , totalPrice , deptPrice , retPrice , adults , children }
+        sessionStorage.setItem('deal', JSON.stringify(data) );
+        console.log(JSON.parse(sessionStorage.getItem('deal')));
+    }
 
     render() {
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children , userId } = this.props
+        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = this.props
         const deptPrice = (deptFlight[deptCabin]["PriceAdult"] * adults) + (deptFlight[deptCabin]["PriceChild"] * children)
         const retPrice = (arrFlight[arrCabin]["PriceAdult"] * adults) + (arrFlight[arrCabin]["PriceChild"] * children)
         // edit later when u add retPrice ^^^ inside total price  ; 
@@ -46,7 +52,7 @@ export default class Trip extends Component {
                                 <p>{deptFlight.DepartureAirport}-{deptFlight.ArrivalAirport} </p>
                             </div>
 
-                            <a href="#" onClick={this.handleModalShow.bind(this,"showModaldept")}>more  {">"}</a>
+                            <a href="#" onClick={this.handleModalShow.bind(this,"showModaldept")}>details {">"}</a>
                         </div>
                         <div className="trip-flight"  >
                             <h4>{arrFlight.FlightNumber} </h4>
@@ -62,7 +68,7 @@ export default class Trip extends Component {
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport} </p>
                             </div>
 
-                            <a href="#" onClick={this.handleModalShow.bind(this,"showModalarr")}>more  {">"}</a>
+                            <a href="#" onClick={this.handleModalShow.bind(this,"showModalarr")}>details  {">"}</a>
                         </div>
 
                     </div>
@@ -73,11 +79,11 @@ export default class Trip extends Component {
                         <h3>{totalPrice}$</h3>
                         <Link to={{
                             pathname: "/reserve",
-                            data: {...this.props , totalPrice , deptPrice , retPrice , userId } // your data array of objects
+                            // data: {...this.props , totalPrice , deptPrice , retPrice , userId } // your data array of objects
                         }}
                             style={{ textDecoration: 'none' }}>
                             <Button
-                                onClick={this.handleProfileClick}
+                                onClick={() => this.handleViewDeal(totalPrice , retPrice  , deptPrice , adults , children)}
                                 style={{
                                     backgroundColor: "#37A1E2",
 

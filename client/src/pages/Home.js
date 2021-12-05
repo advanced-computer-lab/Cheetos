@@ -3,7 +3,8 @@ import Trip from '../components/Trip'
 import MyHeader from '../components/MyHeader'
 import Booking from '../components/Booking'
 import api from '../api'
-export default class Home extends Component {
+import { withRouter } from 'react-router'
+class Home extends Component {
     deptTrip = {
         FlightNumber: "1175",
         DepartureTime: "10:10",
@@ -73,9 +74,9 @@ export default class Home extends Component {
 
         TripDuration: "24h 30m",
         BaggageAllowance: {
-            Number: 4 , 
+            Number: 4,
             Size: 20
-          }
+        }
     }
 
     arrTrip = {
@@ -147,53 +148,65 @@ export default class Home extends Component {
 
         TripDuration: "15h 30m",
         BaggageAllowance: {
-            Number: 2 , 
+            Number: 2,
             Size: 25
-          }
-        
+        }
+
     }
 
     state = {
         // all flights fetched from backend
         // flightArr : [this.deptTrip , this.arrTrip , this.arrTrip , this.deptTrip] ,  
-        flightArr : [] ,
-        userId : "61ab9713fe61452296d667ca" , 
+        flightArr: [],
+        userId: "",
         //array containing pairs of dept and arrival flights i.e round trip ,computed at search
         // tripArr: [[this.deptTrip, this.arrTrip],
         // [this.deptTrip, this.arrTrip],
         // [this.deptTrip, this.arrTrip],
         // [this.deptTrip, this.arrTrip],
         // ]
-        tripArr: [] ,
+        tripArr: [],
 
-       
+
 
     }
 
     async componentDidMount() {
-        await api.getAllFlights().then(flights => {
-          console.log(flights)
-          this.setState({
-            flightArr: flights.data,
-           
-          })
-        })
-        console.log(this.state.flightArr) ;
-      }
-     
 
-    deptCabin  = '' 
+        await api.getAllFlights().then(flights => {
+            console.log(flights)
+            this.setState({
+                flightArr: flights.data,
+
+            })
+        }).then(
+            () => {
+                const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
+                if (searchObject) {
+                   
+                    this.handleSearch( searchObject.adultCount, searchObject.childCount, searchObject.deptAirport,searchObject.arrAirport, searchObject.deptDate, searchObject.retDate, searchObject.deptCabinClass, searchObject.arrCabinClass)
+                }
+            }
+        )
+
+        console.log(this.state.flightArr);
+        // sessionStorage.setItem('userId', "61ab9713fe61452296d667ca");
+        console.log("my user id is ", localStorage.getItem('userId'))
+    }
+
+
+    deptCabin = ''
     arrCabin = ''
-    adultCount = 0 
-    childCount = 0 
-    handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass ){
+    adultCount = 0
+    childCount = 0
+    handleSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass) {
         //----making the pairs of flights (round trips) from the all flights array 
-        this.deptCabin = deptCabinClass ; 
-        this.arrCabin = arrCabinClass ; 
-        this.adultCount = adultCount ; 
-        this.childCount = childCount ; 
-        const {flightArr} = this.state ; 
-        let resultArr = [] ; //temporary array to hold all "pairs" of possible round trips
+        this.deptCabin = deptCabinClass;
+        this.arrCabin = arrCabinClass;
+        this.adultCount = adultCount;
+        this.childCount = childCount;
+        const { flightArr } = this.state;
+        let resultArr = []; //temporary array to hold all "pairs" of possible round trips
         for (let i = 0; i < flightArr.length; i++) {
             for (let j = 0; j < flightArr.length; j++) {
                 if (flightArr[i].DepartureAirport === flightArr[j].ArrivalAirport && flightArr[i].ArrivalAirport === flightArr[j].DepartureAirport
@@ -211,25 +224,26 @@ export default class Home extends Component {
                     p[0].DepartureAirport === deptAirport && p[0].ArrivalAirport === arrAirport
                     && Date.parse(p[0].DepartureDate) === Date.parse(deptDate) && Date.parse(p[1].ArrivalDate) === Date.parse(retDate)
                     && p[0][deptCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
-                    && p[1][arrCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)  ), 
+                    && p[1][arrCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)),
             }
-        , () => console.log(this.state.tripArr))
+            , () => sessionStorage.setItem('searchQuery', null )) 
 
 
 
     }
     render() {
-        const { tripArr , userId  } = this.state
+        const { tripArr, userId } = this.state
 
         return (
             <div className="flex-col" >
-                <MyHeader userId = { userId }  parentSearch = {( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass ) => this.handleSearch( adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass , arrCabinClass )} />
+                <MyHeader userId={userId} parentSearch={(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass) => this.handleSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)} />
 
                 <div className="trip-search-results">
 
-                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]}  deptCabin = {this.deptCabin} arrCabin = {this.arrCabin} adults = {this.adultCount}  children = {this.childCount}   userId = {this.state.userId} />)}
+                    {tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]} deptCabin={this.deptCabin} arrCabin={this.arrCabin} adults={this.adultCount} children={this.childCount} userId={this.state.userId} />)}
                 </div>
             </div>
         )
     }
 }
+export default withRouter(Home)

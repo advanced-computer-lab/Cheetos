@@ -4,6 +4,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 export default class Signin extends Component {
+    fakeLogin(){
+        localStorage.setItem('userId', "61ab9713fe61452296d667ca");
+    }
     render() {
         return (
             <div className="signin-form" >
@@ -43,7 +46,7 @@ export default class Signin extends Component {
                         `}
                     </style>
 
-                    <Button variant="flat" size="lg">
+                    <Button variant="flat" size="lg" onClick = {()=> this.fakeLogin()}>
                         Log in
                     </Button>
                     </>

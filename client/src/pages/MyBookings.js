@@ -55,7 +55,7 @@ import { withRouter } from 'react-router';
     }
     
     async componentDidMount() {
-        const { userId } = this.props.location.data
+        const  userId  = sessionStorage.getItem('userId');
         await api.getReservationsById(userId).then(reservations => {
             this.setState({
                 bookingsArr : reservations.data.data

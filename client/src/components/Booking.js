@@ -69,7 +69,9 @@ export default class Booking extends Component {
         // for(let i = 0 ; i< reservation.length ;i++){
         //     price+=reservation[i].Price; 
         //  }
-        const { DepFlight, ArrFlight } = reservation
+        const { DepFlight, ArrFlight  , Reservation} = reservation
+        const deptCabin = Reservation[0].CabinClass 
+        const arrCabin= Reservation[Reservation.length -1].CabinClass 
         return (
             <>
 
@@ -96,7 +98,7 @@ export default class Booking extends Component {
 
                             <div className="trip-flex-col">
                                 <div className="emphasis"><AirlineSeatReclineNormalIcon />{DepFlight.DeptSeats ? DepFlight.DeptSeats.toString() : ''}</div>
-                                <p style={{ width: "120px", textAlign: "center" }}>{deptFlight.CabinClass}</p>
+                                <p style={{ width: "120px", textAlign: "center" }}>{deptCabin}</p>
                             </div>
 
                             <div className="trip-flex-col">
@@ -117,7 +119,7 @@ export default class Booking extends Component {
 
                             <div className="trip-flex-col">
                                 <div className="emphasis"><AirlineSeatReclineNormalIcon />{ArrFlight.ArrSeats ? ArrFlight.ArrSeats.toString():''}</div>
-                                <p style={{ width: "120px", textAlign: "center" }}>{arrFlight.CabinClass}</p>
+                                <p style={{ width: "120px", textAlign: "center" }}>{arrCabin}</p>
                             </div>
 
                             <div className="trip-flex-col">
