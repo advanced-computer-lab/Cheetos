@@ -78,7 +78,7 @@ html {
 .flight-list {
   border: 1px solid darkgray;
   background-color: #ffffff;
-  width: 90%;
+  width: 95%;
   height: 60vh;
   overflow: auto;
   padding-bottom: 1rem;
@@ -89,7 +89,7 @@ html {
 }
 th,
 td {
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center !important;
   
 }

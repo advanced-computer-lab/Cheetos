@@ -31,8 +31,11 @@ export default class AdminPage extends Component {
     arrDate: "",
     depDate: "",
     ecSeats: 0,
+    ecPrice: 0,
     buSeats: 0,
+    buPrice: 0,
     fcSeats: 0,
+    fiPrice: 0,
     depTime: "",
     arrTime: "",
     departureTerminal: "",
@@ -96,6 +99,9 @@ export default class AdminPage extends Component {
       !this.state.ecSeats ||
       !this.state.buSeats ||
       !this.state.fcSeats ||
+      !this.state.ecPrice ||
+      !this.state.buPrice ||
+      !this.state.fiPrice ||
       !this.state.depTime ||
       !this.state.arrTime ||
       !this.state.departureTerminal
@@ -110,9 +116,18 @@ export default class AdminPage extends Component {
         "ArrivalTime": this.state.arrTime,
         "DepartureDate": this.state.depDate,
         "ArrivalDate": this.state.arrDate,
-        "EconomySeats": this.state.ecSeats,
-        "BusinessSeats": this.state.buSeats,
-        "FirstClassSeats": this.state.fcSeats,
+        "EconomySeats": {
+          "AvailableSeats": this.state.ecSeats,
+          "PriceAdult": this.state.ecPrice
+        },
+        "BusinessSeats": {
+          "AvailableSeats" : this.state.buSeats , 
+          "PriceAdult" : this.state.buPrice
+        },
+        "FirstClassSeats": {
+          "AvailableSeats" : this.state.fcSeats , 
+          "PriceAdult" : this.state.fiPrice
+        },
         "DepartureTerminal": this.state.departureTerminal,
         "ArrivalTerminal": this.state.arrivalTerminal,
         "DepartureAirport": this.state.departureAirport,
@@ -301,8 +316,11 @@ export default class AdminPage extends Component {
       arrDate,
       depDate,
       ecSeats,
+      ecPrice,
       buSeats,
+      buPrice,
       fcSeats,
+      fiPrice,
       depTime,
       arrTime,
       departureTerminal,
@@ -438,9 +456,9 @@ export default class AdminPage extends Component {
                     depDate={f.DepartureDate}
                     deptAirport={f.DepartureAirport}
                     arrAirport={f.ArrivalAirport}
-                    economy={f.EconomySeats}
-                    business={f.BusinessSeats}
-                    firstC={f.FirstClassSeats}
+                    economy={f.EconomySeats.AvailableSeats}
+                    business={f.BusinessSeats.AvailableSeats}
+                    firstC={f.FirstClassSeats.AvailableSeats}
                     dep={f.DepartureTime}
                     arrival={f.ArrivalTime}
                     deptTerminal={f.DepartureTerminal}
@@ -569,35 +587,66 @@ export default class AdminPage extends Component {
               </div>
 
               <div className="add-flight-body">
-                <Form.Group className="mb-3"  >
-                  <Form.Label>Number of economy seats : </Form.Label>
-                  <Form.Control
-                    onChange={this.handleAddFlightChange.bind(this)}
-                    name="ecSeats"
-                    value={ecSeats}
-                    type="number"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3"  >
-                  <Form.Label>Number of business seats : </Form.Label>
-                  <Form.Control
-                    onChange={this.handleAddFlightChange.bind(this)}
-                    name="buSeats"
-                    value={buSeats}
-                    type="number"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3"  >
-                  <Form.Label>Number of first class seats :</Form.Label>
-                  <Form.Control
-                    onChange={this.handleAddFlightChange.bind(this)}
-                    name="fcSeats"
-                    value={fcSeats}
-                    type="number"
-                  />
-                </Form.Group>
+                <div>
+                  <Form.Group className="mb-3"  >
+                    <Form.Label>Number of economy seats : </Form.Label>
+                    <Form.Control
+                      onChange={this.handleAddFlightChange.bind(this)}
+                      name="ecSeats"
+                      value={ecSeats}
+                      type="number"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3"  >
+                    <Form.Label> Price: </Form.Label>
+                    <Form.Control
+                      onChange={this.handleAddFlightChange.bind(this)}
+                      name="ecPrice"
+                      value={ecPrice}
+                      type="number"
+                    />
+                  </Form.Group>
+                </div>
+                <div>
+                  <Form.Group className="mb-3"  >
+                    <Form.Label>Number of business seats : </Form.Label>
+                    <Form.Control
+                      onChange={this.handleAddFlightChange.bind(this)}
+                      name="buSeats"
+                      value={buSeats}
+                      type="number"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3"  >
+                    <Form.Label> Price: </Form.Label>
+                    <Form.Control
+                      onChange={this.handleAddFlightChange.bind(this)}
+                      name="buPrice"
+                      value={buPrice}
+                      type="number"
+                    />
+                  </Form.Group>
+                </div>
+                <div>
+                  <Form.Group className="mb-3"  >
+                    <Form.Label>Number of first class seats :</Form.Label>
+                    <Form.Control
+                      onChange={this.handleAddFlightChange.bind(this)}
+                      name="fcSeats"
+                      value={fcSeats}
+                      type="number"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3"  >
+                    <Form.Label> Price: </Form.Label>
+                    <Form.Control
+                      onChange={this.handleAddFlightChange.bind(this)}
+                      name="fiPrice"
+                      value={fiPrice}
+                      type="number"
+                    />
+                  </Form.Group>
+                </div>
               </div>
               <div className="add-flight-body">
                 <Form.Group

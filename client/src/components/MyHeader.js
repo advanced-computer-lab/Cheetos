@@ -54,7 +54,10 @@ export default class MyHeader extends Component {
             <Logo />
           </Link>
           <div className="header-buttons-container">
-            <Link to="/bookings" style={{ textDecoration: 'none' }}>
+            <Link to={{
+                pathname: "/bookings",
+                data: {  userId } // your data array of objects
+              }} style={{ textDecoration: 'none' }}>
               <Button className="header-buttons" style={{ marginRight: "20px" }}
                 onClick={this.handleProfileClick} variant="contained" >
                 My bookings
