@@ -25,3 +25,18 @@
     margin-bottom: 0;
     font-size: large;
 }
+.no-result{
+    background-color: white;
+    border : 1px solid rgb(182, 182, 182) ;
+    width: 60em;
+    height: auto;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding : 5em 5em 7em 5em 
+    
+ 
+}
