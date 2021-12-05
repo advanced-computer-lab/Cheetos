@@ -1,0 +1,16 @@
+*Front End* : 
+-Katrin Emad : 
+Profile , My bookings , home ui , header ui , confirm booking , sign-in
+
+-Mark Malak  :
+Seats , trip card ui ,  Search , react router(routing) , connecting to backend , saving temporary data into session storage 
+
+*Back End* :
+-Youssef Youhanna : 
+User Moddel, User Controller and automated email
+
+-Maria Maged : 
+Reservation Model, Reservation Controller 
+
+-Maryse Fahim :
+Flight Model, Flight Controller
