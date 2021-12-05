@@ -90,7 +90,7 @@
   width: 50px;
   border: 1px solid rgba(0, 0, 0, 0.418);
   /* background-color: hsl(232, 78%, 100%); */
-   background-color: #a8c9f5;
+   background-color: #a8c9f5a2;
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0 2px 4px 0 rgba(114, 114, 114, 0.2);
@@ -111,7 +111,8 @@
 }
 .seat:hover {
   box-shadow: 0 2px 4px 0 rgb(0, 0, 0);
-  
+  background-color: #a8c9f5;
+  /* color: aliceblue; */
 }
 
 .taken-seat{

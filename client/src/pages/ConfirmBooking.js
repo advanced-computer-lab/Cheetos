@@ -4,54 +4,32 @@ import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatRecline
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
 import { withRouter } from "react-router";
+import Signin from "../components/Signin"
 import api from '../api'
 class ConfirmBooking extends Component {
 
     state = {
         showModal: false,
-        resId: ""
+        resId: "",
+        showSignin: false , 
+        signedIn : false 
     }
     handleModalShow() {
         this.setState({
             showModal: this.state.showModal ? false : true,
         });
     }
-    async handleConfirm() {
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
-        const { deptSeats, arrSeats } = this.props
-        let arrOne = deptSeats.map((s) => ({
-            FlightId: deptFlight._id,
-            CabinClass: deptCabin === "FirstClassSeats" ? "FirstClass" :
-                deptCabin === "EconomySeats" ? "Economy" :
-                    deptCabin === "BusinessSeats" ? "Business" : '',
-            ChosenSeat: s.Seat
-        }))
-
-        let arrTwo = arrSeats.map((s) => ({
-            FlightId: arrFlight._id,
-            CabinClass: arrCabin === "FirstClassSeats" ? "FirstClass" :
-                arrCabin === "EconomySeats" ? "Economy" :
-                    arrCabin === "BusinessSeats" ? "Business" : '',
-            ChosenSeat: s.Seat
-        }))
-        let newArr = arrOne.concat(arrTwo);
-        console.log("my array of chosen seats objects", newArr);
-        const reservation = {
-            UserId: userId,
-            TotalPrice: totalPrice,
-            Reservation: newArr
-        }
-        console.log("my array of chosen seats objects", reservation);
-        await api.confirmFlight(reservation).then((res) => {
-            this.setState({
-                resId: res.data.data
-            })
-            this.handleModalShow();
-        })
+    handleSignInModal() {
+        this.setState({
+            showSignin: !this.state.showSignin , 
+            signedIn : true 
+        });
+        this.props.parentFunc()
     }
+   
     render() {
 
-        const { showModal } = this.state
+        const { showModal, showSignin } = this.state
         const { deptSeats, arrSeats } = this.props
         const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
         let deptSeatNames = "";
@@ -83,7 +61,7 @@ class ConfirmBooking extends Component {
                     {/* <MyHeader/> */}
 
 
-                    <div className="booking-card" style={{ marginTop: "50px",marginBottom: "30px" }}>
+                    <div className="booking-card" style={{ marginTop: "50px", marginBottom: "30px" }}>
                         <div style={{ width: '70%', marginTop: '5px' }} >
 
 
@@ -91,13 +69,15 @@ class ConfirmBooking extends Component {
 
 
                                 <div className="trip-flex-col">
-                                    <p className="emphasis">{deptFlight.DepartureDate}{">"} {deptFlight.ArrivalDate} </p>
+                                    <p className="emphasis">{deptFlight.DepartureDate}{" >"} {deptFlight.ArrivalDate} </p>
                                     <p>{deptFlight.DepartureTime}{">"}{deptFlight.ArrivalTime}</p>
                                 </div>
 
                                 <div className="trip-flex-col">
                                     <div className="emphasis" ><AirlineSeatReclineNormalIcon />{deptSeatNames}</div>
-                                    <p style={{ width: "12", textAlign: "center" }}>{deptCabin}</p>
+                                    <p style={{ width: "12", textAlign: "center" }}>{deptCabin === "FirstClassSeats" ? "FirstClass" :
+                                        deptCabin === "EconomySeats" ? "Economy" :
+                                            deptCabin === "BusinessSeats" ? "Business" : ''}</p>
                                 </div>
 
                                 <p className="emphasis">{deptPrice}$</p>
@@ -110,13 +90,15 @@ class ConfirmBooking extends Component {
 
 
                                 <div className="trip-flex-col">
-                                    <p className="emphasis">{arrFlight.DepartureDate}{">"} {arrFlight.ArrivalDate} </p>
+                                    <p className="emphasis">{arrFlight.DepartureDate}{" >"} {arrFlight.ArrivalDate} </p>
                                     <p>{arrFlight.DepartureTime}{">"}{arrFlight.ArrivalTime}</p>
                                 </div>
 
                                 <div className="trip-flex-col">
                                     <div className="emphasis" ><AirlineSeatReclineNormalIcon />{arrSeatNames}</div>
-                                    <p style={{ width: "12", textAlign: "center" }}>{arrCabin}</p>
+                                    <p style={{ width: "12", textAlign: "center" }}>{arrCabin === "FirstClassSeats" ? "FirstClass" :
+                                        arrCabin === "EconomySeats" ? "Economy" :
+                                            arrCabin === "BusinessSeats" ? "Business" : ''}</p>
                                 </div>
 
                                 <p className="emphasis">{retPrice}$</p>
@@ -137,8 +119,8 @@ class ConfirmBooking extends Component {
                         </div>
                         <div className="trip-flex-col" style={{ width: '30%' }} >
                             <h3>{totalPrice}$</h3>
-                            <Button
-                                onClick={this.handleConfirm.bind(this)}
+                           { !this.state.signedIn ? <Button
+                                onClick={this.handleSignInModal.bind(this)}
                                 style={{
                                     backgroundColor: "#447fcc",
                                     width: "170px",
@@ -148,22 +130,21 @@ class ConfirmBooking extends Component {
 
                                 variant="contained"
                             >
-                                Confirm Booking
-                            </Button>
+                                Reserve
+                            </Button> : ''}
                         </div>
                     </div>
                 </div>
+               
+
                 <Modal
-                    aria-labelledby="contained-modal-title-vcenter" centered show={showModal} onHide={this.handleModalShow.bind(this)}>
-                    <Modal.Header closeButton style={{ backgroundColor: "#14279b" }}>
-                        <Modal.Title style={{ color: "white" }}>Successfully Booked !</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body><h5>
-                        Your flight has been been booked !<br />
-                        Here is your confirmation number : <strong>{this.state.resId}</strong>
-                        <br />we'll also email it to you !
-                    </h5>
-                    </Modal.Body>
+                    aria-labelledby="contained-modal-title-vcenter" 
+                    size = "sm"
+                    centered show={showSignin} onHide={this.handleSignInModal.bind(this)}>
+                   
+
+                    <Signin />
+
 
                 </Modal>
 
