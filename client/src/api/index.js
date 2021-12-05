@@ -6,7 +6,8 @@ const api = axios.create({
 //admin
 export const insertFlight = payload => api.post(`/flight/createflight`, payload)
 export const getAllFlights = () => api.get(`/flight/getflights`)
-export const updateFlightbyId = (id, payload) => api.put(`/flight/update/${id}`, payload)
+export const getFlightById = id => api.get(`/flight/getflight/${id}`)
+export const updateFlightbyId = (id, payload) => api.put(`/flight/updateflight/${id}`, payload)
 export const deleteFlightById = id => api.delete(`/flight/deleteflight/${id}`)
 
 //sprint 2 
@@ -17,17 +18,20 @@ export const getUserInfo = id => api.get(`/user/u/${id}`)
 export const updateUserInfo = (id, payload) => api.put(`/user/uupdate/${id}`, payload)
 //
 export const getReservationsById = id => api.get(`/reservation/getreservation/${id}`)
+export const deleteReservationById = id => api.delete(`/reservation/deletereservation/${id}`)
 
 const apis = {
     insertFlight,
     getAllFlights,
+    getFlightById , 
     updateFlightbyId,
     deleteFlightById , 
     
     confirmFlight , 
     getUserInfo , 
     updateUserInfo , 
-    getReservationsById
+    getReservationsById , 
+    deleteReservationById
 }
 
 export default apis

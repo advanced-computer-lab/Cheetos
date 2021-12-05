@@ -9,7 +9,7 @@ class ConfirmBooking extends Component {
 
     state = {
         showModal: false,
-        resId : ""
+        resId: ""
     }
     handleModalShow() {
         this.setState({
@@ -20,25 +20,31 @@ class ConfirmBooking extends Component {
         const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children, totalPrice, deptPrice, retPrice, userId } = this.props.location.data
         const { deptSeats, arrSeats } = this.props
         let arrOne = deptSeats.map((s) => ({
-            FlightId : deptFlight._id,
-            CabinClass: deptCabin,
-            ChosenSeat : s.Seat
-        }) )
+            FlightId: deptFlight._id,
+            CabinClass: deptCabin === "FirstClassSeats" ? "FirstClass" :
+                deptCabin === "EconomySeats" ? "Economy" :
+                    deptCabin === "BusinessSeats" ? "Business" : '',
+            ChosenSeat: s.Seat
+        }))
 
         let arrTwo = arrSeats.map((s) => ({
-            FlightId : arrFlight._id,
-            CabinClass: arrCabin,
-            ChosenSeat : s.Seat
-        }) )
-        let newArr = arrOne.concat(arrTwo) ; 
+            FlightId: arrFlight._id,
+            CabinClass: arrCabin === "FirstClassSeats" ? "FirstClass" :
+                arrCabin === "EconomySeats" ? "Economy" :
+                    arrCabin === "BusinessSeats" ? "Business" : '',
+            ChosenSeat: s.Seat
+        }))
+        let newArr = arrOne.concat(arrTwo);
+        console.log("my array of chosen seats objects", newArr);
         const reservation = {
             UserId: userId,
             TotalPrice: totalPrice,
             Reservation: newArr
         }
+        console.log("my array of chosen seats objects", reservation);
         await api.confirmFlight(reservation).then((res) => {
             this.setState({
-                resId : res.data.data
+                resId: res.data.data
             })
             this.handleModalShow();
         })

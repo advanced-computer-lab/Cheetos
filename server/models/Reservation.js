@@ -33,6 +33,29 @@ const ReservationSchema = new mongoose.Schema({
 
     },
   ],
+  DepFlight: {
+    Id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Flight",
+    },
+    DeptSeats: [
+      {
+        type: String,
+      },
+    ],
+  },
+
+  ArrFlight: {
+    Id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Flight",
+    },
+    ArrSeats: [
+      {
+        type: String,
+      },
+    ],
+  },
 });
 
 ReservationSchema.post("save", (reservation, next) => {
@@ -106,7 +129,8 @@ ReservationSchema.post("findOneAndDelete", (reservation, next) => {
         text:
           "Dear " +
           user.FirstName +
-          " , \n This email serves as a notification that you have cancelled your reservation." +
+          " , \n This email serves as a notification that you have cancelled your reservation." + 
+          "with confirmation number " + reservation._id + 
           "\n " +
           reservation.TotalPrice +
           " dollars were refunded. ",
@@ -168,6 +192,62 @@ ReservationSchema.post("findOneAndDelete", (reservation, next) => {
       }
     });
   }
+  next();
+});
+
+ReservationSchema.post("save", (re, next) => {
+  let deptid = re.Reservation[0].FlightId;
+  let a1 = [];
+  a1.push(re.Reservation[0].ChosenSeat);
+  console.log("a1", a1);
+  let index = 1;
+  for (i = 1; i < re.Reservation.length + 1; i++) {
+    if (re.Reservation[i].FlightId.equals(deptid)) {
+      a1.push(re.Reservation[i].ChosenSeat);
+    } else {
+      break;
+    }
+    index++;
+  }
+  let arrid = re.Reservation[index].FlightId;
+
+  let a2 = [];
+  a2.push(re.Reservation[index].ChosenSeat);
+  for (let j = index + 1; j < re.Reservation.length; j++) {
+    if (re.Reservation[j].FlightId.equals(arrid)) {
+      a2.push(re.Reservation[j].ChosenSeat);
+    } else {
+      break;
+    }
+  }
+
+  Reservation.findByIdAndUpdate(
+    { _id: re._id },
+    {
+      $set: {
+        "DepFlight.DeptSeats": a1,
+        "DepFlight.Id": deptid,
+      },
+    },
+    { new: true }
+  )
+    .then((newflight) => {})
+    .catch((err) => res.status(400).json({ error: err }));
+
+  Reservation.findByIdAndUpdate(
+    { _id: re._id },
+    {
+      $set: {
+        "ArrFlight.ArrSeats": a2,
+        "ArrFlight.Id": arrid,
+      },
+    },
+    { new: true }
+  )
+    .then((newflight) => {
+      console.log(newflight);
+    })
+    .catch((err) => res.status(400).json({ error: err }));
   next();
 });
 module.exports = Reservation = mongoose.model("reservation", ReservationSchema);
