@@ -30,12 +30,14 @@ class ChooseSeats extends Component {
     }
     render() {
         const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = this.props.location.data
+       // console.log("seats are " , deptFlight[deptCabin].Seats) ; 
+       // console.log("seats are " , arrFlight[arrCabin].Seats) ; 
         return (
             <div className="seats-page">
                 {/* <MyHeader /> */}
                 <div className="shuttles">
-                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
-                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
+                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
+                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
                 </div>
                
                     <Button
