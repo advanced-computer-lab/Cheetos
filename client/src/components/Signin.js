@@ -9,7 +9,7 @@ export default class Signin extends Component {
     }
     render() {
         return (
-            <div className="signin-form" >
+            // <div className="signin-form" >
                 <Form >
                 <Form.Group  controlId="formBasicEmail">
                     
@@ -60,7 +60,7 @@ export default class Signin extends Component {
                     </Button>
                 </div>
                 </Form>
-                </div>
+                // </div>
         )
     }
 }

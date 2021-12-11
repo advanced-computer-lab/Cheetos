@@ -79,12 +79,8 @@ export default class Booking extends Component {
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
                         <div style={{ marginLeft: "4rem", marginBottom: "20px", marginTop: "15px" }}><strong>
-                            <h5>Confirmation Number : {confirmationNum}</h5>
+                            <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5>
                         </strong></div>
-
-
-
-
 
 
 
@@ -126,9 +122,7 @@ export default class Booking extends Component {
                                 <p className="emphasis">{arrFlight.TripDuration} </p>
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport}</p>
                             </div>
-                            {/* <p>CAI-LAX</p> */}
-
-
+                        
                         </div>
 
 
@@ -171,10 +165,10 @@ export default class Booking extends Component {
                     </Modal.Header>
                     <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" style={{ color: "red" }} onClick={this.handleModalShow.bind(this)}>
+                        <Button variant="primary"  onClick={this.handleModalShow.bind(this)}>
                             Cancel
                         </Button>
-                        <Button variant="secondary" onClick={this.handleDelete.bind(this)}>
+                        <Button variant="secondary" style={{ color: "red" }} onClick={this.handleDelete.bind(this)}>
                             Yes
                         </Button>
                     </Modal.Footer>

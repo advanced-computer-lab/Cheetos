@@ -140,12 +140,17 @@ class ConfirmBooking extends Component {
 
                 <Modal
                     aria-labelledby="contained-modal-title-vcenter" 
-                    size = "sm"
+                    dialogClassName="my-modal"
                     centered show={showSignin} onHide={this.handleSignInModal.bind(this)}>
                    
 
-                    <Signin />
+                   <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Sign In</Modal.Title>
+                    </Modal.Header>
 
+                    <div className="signup-form">
+                        <Signin />
+                    </div>
 
                 </Modal>
 

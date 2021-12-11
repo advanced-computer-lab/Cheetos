@@ -263,6 +263,13 @@ body::-webkit-scrollbar-thumb:hover {
     padding: 20px;
 
 }
+.signup-form{
+ 
+    height:370px;
+    background-color: #ffffff;
+    padding: 20px;
+
+}
 .v2{
   border-bottom: 1px solid rgb(202, 202, 202) !important;
   width: 90%;
@@ -303,3 +310,8 @@ body::-webkit-scrollbar-thumb:hover {
   font-weight: 400;
 
 }
+.my-modal {
+  height: 400px !important;
+  width:400px !important;   /* Occupy the 90% of the screen width */
+  
+} 

@@ -11,7 +11,10 @@ import ChooseSeats from '../pages/ChooseSeats';
 import Tagline from '../pages/Tagline';
 import StepperPage from '../components/StepperPage';
 import Reservation from '../pages/Reservation';
+import SignUp from '../components/SignUp';
+import PassengerCounter from '../components/PassengerCounter'
 
+import ProfileDropdown from '../components/ProflieDropdown'
 
 function App() {
   return (
@@ -44,6 +47,9 @@ function App() {
       </Route>
       <Route path="/reserve" >
         <Reservation/>
+      </Route>
+      <Route path="/signUp" >
+        <SignUp/>
       </Route>
       </Switch>
 

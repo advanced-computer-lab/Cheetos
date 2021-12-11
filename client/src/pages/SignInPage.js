@@ -11,7 +11,7 @@ export default class SignInPage extends Component {
         return (
             <div className ="signin-page" >
                 <div className="signin-logo"><Logo/> <p>Boomerang can help you<br/> find your ideal flight !</p></div>
-               <Signin/>
+               <div className="signin-form"><Signin/></div>
             </div>
         )
     }

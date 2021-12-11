@@ -11,6 +11,14 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { Link } from "react-router-dom";
 import Signin from "../components/Signin"
 import { withRouter } from 'react-router';
+import ProfileDropdown from '../components/ProflieDropdown'
+import PassengerCounter from '../components/PassengerCounter'
+import CabinSelect from '../components/CabinSelect'
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { TextField } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+
 class MyHeader extends Component {
   state = {
     adultCount: "",
@@ -23,8 +31,36 @@ class MyHeader extends Component {
     arrCabinClass: "",
     userId: '',
     showSignin: false,
-    signedIn: false
+    signedIn: false,
+    anchorEl:null,
+    open : false,
+    anchorElCabin:null,
+    openCabin:false,
   }
+
+  handleClick = (event) => {
+    this.setState({
+      anchorEl:event.currentTarget,open:true
+    })
+  };
+
+  handleClose = (event) => {
+    this.setState({
+      anchorEl:null,open:false
+    })
+  };
+
+  handleClickCabin = (event) => {
+    this.setState({
+      anchorElCabin:event.currentTarget,openCabin:true
+    })
+  };
+
+  handleCloseCabin = (event) => {
+    this.setState({
+      anchorElCabin:null,openCabin:false
+    })
+  };
 
   handleSearch(e) {
     e.preventDefault();
@@ -86,9 +122,11 @@ class MyHeader extends Component {
 
     }
   }
+  
+
   render() {
     const { userId } = this.props
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn } = this.state
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn ,open,openCabin} = this.state
     return (
       <div className="admin-header logo-buttons-search">
 
@@ -99,29 +137,8 @@ class MyHeader extends Component {
           <div className="header-buttons-container">
             {sessionStorage.getItem('userId') ?
               <>
-                <Link to={{
-                  pathname: "/bookings",
-                  // data: { userId } // your data array of objects
-                }} style={{ textDecoration: 'none' }}>
-                  <Button className="header-buttons" style={{ marginRight: "20px" }}
-                    variant="contained" >
-                    My bookings
-                  </Button>
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/profile",
-                    // data: { userId } // your data array of objects
-                  }}
-                  style={{ textDecoration: 'none' }} >
-                  <Button className="header-buttons"
-                    variant="contained" >
-                    <PersonIcon style={{ marginRight: "5px", fontSize: "x-large" }} />
-
-                    Profile
-
-                  </Button>
-                </Link>
+                <ProfileDropdown username="Mark Potter"/>
+                
               </>
               :
               <Button className="header-buttons" style={{ marginRight: "20px" }}
@@ -133,23 +150,155 @@ class MyHeader extends Component {
 
         </div>
         <div className="flex-col" style={{ gap: "0", alignItems: "center", marginTop: "10px" }}>
-          {/* <h5 style={{ alignSelf: 'flex-start', marginLeft: "5%" }}>Input fields to Search !</h5> */}
+          
           <div className="search-bar" style={{ gap: 0, justifyContent: "center" }} >
-            {/* n of passengers , dep airport , arr air , dep date ,arr date ,cabin class  */}
 
-            <div className="flex-row " style={{ gap: "0.5rem", width: "100%", margin: "0" }}>
-              <Form.Group style={{ flexGrow: 1, width: "18%" }} className="mb-2">
-                {/* <Form.Label>Adult passengers: </Form.Label> */}
-                <Form.Control
-                  type="number"
-                  placeholder="Adult Passengers"
-                  value={adultCount}
-                  name="adultCount"
+            <div className="flex-row" style={{ gap: " 0.5rem", width: "100%", justifyContent: "flex-start" }}>
+            <div>
+      <Button
+        id="demo-positioned-button"
+        aria-controls="demo-positioned-menu"
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={this.handleClick.bind(this)}
+        style={{color:"white"}}
+      >
+        Passengers
+        <KeyboardArrowDownIcon/>
+      </Button>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={this.state.anchorEl}
+        open={open}
+        onClose={this.handleClose.bind(this)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+ 
+        <MenuItem >  <TextField
+          id="outlined-number"
+          label="Adults"
+          type="number"
+          size="small"
+          style={{width:"9rem"}}
+          value={adultCount}
+          name="adultCount"
+          onChange={this.handleSearch.bind(this)}
+        />
+        </MenuItem>
+
+        <MenuItem > <TextField
+          id="outlined-number"
+          label="Children"
+          type="number"
+          size="small"
+          style={{width:"9rem"}}
+          value={childCount}
+          name="childCount"
+          onChange={this.handleSearch.bind(this)}
+        />
+        </MenuItem>
+   
+      </Menu>
+    </div>
+              
+              <div>
+              <Button
+        id="demo-positioned-button"
+        aria-controls="demo-positioned-menu"
+        aria-haspopup="true"
+        aria-expanded={openCabin ? 'true' : undefined}
+        onClick={this.handleClickCabin.bind(this)}
+        style={{color:"white"}}
+      >
+        Departure Cabin Class
+        <KeyboardArrowDownIcon/>
+      </Button>
+      <Menu value={deptCabinClass}
+                  name="deptCabinClass"
                   onChange={this.handleSearch.bind(this)}
-                />
-              </Form.Group >
-              <Form.Group style={{ flexGrow: 1, width: "18%" }} className="mb-2">
-                {/* <Form.Label>Departure Airport: </Form.Label> */}
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={this.state.anchorElCabin}
+        open={openCabin}
+        onClose={this.handleCloseCabin.bind(this)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+ 
+        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="EconomySeats">Economy
+        </MenuItem>
+
+        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="BusinessSeats">Business-Class
+        </MenuItem>
+
+        <MenuItem onClick={this.handleCloseCabin.bind(this) } value="FirstClassSeats">First-Class
+        </MenuItem>
+   
+      </Menu>
+              </div>
+
+              <div>
+              <Button
+        id="demo-positioned-button"
+        aria-controls="demo-positioned-menu"
+        aria-haspopup="true"
+        aria-expanded={openCabin ? 'true' : undefined}
+        onClick={this.handleClickCabin.bind(this)}
+        style={{color:"white"}}
+      >
+        Return Cabin Class
+        <KeyboardArrowDownIcon/>
+      </Button>
+      <Menu value={arrCabinClass}
+                  name="arrCabinClass"
+                  onChange={this.handleSearch.bind(this)}
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={this.state.anchorElCabin}
+        open={openCabin}
+        onClose={this.handleCloseCabin.bind(this)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+ 
+        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="EconomySeats">Economy
+        </MenuItem>
+
+        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="BusinessSeats">Business-Class
+        </MenuItem>
+
+        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="FirstClassSeats">First-Class
+        </MenuItem>
+   
+      </Menu>
+              </div>
+            </div>
+      
+
+            <div className="flex-row " style={{ gap: " 0.5rem", width: "100%", alignItems: "stretch" }}>
+              
+              <Form.Group style={{ flexGrow: 1 }} className="mb-2">
+            
                 <Form.Control
                   type="text"
                   placeholder="Departure airport"
@@ -157,8 +306,23 @@ class MyHeader extends Component {
                   name="deptAirport"
                   onChange={this.handleSearch.bind(this)}
                 />
+                 </Form.Group>
+                
+
+                <Form.Group style={{ flexGrow: 1 }} className="mb-2">
+            
+                <Form.Control
+                  type="text"
+                  placeholder="Arrival airport"
+                  value={arrAirport}
+                  name="arrAirport"
+                  onChange={this.handleSearch.bind(this)}
+                />
+             
+                   
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1, width: "18%" }} className="mb-2">
+              <Form.Group style={{ flexGrow: 1 }} className="mb-2">
+       
                 <Form.Control
                   type="text"
                   onFocus={
@@ -176,43 +340,10 @@ class MyHeader extends Component {
                   onChange={this.handleSearch.bind(this)}
                 />
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1, width: "18%" }} className="mb-2">
-                <Form.Select
-                  value={deptCabinClass}
-                  name="deptCabinClass"
-                  onChange={this.handleSearch.bind(this)}
-                  aria-label="Default select example">
-                  <option hidden>Departure cabin </option>
-                  <option value="EconomySeats">Economy</option>
-                  <option value="BusinessSeats">Business class</option>
-                  <option value="FirstClassSeats">First Class</option>
-                </Form.Select>
-              </Form.Group>
-            </div>
 
-            <div className="flex-row" style={{ gap: " 0.5rem", width: "100%", alignItems: "stretch" }}>
-              <Form.Group style={{ flexGrow: 1, width: "15%" }} className="mb-2">
-                {/* <Form.Label>Child passengers: </Form.Label> */}
-                <Form.Control
-                  type="number"
-                  placeholder="Child passengers"
-                  value={childCount}
-                  name="childCount"
-                  onChange={this.handleSearch.bind(this)}
-                />
-              </Form.Group>
 
               <Form.Group style={{ flexGrow: 1, width: "15%" }} className="mb-2">
-                {/* <Form.Label>Arrival airport: </Form.Label> */}
-                <Form.Control
-                  type="text"
-                  placeholder="Arrival airport"
-                  value={arrAirport}
-                  name="arrAirport"
-                  onChange={this.handleSearch.bind(this)}
-                />
-              </Form.Group>
-              <Form.Group style={{ flexGrow: 1, width: "15%" }} className="mb-2">
+              
                 <Form.Control
                   style={{ width: "" }}
                   type="text" onFocus={
@@ -232,19 +363,6 @@ class MyHeader extends Component {
                   onChange={this.handleSearch.bind(this)}
                 />
               </Form.Group>
-              <Form.Group style={{ flexGrow: 1, width: "15%" }} className="mb-2">
-                {/* <Form.Label>Cabin class: </Form.Label> */}
-                <Form.Select
-                  value={arrCabinClass}
-                  name="arrCabinClass"
-                  onChange={this.handleSearch.bind(this)}
-                  aria-label="Default select example">
-                  <option hidden>Returning cabin</option>
-                  <option value="EconomySeats">Economy</option>
-                  <option value="BusinessSeats">Business class</option>
-                  <option value="FirstClassSeats">First Class</option>
-                </Form.Select>
-              </Form.Group>
 
               <div >
                 <Button style={{ width: "100px", height: "38px" }}
@@ -254,6 +372,14 @@ class MyHeader extends Component {
                 </Button>
               </div >
 
+
+
+
+            </div>
+
+            <div className="flex-row" style={{ gap: " 0.5rem", width: "100%", alignItems: "stretch" }}>
+             
+              
             </div>
 
 
@@ -263,11 +389,16 @@ class MyHeader extends Component {
 
         <Modal
           aria-labelledby="contained-modal-title-vcenter"
-          size="sm"
+          dialogClassName="my-modal"
           centered show={showSignin} onHide={this.handleSignInModal.bind(this)}>
+               <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Sign In</Modal.Title>
+                    </Modal.Header>
 
 
-          <Signin />
+          <div className="signup-form">
+            <Signin />
+          </div>
 
 
         </Modal>
