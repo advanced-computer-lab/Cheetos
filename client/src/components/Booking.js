@@ -8,6 +8,8 @@ import AirlineSeatReclineNormalIcon from '@mui/icons-material/AirlineSeatRecline
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import api from '../api'
 import { withRouter } from 'react-router';
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from "react-router-dom";
 
 export default class Booking extends Component {
 
@@ -50,35 +52,35 @@ export default class Booking extends Component {
         )
 
     }
+
+    editDeparture(){
+        sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
+        this.props.history.push("/editDep");
+    }
+    editReturn(){
+        sessionStorage.setItem('arrFlight', JSON.stringify(this.state.arrFlight));
+        this.props.history.push("/editRet");
+    }
+  
     render() {
         let price = 0;
         const { confirmationNum, userId, reservation } = this.props
-        // const { Reservation } = reservation
-        // let deptSeats = []
-        // let retSeats = []
-        // let f = Reservation[0]._id
-        // for (let i = 0; i < Reservation.length ; i++ ){
-        //     if(f === Reservation[i]._id){
-        //         deptSeats.push(Reservation[i]._id)
-        //     }else{
-        //         retSeats.push(Reservation[i]._id)
-        //     }
-        // }
+        
         const { showModal, deptFlight, arrFlight } = this.state
 
-        // for(let i = 0 ; i< reservation.length ;i++){
-        //     price+=reservation[i].Price; 
-        //  }
+        
         const { DepFlight, ArrFlight  , Reservation} = reservation
         const deptCabin = Reservation[0].CabinClass 
         const arrCabin= Reservation[Reservation.length -1].CabinClass 
+
+       
         return (
             <>
 
                 <div className="booking-card">
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
-                        <div style={{ marginLeft: "4rem", marginBottom: "20px", marginTop: "15px" }}><strong>
+                        <div style={{ marginLeft: "2rem", marginBottom: "20px", marginTop: "15px" }}><strong>
                             <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5>
                         </strong></div>
 
@@ -101,8 +103,11 @@ export default class Booking extends Component {
                                 <p className="emphasis">{deptFlight.TripDuration} </p>
                                 <p>{deptFlight.DepartureAirport}-{deptFlight.ArrivalAirport}</p>
                             </div>
-                            {/* <p>CAI-LAX</p> */}
-
+                            
+                            
+                            {/* <Link to='/editDep'> */}
+                                <EditIcon className="icon" onClick={this.editDeparture.bind(this)}/>
+                            {/* </Link> */}
 
                         </div>
                         <div className="booking-flight"  >
@@ -122,7 +127,9 @@ export default class Booking extends Component {
                                 <p className="emphasis">{arrFlight.TripDuration} </p>
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport}</p>
                             </div>
-                        
+                            <Link to='/editRet'>
+                                <EditIcon className="icon" onClick={this.editReturn.bind(this)}/>
+                            </Link>
                         </div>
 
 

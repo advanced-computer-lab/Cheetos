@@ -201,7 +201,7 @@ class Home extends Component {
 
     emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass) {
 
-        if (!adultCount || !childCount ||
+        if (!adultCount || 
             !deptAirport || !arrAirport ||
             !deptDate || !retDate ||
             !deptCabinClass || !arrCabinClass) {

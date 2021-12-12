@@ -21,8 +21,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 class MyHeader extends Component {
   state = {
-    adultCount: "",
-    childCount: "",
+    adultCount: 1,
+    childCount: 0,
     deptAirport: "",
     arrAirport: "",
     deptDate: "",
@@ -34,8 +34,13 @@ class MyHeader extends Component {
     signedIn: false,
     anchorEl:null,
     open : false,
+
+    anchorElCabinDep:null,
     anchorElCabin:null,
+
+    openCabinDep:false,
     openCabin:false,
+    
   }
 
   handleClick = (event) => {
@@ -59,6 +64,18 @@ class MyHeader extends Component {
   handleCloseCabin = (event) => {
     this.setState({
       anchorElCabin:null,openCabin:false
+    })
+  };
+
+  handleClickCabinDep = (event) => {
+    this.setState({
+      anchorElCabinDep:event.currentTarget,openCabinDep:true
+    })
+  };
+
+  handleCloseCabinDep = (event) => {
+    this.setState({
+      anchorElCabinDep:null,openCabinDep:false
     })
   };
 
@@ -92,6 +109,7 @@ class MyHeader extends Component {
     } else {
       const search = { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass }
       sessionStorage.setItem('searchQuery', JSON.stringify(search));
+      console.log(search);
       this.props.history.push("/search");
     }
 
@@ -107,6 +125,7 @@ class MyHeader extends Component {
     }
     const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
     if (searchObject) {
+      console.log("this is search object",searchObject);
       this.setState(
         {
           adultCount: searchObject.adultCount,
@@ -122,11 +141,35 @@ class MyHeader extends Component {
 
     }
   }
+
+  handleMenuItemClick = (event, index) => {
+    
+    event.preventDefault();
+    // const name = e.target.name
+    //--- setting the state of search fields upon change 
+    //doing the search and filtering 
+    const value = event.target.getAttribute('value');
+    this.setState(
+      {
+        ...this.state,
+        [event.target.getAttribute('name')]: value
+      },()=>{console.log("this is the state",this.state[event.target.getAttribute('name')])})
+     
+      if(event.target.getAttribute('name')==="deptCabinClass"){
+        this.handleCloseCabinDep(event)
+        
+      }
+      else{
+        this.handleCloseCabin(event)
+      }
+      
+
+  };
   
 
   render() {
     const { userId } = this.props
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn ,open,openCabin} = this.state
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn ,open,openCabin,openCabinDep} = this.state
     return (
       <div className="admin-header logo-buttons-search">
 
@@ -163,7 +206,7 @@ class MyHeader extends Component {
         onClick={this.handleClick.bind(this)}
         style={{color:"white"}}
       >
-        Passengers
+        {Number(childCount)+Number(adultCount)===1?Number(childCount)+Number(adultCount) +" Passenger":Number(childCount)+Number(adultCount)+" Passengers"} 
         <KeyboardArrowDownIcon/>
       </Button>
       <Menu
@@ -211,24 +254,26 @@ class MyHeader extends Component {
               
               <div>
               <Button
+
         id="demo-positioned-button"
         aria-controls="demo-positioned-menu"
         aria-haspopup="true"
         aria-expanded={openCabin ? 'true' : undefined}
-        onClick={this.handleClickCabin.bind(this)}
+        onClick={this.handleClickCabinDep.bind(this)}
         style={{color:"white"}}
       >
-        Departure Cabin Class
+        {deptCabinClass==="" ?"Departure Cabin ": deptCabinClass==="EconomySeats"? "Economy" : deptCabinClass==="BusinessSeats"? "Business Class" : "First Class" }
+        
         <KeyboardArrowDownIcon/>
       </Button>
-      <Menu value={deptCabinClass}
+      <Menu 
                   name="deptCabinClass"
                   onChange={this.handleSearch.bind(this)}
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
-        anchorEl={this.state.anchorElCabin}
-        open={openCabin}
-        onClose={this.handleCloseCabin.bind(this)}
+        anchorEl={this.state.anchorElCabinDep}
+        open={openCabinDep}
+        onClose={this.handleCloseCabinDep.bind(this)}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'left',
@@ -239,13 +284,13 @@ class MyHeader extends Component {
         }}
       >
  
-        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="EconomySeats">Economy
+        <MenuItem  onClick={(event) => this.handleMenuItemClick(event) }  name="deptCabinClass" value="EconomySeats">Economy
         </MenuItem>
 
-        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="BusinessSeats">Business-Class
+        <MenuItem  onClick={(event) => this.handleMenuItemClick(event)}   name="deptCabinClass" value="BusinessSeats">Business-Class
         </MenuItem>
 
-        <MenuItem onClick={this.handleCloseCabin.bind(this) } value="FirstClassSeats">First-Class
+        <MenuItem  onClick={(event) => this.handleMenuItemClick(event) }  name="deptCabinClass" value="FirstClassSeats">First-Class
         </MenuItem>
    
       </Menu>
@@ -260,7 +305,7 @@ class MyHeader extends Component {
         onClick={this.handleClickCabin.bind(this)}
         style={{color:"white"}}
       >
-        Return Cabin Class
+        {arrCabinClass==="" ?"Return Cabin ": arrCabinClass==="EconomySeats"? "Economy" : arrCabinClass==="BusinessSeats"? "Business Class" : "First Class" }
         <KeyboardArrowDownIcon/>
       </Button>
       <Menu value={arrCabinClass}
@@ -281,13 +326,13 @@ class MyHeader extends Component {
         }}
       >
  
-        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="EconomySeats">Economy
+        <MenuItem  onClick={(event) => this.handleMenuItemClick(event)}  name="arrCabinClass" value="EconomySeats">Economy
         </MenuItem>
 
-        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="BusinessSeats">Business-Class
+        <MenuItem  onClick={(event) => this.handleMenuItemClick(event)}  name="arrCabinClass" value="BusinessSeats">Business-Class
         </MenuItem>
 
-        <MenuItem onClick={this.handleCloseCabin.bind(this)} value="FirstClassSeats">First-Class
+        <MenuItem  onClick={(event) => this.handleMenuItemClick(event)}  name="arrCabinClass" value="FirstClassSeats">First-Class
         </MenuItem>
    
       </Menu>

@@ -9,6 +9,20 @@
     justify-content: space-around;
  
 }
+.single-card{
+    background-color: white;
+    border : 1px solid rgb(182, 182, 182) ;
+    width: 40rem;
+    height: 20vh;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+ 
+}
+.single-card:hover{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
 .booking-flight{
     margin-top: 10px;
     display: flex;

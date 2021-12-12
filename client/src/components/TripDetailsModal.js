@@ -19,8 +19,8 @@ export default class TripDetailsModal extends Component {
                     centered
 
                 >
-                    <Modal.Header className="msg-header" closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
+                    <Modal.Header  closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter"style={{fontWeight:"600"}}>
                             Flight number : {fNum}
                         </Modal.Title>
                     </Modal.Header>
