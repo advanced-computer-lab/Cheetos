@@ -26,25 +26,33 @@ import TripDetailsModal from './TripDetailsModal';
     }
     componentDidMount(){
         if (this.props.location.pathname === "/editDep") {
+   
+            //console.log("heck2",this.state.deptCabin);
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
+              
                 // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
          }) 
+         console.log("heck",this.state.searchFlight);
         }
         else {
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
                 // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
+                
          })
+         console.log("ahhhhhh");
         }
         
     }
     render() {
         const { showModal, deptFlight ,searchFlight} = this.props;
         const{deptCabin,}=this.state;
+        
         return (
             <>
             <div className="single-card">
+                
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
 
@@ -74,7 +82,7 @@ import TripDetailsModal from './TripDetailsModal';
 
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
-                        <h3>{searchFlight[deptCabin].AdultPrice}</h3>
+                        {/* <h3>{searchFlight[deptCabin]["AdultPrice"]}</h3> */}
                         <Button
                            
                             style={{
@@ -93,6 +101,7 @@ import TripDetailsModal from './TripDetailsModal';
 
         <TripDetailsModal show = {this.state.showModal} parentFunc={()=>this.handleModalShow("showModal") } fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
         depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage =  {deptFlight[deptCabin].BaggageAllowance}/ >
+           
            
             </>
         )

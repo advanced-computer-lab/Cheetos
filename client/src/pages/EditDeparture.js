@@ -9,6 +9,7 @@ import NoResults from '../components/NoResults'
 import '../style/EditFlight.css';
 import moment from 'moment';
 import MyHeader from '../components/MyHeader';
+import SingleFlightConfirm from '../components/SingleFlightConfirm';
 
 
 class EditDeparture extends Component {
@@ -267,6 +268,7 @@ to search i need a flight's dep and arr airport( from storage) ,
         return (
             <div className = "flex-col">
                 <MyHeader/>
+                <SingleFlightConfirm/>
                <div className="search-bar search-bar-box" style={{justifyContent:"center"}}>
                 <Form.Group style={{ width:"20%"}} className="mb-2">
                 <Form.Label style={{color:"white",fontWeight:"bold"}}>Departure Date</Form.Label>
