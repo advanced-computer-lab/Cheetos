@@ -196,7 +196,7 @@ class MyHeader extends Component {
           
           <div className="search-bar" style={{ gap: 0, justifyContent: "center" }} >
 
-            <div className="flex-row" style={{ gap: " 0.5rem", width: "100%", justifyContent: "flex-start" }}>
+            <div className="flex-row" style={{ gap: " 0.5rem", width: "100%", justifyContent: "flex-start" ,marginTop:"-15px" }}>
             <div>
       <Button
         id="demo-positioned-button"

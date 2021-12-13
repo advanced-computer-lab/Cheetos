@@ -12,8 +12,9 @@
 .single-card{
     background-color: white;
     border : 1px solid rgb(182, 182, 182) ;
-    width: 40rem;
-    height: 20vh;
+    width: 45rem;
+    height: 10rem;
+    padding: 1.5rem;
     border-radius: 7px;
     display: flex;
     align-items: center;

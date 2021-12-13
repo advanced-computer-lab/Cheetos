@@ -10,10 +10,11 @@ import { withRouter } from 'react-router';
 import TripDetailsModal from './TripDetailsModal';
 
 
-export default class SingleFlight extends Component {
+ class SingleFlight extends Component {
     state = {
         showModal: false,
-        deptCabin:"EconomySeats"
+        deptCabin:"EconomySeats",
+        searchFlight:"",
     }
     handleModalShow() {
        
@@ -23,24 +24,33 @@ export default class SingleFlight extends Component {
               showModal: !this.state.showModal
             });
     }
+    componentDidMount(){
+        if (this.props.location.pathname === "/editDep") {
+            this.setState({
+                searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
+                // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
+         }) 
+        }
+        else {
+            this.setState({
+                searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
+                // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
+         })
+        }
+        
+    }
     render() {
-        const { showModal, deptFlight } = this.props;
-        const{deptCabin}=this.state;
+        const { showModal, deptFlight ,searchFlight} = this.props;
+        const{deptCabin,}=this.state;
         return (
             <>
             <div className="single-card">
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
-                        <div style={{ marginLeft: "1.5rem", marginBottom: "10px", marginTop: "7px" }}><strong>
-                            {/* <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5> */}
-                            <h5>Flight Number : {deptFlight.FlightNumber}</h5>
-                        </strong></div>
-
-
 
                         <div className="booking-flight"  >
 
-
+                        <p className="emphasis"> {deptFlight.FlightNumber}</p>
                             <div className="trip-flex-col">
                                 <p className="emphasis">{deptFlight.DepartureDate}{">"} {deptFlight.ArrivalDate}  </p>
                                 <p>{deptFlight.DepartureTime} {">"} {deptFlight.ArrivalTime}</p>
@@ -64,7 +74,7 @@ export default class SingleFlight extends Component {
 
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
-                        <h3>177$</h3>
+                        <h3>{searchFlight[deptCabin].AdultPrice}</h3>
                         <Button
                            
                             style={{
@@ -88,3 +98,4 @@ export default class SingleFlight extends Component {
         )
     }
 }
+export default withRouter(SingleFlight)

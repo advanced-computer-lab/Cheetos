@@ -11,7 +11,8 @@ import { withRouter } from 'react-router';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
 
-export default class Booking extends Component {
+
+ class Booking extends Component {
 
 
 
@@ -55,10 +56,13 @@ export default class Booking extends Component {
 
     editDeparture(){
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
+        sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
         this.props.history.push("/editDep");
     }
     editReturn(){
-        sessionStorage.setItem('arrFlight', JSON.stringify(this.state.arrFlight));
+       
+        sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
+        sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
         this.props.history.push("/editRet");
     }
   
@@ -185,3 +189,4 @@ export default class Booking extends Component {
         )
     }
 }
+export default withRouter(Booking);

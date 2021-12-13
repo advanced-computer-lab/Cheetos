@@ -79,18 +79,20 @@ export default function ProfileDropdown(props) {
               Profile
             </MenuItem>
         </Link>
+        <Link to={{pathname: "/bookings"}} style={{textDecoration:"none",color:"black"}}>
         <MenuItem>
          
           
          
-            <Link to={{pathname: "/bookings"}} style={{textDecoration:"none",color:"black"}}>
+            
                 <Avatar>
                     <BookmarksIcon fontSize="small" />
                 </Avatar>
-            </Link>
+            
          
           My Bookings
         </MenuItem>
+        </Link>
         <Divider />
        
       

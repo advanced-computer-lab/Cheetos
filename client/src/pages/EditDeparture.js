@@ -3,15 +3,22 @@ import SingleFlight from '../components/SingleFlight'
 import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
 import Modal from "react-bootstrap/Modal";
+import SearchIcon from '@mui/icons-material/Search';
+import { withRouter } from 'react-router';
+import NoResults from '../components/NoResults'
+import '../style/EditFlight.css';
+import moment from 'moment';
+import MyHeader from '../components/MyHeader';
 
-export default class EditDeparture extends Component {
+
+class EditDeparture extends Component {
    
         deptTrip ={
             FlightNumber: "1175",
             DepartureTime: "10:10",
             ArrivalTime: "12:10",
-            DepartureDate: "2021-09-12",
-            ArrivalDate: "2021-09-13",
+            DepartureDate: "2021-12-09",
+            ArrivalDate: "2021-12-10",
             EconomySeats: {
                 AvailableSeats: 20,
                 PriceAdult: 1000,
@@ -84,43 +91,168 @@ export default class EditDeparture extends Component {
     
             DepartureAirport: "CAI",
     
-            ArrivalAirport: "LAX",
+            ArrivalAirport: "LXR",
+    
+            TripDuration: "24h 30m",
+           
+        }
+
+        deptTrip2 ={
+            FlightNumber: "1175",
+            DepartureTime: "10:10",
+            ArrivalTime: "12:10",
+            DepartureDate: "2021-12-05",
+            ArrivalDate: "2021-12-10",
+            EconomySeats: {
+                AvailableSeats: 0,
+                PriceAdult: 1000,
+                PriceChild: 700,
+                Seats: [
+                    {
+                        Seat: "A1",
+                        Reserved: true,
+                    }, {
+                        Seat: "A1",
+                        Reserved: true,
+                    },
+                    {
+                        Seat: "A1",
+                        Reserved: true,
+                    }],
+                    BaggageAllowance: {
+                        Number: 4,
+                        Size: 20
+                    }
+            },
+            
+    
+            BusinessSeats: {
+                AvailableSeats: 20,
+                PriceAdult: 1500,
+                PriceChild: 850,
+                Seats: [
+                    {
+                        Seat: "A1",
+                        Reserved: true,
+                    }, {
+                        Seat: "A1",
+                        Reserved: true,
+                    },
+                    {
+                        Seat: "A1",
+                        Reserved: true,
+                    }],
+                    BaggageAllowance: {
+                        Number: 4,
+                        Size: 20
+                    }
+            },
+            FirstClassSeats: {
+                AvailableSeats: 20,
+                PriceAdult: 2000,
+                PriceChild: 700,
+                Seats: [
+                    {
+                        Seat: "A1",
+                        Reserved: true,
+                    }, {
+                        Seat: "A1",
+                        Reserved: true,
+                    },
+                    {
+                        Seat: "A1",
+                        Reserved: true,
+                    }],
+                    BaggageAllowance: {
+                        Number: 4,
+                        Size: 20
+                    }
+            },
+    
+            DepartureTerminal: 10,
+    
+            ArrivalTerminal: 15,
+    
+            DepartureAirport: "CAI",
+    
+            ArrivalAirport: "LXR",
     
             TripDuration: "24h 30m",
            
         }
 
         state={
-            flightArr: [this.deptTrip,this.deptTrip,this.deptTrip],
-            searchResults:[],
-            departureDateSearch: "",
-            cabinSearch:"",
-            deptDate:"",
-            cabin:"",
-            searchFlight:"",
-            date:"",
+            flightsArr: [this.deptTrip,this.deptTrip,this.deptTrip2,this.deptTrip,this.deptTrip,this.deptTrip2], //all flights
+            searchResults:[], //where i'm putting the filtering
+            depDateSearch: "", //user input for dep date
+            cabinSearch:"EconomySeats", // user input for cabin class
+            searchFlight:"", // the flight i got form my booking
+            date:"", // the date of the other flight
             returnFlag:false,
             departureFlag:false,
         }
-
+/*
+to search i need a flight's dep and arr airport( from storage) ,
+ dep date (userInput), cabin (userInput), 
+ check flight has vacancy , check flight date with other flight 
+*/
   
+ 
 
     componentDidMount(){
         if (this.props.location.pathname === "/editDep") {
-           this.state.searchFlight = JSON.parse(sessionStorage.getItem('depFlight'));
-           this.state.date = (JSON.parse(sessionStorage.getItem('retFlight'))).ArrivalDate;
-           this.state.departureFlag = true;
+            this.setState({
+                searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
+                date:(JSON.parse(sessionStorage.getItem('retFlight'))).ArrivalDate,
+                departureFlag:true,
+                depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
+         }) 
         }
         else {
-            this.state.searchFlight = JSON.parse(sessionStorage.getItem('reservation')).ArrFlight;
-            this.state.date = JSON.parse(sessionStorage.getItem('reservation'));
-            this.date.returnFlag = true;
+            this.setState({
+                searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
+                date:(JSON.parse(sessionStorage.getItem('depFlight'))).ArrivalDate,
+                departureFlag:true,
+         })
         }
         
     }
-    handleSearch(){
-
+    handleSearch(e){
+         // setting the state of search fields upon change
+         e.preventDefault();
+         const value = e.target.value;
+         
+         this.setState(
+           {
+             ...this.state,[e.target.name]: value
+           }
+           );
     }
+    andSearch(){
+        const{flightsArr,deptCabinClass,searchResults,searchFlight,depDateSearch,cabinSearch} = this.state;
+        //doing the search and filtering 
+
+
+        this.setState({
+            searchResults: flightsArr.filter((f) =>
+              Date.parse(f.DepartureDate)=== Date.parse(depDateSearch)
+              && f.DepartureAirport === searchFlight.DepartureAirport
+              && f.ArrivalAirport === searchFlight.ArrivalAirport
+              && f[cabinSearch]["AvailableSeats"] >= Number(1)
+              
+            )
+          })
+        //   sessionStorage.setItem('cabinSearch', JSON.stringify(cabinSearch));
+    }
+    // dates(){
+    //     if(retFlag){
+    //         //check departure not before arrival of DepFlight
+    //     }
+    //     if(depFlag){
+    //         //check arrival not after departure return
+    //     }
+    // }
+
     /*steps :
     1. get the old flight attributes i'm searching for from session
     2. get new values from user input
@@ -131,34 +263,30 @@ export default class EditDeparture extends Component {
 
     
     render() {
-        const { searchResults ,deptDate,cabin} = this.state
+        const { searchResults ,flightsArr,depDateSearch,cabinSearch,searchFlight} = this.state
         return (
             <div className = "flex-col">
-               <div className="search-bar" style={{justifyContent:"center"}}>
+                <MyHeader/>
+               <div className="search-bar search-bar-box" style={{justifyContent:"center"}}>
                 <Form.Group style={{ width:"20%"}} className="mb-2">
-                
+                <Form.Label style={{color:"white",fontWeight:"bold"}}>Departure Date</Form.Label>
+              
                 <Form.Control
-                    type="text"
-                    onFocus={
-                    (e) => {
-                        e.currentTarget.type = "date";
-                        e.currentTarget.focus();
-                    }
-                    }
-                    onBlur={
-                    (e) => (e.currentTarget.type = "text")
-                    }
+                    type="date"
                     placeholder="Departure date"
-                    value={deptDate}
-                    name="deptDate"
+                    value={depDateSearch}
+                    name="depDateSearch"
                     onChange={this.handleSearch.bind(this)}
+                    minDate={new Date("12-12-2021")}
+                    maxDate={new Date("-12-2021")}
                 />
                 </Form.Group>
 
                 <Form.Group style={{  width: "20%" }} className="mb-2">
+                <Form.Label style={{color:"white",fontWeight:"bold"}}>Cabin Class</Form.Label>
                 <Form.Select
-                  value={cabin}
-                  name="deptCabinClass"
+                  value={cabinSearch}
+                  name="cabinSearch"
                   onChange={this.handleSearch.bind(this)}
                   aria-label="Default select example">
                   <option hidden>Departure cabin </option>
@@ -168,17 +296,38 @@ export default class EditDeparture extends Component {
                 </Form.Select>
                </Form.Group>
 
-
-
+               <div >
+                <Button style={{ width: "auto", height: "39px",marginTop:"22px",padding:"1rem" }}
+                  onClick={this.andSearch.bind(this)} variant="contained" >
+                  <SearchIcon style={{ fontSize: "30px" }} />{" "}
+                  
+                </Button>
+              </div >
 
                 </div>
-                <div className="flex-col">
-                    { searchResults.map((t) => (
-                    <SingleFlight deptFlight={t}  />
-                    ))}
+
+              
+                <div className="flex-col edit-box">
+                    { searchResults.length>0? 
+                    
+                        searchResults.map((t) => (
+                        <SingleFlight deptFlight={t}  />
+                   
+                    ))
+                : 
+                <>
+                <div className="flex-col no-res">
+                    <SearchIcon style={{ fontSize: "5rem" }} />
+                    <h2>Sorry, we couldn't find any flights from {searchFlight.DepartureAirport} to {searchFlight.ArrivalAirport} on {depDateSearch}</h2>
+                    <h6 style={{ color: "grey" }}>These airports may not have regularly scheduled flights or there may be restrictions that impact this route.
+                    </h6>
+                </div>
+                </>
+                }
                     
                 </div>
             </div>
         )
     }
 }
+export default withRouter(EditDeparture)

@@ -1,0 +1,31 @@
+.edit-box{
+    display:flex;
+    justify-content: center;
+    gap: 0.5rem;
+    width:auto;
+    overflow: auto;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    padding: 1rem;
+    max-height: 30rem;
+  }
+
+  .edit-box::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  /* Add a thumb */
+  .edit-box::-webkit-scrollbar-thumb {
+    background: gainsboro;
+    border-radius: 10px;
+  }
+  .edit-box::-webkit-scrollbar-thumb:hover {
+    background-color: #aaaaaa;
+  }
+  .no-res{
+      width:45rem;
+      height:30%;
+      padding: 1rem;
+      text-align: center;
+  }
+  
