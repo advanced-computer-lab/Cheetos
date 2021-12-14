@@ -59,7 +59,7 @@ function App() {
       </Route>
 
       <Route path="/editRet" >
-        <EditReturn/>
+        <EditDeparture/>
       </Route>
       </Switch>
 
