@@ -11,6 +11,7 @@ import ChooseSeats from '../pages/ChooseSeats';
 import Tagline from '../pages/Tagline';
 import StepperPage from '../components/StepperPage';
 import Reservation from '../pages/Reservation';
+import Payment from '../components/Payment';
 
 
 function App() {
@@ -44,6 +45,9 @@ function App() {
       </Route>
       <Route path="/reserve" >
         <Reservation/>
+      </Route>
+      <Route path="/pay" >
+        <Payment name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191} />
       </Route>
       </Switch>
 
