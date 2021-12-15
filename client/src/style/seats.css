@@ -140,7 +140,7 @@
 .stepper{
   background-color: white;
   border-radius: 5px;
-  /* width: 100%; */
+  width: 75%;
   margin: 2em;
   padding: 2em;
 }

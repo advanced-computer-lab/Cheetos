@@ -6,7 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const steps = ["Select Seats" , "View Summary"];
+const steps = ["Flight Details" , "Select Seats", "Payment"];
 
 export default function HorizontalLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -71,7 +71,7 @@ export default function HorizontalLinearStepper() {
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
-              
+
             </Step>
           );
         })}
