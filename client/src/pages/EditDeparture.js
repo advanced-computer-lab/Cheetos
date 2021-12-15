@@ -90,9 +90,9 @@ class EditDeparture extends Component {
     
             ArrivalTerminal: 15,
     
-            DepartureAirport: "CAI",
+            DepartureAirport: "LXR",
     
-            ArrivalAirport: "LXR",
+            ArrivalAirport: "CAI",
     
             TripDuration: "24h 30m",
            
@@ -187,34 +187,39 @@ class EditDeparture extends Component {
             searchResults:[], //where i'm putting the filtering
             depDateSearch: "", //user input for dep date
             cabinSearch:"EconomySeats", // user input for cabin class
-            searchFlight:"", // the flight i got form my booking
+            searchFlight:"", // the flight i got from my booking
             date:"", // the date of the other flight
-            returnFlag:false,
             departureFlag:false,
+            clickedSearch : false,
         }
 /*
 to search i need a flight's dep and arr airport( from storage) ,
  dep date (userInput), cabin (userInput), 
  check flight has vacancy , check flight date with other flight 
 */
-  
+
  
 
     componentDidMount(){
         if (this.props.location.pathname === "/editDep") {
+            
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
                 date:(JSON.parse(sessionStorage.getItem('retFlight'))).ArrivalDate,
                 departureFlag:true,
                 depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
          }) 
+         console.log("search flight is",this.state.searchFlight);
         }
         else {
+           
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
                 date:(JSON.parse(sessionStorage.getItem('depFlight'))).ArrivalDate,
-                departureFlag:true,
+                depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
+                departureFlag:false,
          })
+         console.log("search flight is",this.state.searchFlight);
         }
         
     }
@@ -233,15 +238,17 @@ to search i need a flight's dep and arr airport( from storage) ,
         const{flightsArr,deptCabinClass,searchResults,searchFlight,depDateSearch,cabinSearch} = this.state;
         //doing the search and filtering 
 
-
+        console.log("andSearch",searchFlight);
         this.setState({
             searchResults: flightsArr.filter((f) =>
               Date.parse(f.DepartureDate)=== Date.parse(depDateSearch)
               && f.DepartureAirport === searchFlight.DepartureAirport
               && f.ArrivalAirport === searchFlight.ArrivalAirport
-              && f[cabinSearch]["AvailableSeats"] >= Number(1)
+              && f[cabinSearch]["AvailableSeats"] >= Number(1)//double check condition if we are adding child parent pairs
+              //add date check
               
-            )
+            ),
+            clickedSearch:true
           })
         //   sessionStorage.setItem('cabinSearch', JSON.stringify(cabinSearch));
     }
@@ -264,11 +271,12 @@ to search i need a flight's dep and arr airport( from storage) ,
 
     
     render() {
-        const { searchResults ,flightsArr,depDateSearch,cabinSearch,searchFlight} = this.state
+        const { searchResults ,flightsArr,depDateSearch,cabinSearch,searchFlight,clickedSearch} = this.state
+      
         return (
             <div className = "flex-col">
                 <MyHeader/>
-                <SingleFlightConfirm/>
+                <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={ "18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"}/>
                <div className="search-bar search-bar-box" style={{justifyContent:"center"}}>
                 <Form.Group style={{ width:"20%"}} className="mb-2">
                 <Form.Label style={{color:"white",fontWeight:"bold"}}>Departure Date</Form.Label>
@@ -280,7 +288,7 @@ to search i need a flight's dep and arr airport( from storage) ,
                     name="depDateSearch"
                     onChange={this.handleSearch.bind(this)}
                     minDate={new Date("12-12-2021")}
-                    maxDate={new Date("-12-2021")}
+                    maxDate={new Date("12-12-2021")}
                 />
                 </Form.Group>
 
@@ -316,7 +324,7 @@ to search i need a flight's dep and arr airport( from storage) ,
                         <SingleFlight deptFlight={t}  />
                    
                     ))
-                : 
+                : clickedSearch? 
                 <>
                 <div className="flex-col no-res">
                     <SearchIcon style={{ fontSize: "5rem" }} />
@@ -324,7 +332,14 @@ to search i need a flight's dep and arr airport( from storage) ,
                     <h6 style={{ color: "grey" }}>These airports may not have regularly scheduled flights or there may be restrictions that impact this route.
                     </h6>
                 </div>
-                </>
+                </>:
+                 <div className="flex-col no-res">
+                 <SearchIcon style={{ fontSize: "5rem" }} />
+                 <h2>Search to find your ideal flight</h2>
+                 <h6 style={{ color: "grey" }}>airports may not have regularly scheduled flights or there may be restrictions that impact this route.
+                 </h6>
+             </div>
+
                 }
                     
                 </div>

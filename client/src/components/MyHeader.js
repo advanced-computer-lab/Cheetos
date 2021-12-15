@@ -343,6 +343,7 @@ class MyHeader extends Component {
             <div className="flex-row " style={{ gap: " 0.5rem", width: "100%", alignItems: "stretch" }}>
               
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
+                
             
                 <Form.Control
                   type="text"

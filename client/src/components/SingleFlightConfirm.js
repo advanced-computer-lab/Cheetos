@@ -9,6 +9,7 @@ import '../style/EditFlight.css'
 
 export default class SingleFlightConfirm extends Component {
     render() {
+        const {departureDate,arrivalDate,departureTime,arrivalTime,seat,cabin,price}=this.props;
         return (
             <div>
                  <div className="flex-col" >
@@ -25,26 +26,17 @@ export default class SingleFlightConfirm extends Component {
 
 
                                 <div className="trip-flex-col">
-                                    <p className="emphasis">02-12-2021{" >"} 18-12-2021 </p>
-                                    <p>03:10{">"}22:10</p>
+                                    <p className="emphasis">{departureDate}{" >"}{arrivalDate} </p>
+                                    <p>{departureTime}{">"}{arrivalTime}</p>
                                 </div>
 
                                 <div className="trip-flex-col">
-                                    <div className="emphasis" ><AirlineSeatReclineNormalIcon />A1</div>
-                                    <p style={{ width: "12", textAlign: "center" }}>Economy
+                                    <div className="emphasis" ><AirlineSeatReclineNormalIcon />{seat}</div>
+                                    <p style={{ width: "12", textAlign: "center" }}>{cabin==="EconomySeats"?"Economy":cabin==="BusinessSeats"?"Bussiness Class":"First Class"}
                                         </p>
                                 </div>
 
-                                <p className="emphasis">112$</p>
-
-
-
                             </div>
-
-
-
-
-
 
 
                         </div>
@@ -52,7 +44,7 @@ export default class SingleFlightConfirm extends Component {
 
                         </div>
                         <div className="trip-flex-col" style={{ width: '30%' }} >
-                            <h3>1177$</h3>
+                            <h3>{price}$</h3>
                           <Button
                                 style={{
                                     backgroundColor: "#447fcc",

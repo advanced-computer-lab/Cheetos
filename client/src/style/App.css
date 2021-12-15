@@ -11,7 +11,6 @@ html {
   background-size: cover;
 }
 
-
 @import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500&display=swap%27");
 * {
   margin: 0;
@@ -42,10 +41,9 @@ html {
 }
 
 @media only screen and (max-width: 1300px) {
-  .admin-header{
-    height:35vh;
+  .admin-header {
+    height: 35vh;
   }
-
 }
 .admin-header > h1 {
   font-weight: 700;
@@ -58,8 +56,6 @@ html {
   width: 90%;
   align-self: center;
   flex-wrap: wrap;
-
- 
 }
 
 .flight-list::-webkit-scrollbar {
@@ -91,16 +87,14 @@ th,
 td {
   padding: 0.5rem;
   text-align: center !important;
-  
 }
 tr:nth-child(even) {
   background-color: white;
 }
 tr:nth-child(odd) {
   background-color: #a8c9f5;
-  
 }
-td{
+td {
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -120,17 +114,14 @@ td{
   color: rgb(201, 6, 6);
 }
 th {
-  
   font-size: large;
   color: white;
   font-weight: 600;
-  position: -webkit-sticky; 
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
-  background:  #447fcc ;
-  ;
-  
+  background: #447fcc;
 }
 
 /* no touch 7gat mark */
@@ -148,50 +139,48 @@ th {
 }
 
 td > input {
-  margin : 0 ;
+  margin: 0;
 }
 .msg-header {
   background-color: #12228f;
   color: #ffffff;
   text-align: center;
- 
 }
 
-.logo-buttons-search{
+.logo-buttons-search {
   height: auto;
   padding-bottom: 1rem;
 }
 
-.logo-buttons{
+.logo-buttons {
   height: 50%;
   display: flex;
   justify-content: space-between;
-  width:90%;
+  width: 90%;
   margin-top: 2rem;
   align-self: center;
 }
 
-header-buttons-container{
+header-buttons-container {
   padding-right: 1rem;
-  width:50%;
+  width: 50%;
 }
 
-
-.header-buttons{
-  background-color: #37A1E2;
+.header-buttons {
+  background-color: #37a1e2;
   width: 150px;
   height: 6vh;
   padding-right: 10px;
 }
 
-.logo{
+.logo {
   display: flex;
-  justify-content:flex-start ;
+  justify-content: flex-start;
   font-size: 30px;
   font-weight: 600;
 }
 
-.trip-search-results{
+.trip-search-results {
   padding-top: 20px;
   /* padding-bottom: 25px; */
   width: 100vw;
@@ -206,7 +195,6 @@ header-buttons-container{
   justify-content: flex-start;
   align-items: center;
   overflow: auto;
-  
 }
 body {
   overflow: auto;
@@ -224,8 +212,6 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #aaaaaa;
 }
 
-
-
 .trip-search-results::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -239,8 +225,8 @@ body::-webkit-scrollbar-thumb:hover {
   background-color: #aaaaaa;
 }
 
-.signin-page{
-  height:100vh;
+.signin-page {
+  height: 100vh;
   background-color: #12228f;
 
   /* background-color: #edf0f5; */
@@ -249,51 +235,46 @@ body::-webkit-scrollbar-thumb:hover {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap:5rem;
+  gap: 5rem;
   /* flex-direction: ; */
 }
 
-.signin-form{
+.signin-form {
   -webkit-box-shadow: 0 0 5px rgb(0, 0, 0);
-        box-shadow: 0 0 5px rgb(73, 73, 73);
-    border-radius: 10px;
-    height:370px;
-    width:400px;
-    background-color: #ffffff;
-    padding: 20px;
-
+  box-shadow: 0 0 5px rgb(73, 73, 73);
+  border-radius: 10px;
+  height: 370px;
+  width: 400px;
+  background-color: #ffffff;
+  padding: 20px;
 }
-.signup-form{
- 
-    height:370px;
-    background-color: #ffffff;
-    padding: 20px;
-
+.signup-form {
+  height: auto;
+  background-color: #ffffff;
+  padding: 20px;
 }
-.v2{
+.v2 {
   border-bottom: 1px solid rgb(202, 202, 202) !important;
   width: 90%;
 }
-.signin-logo{
-  font-size:xx-large;
+.signin-logo {
+  font-size: xx-large;
   display: flex;
   flex-direction: column;
-  color:#ffffff;
+  color: #ffffff;
 }
-.tag-container{
+.tag-container {
   height: 70vh;
   flex-grow: 1;
-  width:100vw;
+  width: 100vw;
   justify-content: center;
   align-items: flex-start;
-  gap:0;
+  gap: 0;
   background-color: rgba(0, 0, 0, 0.575);
   padding: 4em;
   border-radius: 10px;
-  
-
 }
-.tag{
+.tag {
   color: #ffffff;
   font-size: 3.5em;
   font-weight: bold;
@@ -303,16 +284,17 @@ body::-webkit-scrollbar-thumb:hover {
   text-shadow: 0px -1px 12px rgba(58, 58, 58, 0.9);
 }
 
-.sub-tag{
-
+.sub-tag {
   font-size: 1.5rem;
   padding-top: 15px;
   font-weight: 400;
-
 }
 .my-modal {
   height: 400px !important;
-  width:400px !important;   /* Occupy the 90% of the screen width */
-  
-} 
+  width: 400px !important; /* Occupy the 90% of the screen width */
+}
+.my-modal-2 {
+  height: 400px !important;
+  width: 400px !important; /* Occupy the 90% of the screen width */
 
+}
