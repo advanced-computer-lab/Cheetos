@@ -243,7 +243,7 @@ body::-webkit-scrollbar-thumb:hover {
   -webkit-box-shadow: 0 0 5px rgb(0, 0, 0);
   box-shadow: 0 0 5px rgb(73, 73, 73);
   border-radius: 10px;
-  height: 370px;
+  height: auto;
   width: 400px;
   background-color: #ffffff;
   padding: 20px;

@@ -89,6 +89,10 @@ export default class SignUp extends Component {
 
           
       }
+
+    handleSubmit(){
+        
+    }
     render() {
         
         const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
@@ -182,7 +186,7 @@ export default class SignUp extends Component {
                     <div className="flex-col">
                 
                 
-                    <Button variant="success" size="md" style={{marginTop:"10px" , fontWeight:"600",width:"50%"}} type="submit">
+                    <Button variant="success" size="md" style={{marginTop:"10px" , fontWeight:"600",width:"50%"}} type="submit" onClick={this.handleSubmit.bind(this)}>
                             Sign Up
                         </Button>
                     </div>
