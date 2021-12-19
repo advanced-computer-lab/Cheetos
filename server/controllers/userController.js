@@ -65,19 +65,31 @@ deleteUser = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
+checkEmail = async (req, res) => {
+  const user = req.body;
+  //Check if email already exists
+  let existingUser = await User.findOne({ Email: user.Email });
+  if (existingUser) {
+    return res.json({ invalidEmail: true, message: "Email already exists" });
+  }
+  return res.json({ invalidEmail: false });
+};
+
+checkUserName = async (req, res) => {
+  //Check if username already exists
+  const user = req.bpdy;
+  let existingUser = await User.findOne({ UserName: user.UserName });
+  if (existingUser) {
+    return res.json({
+      invalidUsername: true,
+      message: "Username already exists",
+    });
+  }
+  return res.json({ invalidUsername: false });
+};
+
 createUser = async (req, res) => {
   const user = req.body;
-
-  //Check if email already exists
-  let existingUser = await User.findOne({ Email: req.body.Email });
-  if (existingUser) {
-    return res.status(400).send("Email already exists");
-  }
-  //Check if username already exists
-  existingUser = await User.findOne({ UserName: req.body.UserName });
-  if (existingUser) {
-    return res.status(400).send("Username already exists.");
-  }
 
   user.Password = await bcrypt.hash(req.body.Password, 10);
 
@@ -162,6 +174,8 @@ verifyJwT = (req, res, next) => {
 module.exports = {
   updateUser,
   deleteUser,
+  checkEmail,
+  checkUserName,
   createUser,
   getUser,
   getUserById,
