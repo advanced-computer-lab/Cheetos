@@ -252,6 +252,7 @@ body::-webkit-scrollbar-thumb:hover {
   height: auto;
   background-color: #ffffff;
   padding: 20px;
+  border-radius: 15px;
 }
 .v2 {
   border-bottom: 1px solid rgb(202, 202, 202) !important;

@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col'
 import InputGroup from 'react-bootstrap/InputGroup'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+import CloseButton from 'react-bootstrap/esm/CloseButton';
 
 
 export default class SignUp extends Component {
@@ -25,6 +26,7 @@ export default class SignUp extends Component {
         invalidPassport:false,
         invalidUsername:false,
         invalidPassword:false,
+        dataValid: true,
     }
 
     
@@ -87,26 +89,43 @@ export default class SignUp extends Component {
             // }
         }
 
+
           
       }
 
-    handleSubmit(){
+      handleSubmit(e){
+        const{show,closeModal} = this.props;
+        const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
+        e.preventDefault();
+        /*steps : async await post to backend send all data , return if invalid email or username
+        if invalid email set invalidEmail = true , if invalidUsername set invalidUserName = true
+         else store data fl backend if successful registration
+        if successful route to login or close modal*/
+
         
+        //if succefsul
+        closeModal(false);
     }
+
+    // closeModal(){
+    //     console.log("hehe")
+    //     this.setState({show : false});
+    // }
     render() {
         
         const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
+        const {show,closeModal} = this.props;
 
-//add check for country code exists or no?
 
 
 
         return (
 
-            <Modal aria-labelledby="contained-modal-title-vcenter"dialogClassName="my-modal" centered show={true}  >
-                
-                <Modal.Header closeButton >
+            <Modal aria-labelledby="contained-modal-title-vcenter"dialogClassName="my-modal" centered show={show} onSubmit={this.handleSubmit} >
+                <Modal.Header  >
+                    
                         <Modal.Title style={{fontWeight:"600"}}>Sign Up</Modal.Title>
+                        <CloseButton  onClick = {() =>closeModal(false)}/>
                     </Modal.Header>
                     <Modal.Body style={{padding:"0",height:"auto"}}>
                 <div className="signup-form">

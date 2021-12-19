@@ -178,7 +178,7 @@ class MyHeader extends Component {
             <Logo />
           </Link>
           <div className="header-buttons-container">
-            {sessionStorage.getItem('userId') ?
+            {sessionStorage.getItem('userId') ? 
               <>
                 <ProfileDropdown username="Mark Potter"/>
                 
