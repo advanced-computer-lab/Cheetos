@@ -5,6 +5,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { red } from '@mui/material/colors';
 
 const steps = ["Flight Details", "Select Seats", "Payment"];
 
@@ -108,7 +109,7 @@ export default class HorizontalLinearStepper extends React.Component {
                     <React.Fragment>
                         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
                         {activeStep == 0 ? 
-                        <div>
+                        <div style = {{height : '55vh' , backgroundColor : 'darkred'}}>
                            {/* your div of choice here  */}
 
 
@@ -117,7 +118,7 @@ export default class HorizontalLinearStepper extends React.Component {
 
                         </div> :
                         activeStep == 1 ? 
-                        <div>
+                        <div style = {{height : '55vh' , backgroundColor : 'darkgreen'}}>
                            {/* your div of choice here  */}
 
                             <h1>seats </h1>
@@ -125,7 +126,7 @@ export default class HorizontalLinearStepper extends React.Component {
 
 
                         </div> :
-                        <div>
+                        <div style = {{height : '55vh' , backgroundColor : 'darkblue'}}>
                            {/* your div of choice here  */}
 
                             <h1>payment </h1>

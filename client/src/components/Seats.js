@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import '../style/seats.css';
-
+import Form from "react-bootstrap/Form";
 import ChairOutlinedIcon from '@mui/icons-material/ChairOutlined';
 import Seat from './Seat';
-
- class Seats extends Component {
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+class Seats extends Component {
     state = {
         chosenSeats: [],
         canChose: true,
-        passengers: this.props.passengers  , //should be initialised from props 
-        seats : this.props.seats ,
+        passengers: this.props.passengers, //should be initialised from props 
+        seats: this.props.seats,
         // busArr : this.props.seats.map((e) => (
         //     { Seat: e, Reserved: false }
-    
+
         // ))
     }
     seat = {
@@ -56,21 +57,21 @@ import Seat from './Seat';
         if (!seat.Reserved) {
 
             if (this.state.passengers > 0) {
-                let newPassengers = this.state.passengers - 1; 
+                let newPassengers = this.state.passengers - 1;
                 console.log(seat.Seat, this.state.passengers);
                 if (chosen) {
                     this.setState({
                         chosenSeats: [...this.state.chosenSeats, seat],
-                        passengers: newPassengers , 
-                        canChose  : newPassengers == 0 ? false : true 
-                    }, () => this.props.parentFunc(this.props.att , this.state.chosenSeats))
+                        passengers: newPassengers,
+                        canChose: newPassengers == 0 ? false : true
+                    }, () => this.props.parentFunc(this.props.att, this.state.chosenSeats))
                 } else {
                     this.setState({
                         chosenSeats: this.state.chosenSeats.filter((s) => s.Seat !== seat.Seat),
                         passengers: this.state.passengers + 1
-                    }, () => this.props.parentFunc(this.props.att , this.state.chosenSeats))
+                    }, () => this.props.parentFunc(this.props.att, this.state.chosenSeats))
                 }
-                    
+
             } else {
                 if (this.state.canChose) {
                     this.setState({
@@ -81,43 +82,62 @@ import Seat from './Seat';
                 if (!chosen) {
                     this.setState({
                         chosenSeats: this.state.chosenSeats.filter((s) => s.Seat !== seat.Seat),
-                        passengers: this.state.passengers + 1 , 
-                        canChose : true 
-                    },  () => this.props.parentFunc(this.props.att , this.state.chosenSeats))
+                        passengers: this.state.passengers + 1,
+                        canChose: true
+                    }, () => this.props.parentFunc(this.props.att, this.state.chosenSeats))
                 }
             }
 
         }
-
+        console.log("in hereeee ", this.state.chosenSeats);
     }
-    
-    render() {
 
-        const { type, seatClass, passengers  } = this.props
-        console.log(this.subs(this.props.seats)) ; 
+    render() {
+        const { chosenSeats } = this.state
+        const { type, seatClass, passengers } = this.props
+        const seatClassName = seatClass === "FirstClassSeats" ? "First class" :
+            seatClass === "BusinessSeats" ? "Business class" :
+                seatClass === "EconomySeats" ? "Economy class" : ""
+        console.log(this.subs(this.props.seats));
         return (
 
-            <div className="shuttle">
-
-                <div className="first-class">
+            <div className="shuttle-wrapper">
+                <div className="shuttle">
                     <h2>{type}</h2>
-                    <h3>{seatClass}  : {this.state.chosenSeats.length}/{passengers} </h3>
-                    {this.props.seats ? this.subs(this.props.seats).map((r) =>
-                        <div className="seats-row">
-                            {
-                                r.map((s) =>
-                                    <Seat seat={s} parentChoseSeats={(s, chosen) => this.handleChoseSeat(s, chosen)} canChose={this.state.canChose} />
-                                )
-                            }
-                        </div>
-                    ) : ''
-                    }
+                    <h3>{seatClassName}  : {this.state.chosenSeats.length}/{passengers} </h3>
+                    <div className="first-class">
+                        {this.props.seats ? this.subs(this.props.seats).map((r) =>
+                            <div className="seats-row">
+                                {
+                                    r.map((s) =>
+                                        <Seat seat={s} parentChoseSeats={(s, chosen) => this.handleChoseSeat(s, chosen)} canChose={this.state.canChose} />
+                                    )
+                                }
+                            </div>
+                        ) : ''
+                        }
+                    </div>
                 </div>
+                <div >
+                    <h2 style = {{paddingLeft : "1em"}}>Passengers Info : </h2>
+                    <div className="passengers-info" >
+                        {chosenSeats.map((s) =>
+                            <div className="passenger">
+                                <h6>Seat: {s.Seat}</h6>
+                                <Form.Control size="sm" type="text" placeholder="Passenger name" />
+                                <DropdownButton size = "sm" id="dropdown-basic-button" title="Adult">
+                                    <Dropdown.Item href="#/action-1">Adult</Dropdown.Item>
+                                    <Dropdown.Item href="#/action-2">Child</Dropdown.Item>
+                                </DropdownButton>
+                                
+                            </div>
+                        )
 
-
-
+                        }
+                    </div>
+                </div>
             </div>
         )
     }
 }
-export default Seats  
+export default Seats

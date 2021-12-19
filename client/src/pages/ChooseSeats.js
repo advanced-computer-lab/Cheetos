@@ -40,7 +40,7 @@ class ChooseSeats extends Component {
                     <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
                 </div>
                
-                    <Button
+                    {/* <Button
                         onClick={this.handleConfirm.bind(this)}
                         style={{
                             backgroundColor: "#447fcc",
@@ -53,7 +53,7 @@ class ChooseSeats extends Component {
                         variant="contained"
                     >
                         Confirm Seats
-                    </Button>
+                    </Button> */}
                 
             </div>
         )

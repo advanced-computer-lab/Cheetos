@@ -41,9 +41,6 @@ export default class Payment extends Component {
         return (
 
             <div className = "flex-col">
-                <div className = "stepper">
-                    <ClassStepper  />
-                </div>
                 <StripeCheckout
                     name={name}
                     description={description}
