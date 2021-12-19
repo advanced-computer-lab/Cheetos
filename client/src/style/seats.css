@@ -41,10 +41,16 @@
   width: 95% ;
 }
 .shuttle-wrapper{
+  padding-top: 1em;
+  /* padding-right: 0.5em; */
+  padding-bottom: 1em;
   display: flex;
-  width: 47em;
+  width: 45em;
+  height: 48vh;
   background-color: white;
   border-radius: 1em;
+  border: 1px solid rgb(136, 136, 136); 
+
 }
 .passengers-info::-webkit-scrollbar {
   width: 2px;
@@ -59,8 +65,10 @@
   background-color: #aaaaaa;
 }
 .passengers-info{
+  
   padding-top: 1em ;
   justify-content: flex-start; 
+  align-items: center;
   padding-left: 1em;
   display: flex;
   flex-direction: column;
@@ -79,9 +87,8 @@
   width: auto;
 }
 .shuttle{
-  /* margin-top: 2em; */
+  
   width: 20rem;
-  height: 50vh;
   /* border: 2px solid rgb(124, 124, 124); */
   background-color: white;
   align-items: center;
@@ -89,7 +96,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
   /* padding-top: 5em; */
   /* margin-top: 7px;  */
   
@@ -100,7 +107,7 @@
 }
 /* Add a thumb */
 .first-class::-webkit-scrollbar-thumb {
-  background: rgb(199, 199, 199);
+  background: rgb(216, 216, 216);
   border-radius: 5px;
 }
 .first-class::-webkit-scrollbar-thumb:hover {
@@ -108,6 +115,8 @@
 }
 
 .first-class{
+  border: 1px solid rgb(206, 206, 206); 
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -116,31 +125,11 @@
   /* border: 1px solid rgba(255, 0, 0, 0.308); */
   border-radius: 5px;
   margin-bottom: 1em;
-  width: 100%;
+  width: 90%;
   height: auto;
   overflow-y: auto;
 }
 
-.bus-class{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 128, 0, 0.171);
-  border-radius: 5px;
-  height: 33%;
-}
-
-
-.eco-class{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 0, 255, 0.103);
-  border-radius: 5px;
-  height: 33%;
-}
 
 .seat{
   text-align: center;

@@ -185,7 +185,7 @@ class Reservation extends Component {
 
                                 </div> :
                                 activeStep == 1 ?
-                                    <div style={{ height: '55vh'  , backgroundColor: 'grey' }}>
+                                    <div style={{ height: '55vh'  , backgroundColor: '#FFFFFF' }}>
                                         {/* your div of choice here  */}
 
                                         <ChooseSeats deptFlight={deptFlight} arrFlight={arrFlight} deptCabin={deptCabin} arrCabin={arrCabin} parentFunc={(deptSeats, arrSeats) => this.handleSeatsConfirm(deptSeats, arrSeats)} />
@@ -202,6 +202,7 @@ class Reservation extends Component {
 
                                     </div>
                             }
+                            
                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4, backgroundColor: "white" }}>
                                 <Button
                                     color="inherit"
