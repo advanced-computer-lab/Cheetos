@@ -61,7 +61,6 @@ import { withRouter } from 'react-router';
                 bookingsArr : reservations.data.data
             }, () => console.log("reservations are "  , reservations.data.data))
         })
-
     }
     render() {
 

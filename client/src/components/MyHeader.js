@@ -34,6 +34,7 @@ class MyHeader extends Component {
     signedIn: false,
     anchorEl:null,
     open : false,
+    token : "",
 
     anchorElCabinDep:null,
     anchorElCabin:null,
@@ -120,9 +121,11 @@ class MyHeader extends Component {
     if (sessionStorage.getItem('userId')) {
       this.setState({
         signedIn: true,
-        userId: sessionStorage.getItem('userId')
-      })
+        userId: sessionStorage.getItem('userId'),
+        token : localStorage.getItem('token'),
+      },()=>console.log("token header",this.state.token))
     }
+    
     const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
     if (searchObject) {
       console.log("this is search object",searchObject);

@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import SignUp from './SignUp';
 import { withRouter } from 'react-router';
+import api from '../api'
 
 class Signin extends Component {
     state={
@@ -26,14 +27,33 @@ class Signin extends Component {
           });
     }
 
-    handleSubmit(e){
+     async handleSubmit(e){
         const {invalidUserName,invalidPassword,username,password} = this.state
         /*steps : async await post to backend send username and password , return if invalid or successful ,
          if succesful get token and store it locally
          then route to home 
          */
-         localStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
-         this.props.history.push("/");
+
+        const loggingInUser = {
+             UserName : username,
+             Password : password
+         }
+
+         console.log("entering submit")
+
+        await api.loginUser(loggingInUser)
+         .then((res) => {
+             localStorage.setItem('token',res.data.token)
+             localStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
+             this.props.history.push("/");
+         }).catch((err) => {
+             console.log("login heho ", err);
+             
+
+         })
+         console.log("token heho",localStorage.getItem('token'))
+         
+      
     }
 
     //for sign up 
@@ -53,9 +73,9 @@ class Signin extends Component {
         return (
         
           <>
-                <Form onSubmit={this.handleSubmit}>
+                <Form hasValidation>
                 <Form.Group className="mb-3">
-                    <Form.Control size="lg"  type="text" name="username" value={username} name="username" isInvalid={invalidUserName} placeholder="Enter Username" onChange={this.handleChange.bind(this)} />
+                    <Form.Control size="lg"  type="text" name="username" value={username} name="username" required isInvalid={invalidUserName} placeholder="Enter Username" onChange={this.handleChange.bind(this)} />
                     <Form.Control.Feedback type="invalid" >
                         Username does not exist.
                      </Form.Control.Feedback>
@@ -63,7 +83,7 @@ class Signin extends Component {
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control size="lg" type="password" name="password" value={password} name="password" isInvalid={invalidPassword} placeholder="Password" onChange={this.handleChange.bind(this)}/>
+                    <Form.Control size="lg" type="password" name="password" value={password} name="password" required isInvalid={invalidPassword} placeholder="Password" onChange={this.handleChange.bind(this)}/>
                     <Form.Control.Feedback type="invalid" >
                         Incorrect Password.
                      </Form.Control.Feedback>
@@ -90,7 +110,7 @@ class Signin extends Component {
                         `}
                     </style>
 
-                    <Button variant="flat" size="lg" type="submit"  >
+                    <Button variant="flat" size="lg"  onClick={this.handleSubmit.bind(this)}  >
                         Log in
                     </Button>
                     </>
@@ -99,7 +119,7 @@ class Signin extends Component {
                     {/* <a href="#" style={{marginBottom:"10px"}}>Forgotten Password?</a> */}
                     
                     <div className = "v2"> </div>
-                    <Button variant="success" size="lg" style={{marginTop:"10px" , fontWeight:"600"}}  onClick={this.handleModalShow.bind(this)}>
+                    <Button variant="success" size="lg" style={{marginTop:"10px" , fontWeight:"600"}}   onClick={this.handleModalShow.bind(this)}>
                         Create New Account
                     </Button>
                 </div>

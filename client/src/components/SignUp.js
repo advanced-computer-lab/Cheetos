@@ -4,13 +4,16 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import InputGroup from 'react-bootstrap/InputGroup'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import CloseButton from 'react-bootstrap/esm/CloseButton';
+import api from '../api'
 
 
 export default class SignUp extends Component {
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+
     state={
         fname:"",
         lname:"",
@@ -43,7 +46,7 @@ export default class SignUp extends Component {
 
 
           if(e.target.name==="phone"){
-            if((e.target.value).length<11 || !(/^\d+$/.test(value)) ){
+            if((e.target.value).length!=11 || !(/^\d+$/.test(value)) ){
               this.setState({invalidPhone:true});
             }
             else{
@@ -52,7 +55,7 @@ export default class SignUp extends Component {
         }
 
         if(e.target.name==="passport"){
-            if((e.target.value).length<9 ){
+            if((e.target.value).length!=9 ){
               this.setState({invalidPassport:true});
             }
             else{
@@ -93,10 +96,73 @@ export default class SignUp extends Component {
           
       }
 
-      handleSubmit(e){
-        const{show,closeModal} = this.props;
-        const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
+      handleEmailValidation(e){
         e.preventDefault();
+        const value = e.target.value;
+        this.setState(
+          {
+               email : value
+          });
+
+      }
+
+      handleUsernameValidation(e){
+        e.preventDefault();
+        const value = e.target.value;
+        this.setState(
+          {
+               username : value
+          });
+
+      }
+
+     async handleSubmit(e){
+
+        e.preventDefault();
+        // const {closeModal} = this.props;
+        
+        const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
+        
+
+        console.log(username,password,fname,lname,email,phone,passport,address,code);
+
+        const newUser = {
+           "UserName" : username,
+           "Password": password,
+           "FirstName" : fname,
+           "LastName" : lname,
+           "Email" : email,
+           "TelephoneNumber" : phone,
+           "PassportNumber" : passport,
+           "HomeAddress" : address,
+           "CountryCode" : code,
+        }
+
+        console.log(newUser,"hehe");
+
+        await api.registerUser(newUser).then((res) => {
+            console.log(res.data.data)
+        },() => { if(!(invalidEmail || invalidPassport || invalidPassword || invalidPhone || invalidUsername)){this.props.closeModal(false);
+            this.setState({
+                fname:"",
+                lname:"",
+                email:"",
+                phone:"",
+                code:"",
+                address:"",
+                passport:"",
+                username:"",
+                password:"",
+                invalidEmail : false,
+                invalidPassport : false,
+                invalidPassword : false,
+                invalidPhone : false,
+                invalidUsername : false ,
+            })
+        }})
+
+     
+
         /*steps : async await post to backend send all data , return if invalid email or username
         if invalid email set invalidEmail = true , if invalidUsername set invalidUserName = true
          else store data fl backend if successful registration
@@ -104,20 +170,34 @@ export default class SignUp extends Component {
 
         
         //if succefsul
-        closeModal(false);
+        
+    }
+    clear(){
+        const{closeModal} = this.props;
+        const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
+        this.setState({
+            fname:"",
+            lname:"",
+            email:"",
+            phone:"",
+            code:"",
+            address:"",
+            passport:"",
+            username:"",
+            password:"",
+            invalidEmail : false,
+            invalidPassport : false,
+            invalidPassword : false,
+            invalidPhone : false,
+            invalidUsername : false ,
+        },() =>closeModal(false))
     }
 
-    // closeModal(){
-    //     console.log("hehe")
-    //     this.setState({show : false});
-    // }
+
     render() {
         
         const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
         const {show,closeModal} = this.props;
-
-
-
 
         return (
 
@@ -125,11 +205,11 @@ export default class SignUp extends Component {
                 <Modal.Header  >
                     
                         <Modal.Title style={{fontWeight:"600"}}>Sign Up</Modal.Title>
-                        <CloseButton  onClick = {() =>closeModal(false)}/>
+                        <CloseButton  onClick = {this.clear.bind(this)}/>
                     </Modal.Header>
                     <Modal.Body style={{padding:"0",height:"auto"}}>
                 <div className="signup-form">
-                     <Form >
+                     <Form hasValidation onSubmit = {(e) => this.handleSubmit(e)}>
                     <Form.Group className="mb-3">
                         <Row>
                             <Col className=" pe-0" >
@@ -205,7 +285,7 @@ export default class SignUp extends Component {
                     <div className="flex-col">
                 
                 
-                    <Button variant="success" size="md" style={{marginTop:"10px" , fontWeight:"600",width:"50%"}} type="submit" onClick={this.handleSubmit.bind(this)}>
+                    <Button variant="success" size="md" style={{marginTop:"10px" , fontWeight:"600",width:"50%"}} type="submit" >
                             Sign Up
                         </Button>
                     </div>
