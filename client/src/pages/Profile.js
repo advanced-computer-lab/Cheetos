@@ -117,13 +117,17 @@ class Profile extends Component {
     });
   }
 
-  handleSubmitPass(){
+  handleSubmitPass(e){
+    e.preventDefault();
     const {oldPass,newPass,invalidOldPass} = this.state
     //validate new here wla onChange??
     /* steps :
     post req to backend validate old pass
      if valid store new pass else
      set invalid old pass*/
+     console.log(oldPass);
+     console.log(newPass);
+     this.changePassModalShow();
   }
 
   render() {
@@ -210,7 +214,7 @@ class Profile extends Component {
                      <Form onSubmit={this.handleSubmitPass.bind(this)}>
                   
 
-                    <Form.Group hasValidation className="mb-3">
+                    <Form.Group hasvalidation className="mb-3">
                      
                           
                           <Form.Group className='mb-3'>

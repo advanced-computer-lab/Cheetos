@@ -13,9 +13,7 @@ class Signin extends Component {
         password:"",
         show:false,
     }
-    fakeLogin(){
-        localStorage.setItem('userId', "61ab9713fe61452296d667ca");
-    }
+   
     
     handleChange(e){
        
@@ -34,6 +32,7 @@ class Signin extends Component {
          if succesful get token and store it locally
          then route to home 
          */
+         localStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
          this.props.history.push("/");
     }
 
@@ -91,7 +90,7 @@ class Signin extends Component {
                         `}
                     </style>
 
-                    <Button variant="flat" size="lg" type="submit"  onClick = {()=> this.fakeLogin()}>
+                    <Button variant="flat" size="lg" type="submit"  >
                         Log in
                     </Button>
                     </>

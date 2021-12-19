@@ -195,7 +195,7 @@ class Home extends Component {
         )
 
         console.log(this.state.flightArr);
-        // sessionStorage.setItem('userId', "61ab9713fe61452296d667ca");
+        // sessionStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
         console.log("my user id is ", localStorage.getItem('userId'))
     }
 
