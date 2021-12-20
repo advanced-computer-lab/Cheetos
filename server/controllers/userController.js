@@ -91,14 +91,14 @@ createUser = async (req, res) => {
       if (existingUser) { 
         return res.json({ invalidUsername: true, message: "Username already exists", }); 
       } 
-      return res.json({ invalidUsername: false });
+     
 
    existingUser = await User.findOne({ Email: user.Email }); 
    if (existingUser) 
    { 
      return res.json({ invalidEmail: true, message: "Email already exists" });
    } 
-   return res.json({ invalidEmail: false });
+  
 
   user.Password = await bcrypt.hash(req.body.Password, 10);
 
@@ -139,7 +139,7 @@ login = (req, res) => {
       .then((isCorrect) => {
         if (isCorrect) {
           const payload = {
-            id: dbUser._id,
+            userId: dbUser._id,
             username: dbUser.UserName,
           };
           jwt.sign(
@@ -148,9 +148,9 @@ login = (req, res) => {
             { expiresIn: "10h" },
             (err, token) => {
               if (err) {
-                return res.json({ message: err });
+                return res.json({ message: "line 151 f controller" });
               }
-              return res.json({ message: "Success", token: "Bearer " + token });
+              return res.json({ message: "Success", token: "Bearer " + token  , data : payload});
             }
           );
         } else {
@@ -161,7 +161,7 @@ login = (req, res) => {
 };
 
 verifyJwT = (req, res, next) => {
-  const token = req.headers["x-access-token"]?.split(" ")[1];
+  const token = req.headers["x-access-token"].split(" ")[1];
   console.log(token);
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
