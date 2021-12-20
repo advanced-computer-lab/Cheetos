@@ -58,7 +58,7 @@ class ConfirmBooking extends Component {
         // arrSeats ? arrSeats.map((s)=> arrSeatNames += s.Seat) : ''; 
         return (
             <>
-                <div className="flex-col" >
+                <div className="flex-col slide-left" >
                     {/* <MyHeader/> */}
 
 

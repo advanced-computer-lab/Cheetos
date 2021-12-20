@@ -33,7 +33,7 @@ class ChooseSeats extends Component {
        // console.log("seats are " , deptFlight[deptCabin].Seats) ; 
        // console.log("seats are " , arrFlight[arrCabin].Seats) ; 
         return (
-            <div className="seats-page">
+            <div className="seats-page slide-left">
                 {/* <MyHeader /> */}
                 <div className="shuttles">
                     <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />

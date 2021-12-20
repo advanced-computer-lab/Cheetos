@@ -12,7 +12,7 @@ import api from '../api'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Payment from '../components/Payment';
-
+import DatePicker from 'react-datepicker';
 const steps = ["Flight Details", "Select Seats", "Payment"];
 class Reservation extends Component {
     state = {
@@ -22,8 +22,11 @@ class Reservation extends Component {
         showModal: false,
         resId: "",
         deptSeats: [],
-        arrSeats: []
+        arrSeats: [] , 
+       
+         
     }
+    
     handleModalShow() {
         if (this.state.showModal) {
             this.setState({
@@ -140,17 +143,17 @@ class Reservation extends Component {
             })
         };
 
-
+        const {startDate} = this.state
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = sessionStorage.getItem('deal')
         return (
             <div style={{ backgroundColor: "background-color: rgba(0, 0, 0, 0.575)" }}>
                 <MyHeader />
                 <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={activeStep} style={{ backgroundColor: "white" , height : "2.7em" }}>
+                    <Stepper activeStep={activeStep} style={{ backgroundColor: "white", height: "2.7em" }}>
                         {steps.map((label, index) => {
                             const stepProps = {};
                             const labelProps = {};
-                            
+
                             if (isStepSkipped(index)) {
                                 stepProps.completed = false;
                             }
@@ -176,16 +179,16 @@ class Reservation extends Component {
                         <React.Fragment>
                             {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
                             {activeStep == 0 ?
-                                <div style={{ height: '55vh', backgroundColor: 'grey' }}>
+                                <div style={{ height: '55vh', backgroundColor: 'white' }}>
                                     {/* your div of choice here  */}
 
 
-                                    <ConfirmBooking parentFunc={() => this.handleSignedIn()} deptSeats={deptSeats} arrSeats={arrSeats} totalPrice={totalPrice} />
+                                    <ConfirmBooking className="slide-left" parentFunc={() => this.handleSignedIn()} deptSeats={deptSeats} arrSeats={arrSeats} totalPrice={totalPrice} />
 
 
                                 </div> :
                                 activeStep == 1 ?
-                                    <div style={{ height: '55vh'  , backgroundColor: '#FFFFFF' }}>
+                                    <div style={{ height: '55vh', backgroundColor: '#FFFFFF' }}>
                                         {/* your div of choice here  */}
 
                                         <ChooseSeats deptFlight={deptFlight} arrFlight={arrFlight} deptCabin={deptCabin} arrCabin={arrCabin} parentFunc={(deptSeats, arrSeats) => this.handleSeatsConfirm(deptSeats, arrSeats)} />
@@ -193,16 +196,19 @@ class Reservation extends Component {
 
 
                                     </div> :
-                                    <div style={{ height: '55vh', backgroundColor: 'grey' }}>
+                                    <div style={{ height: '55vh', backgroundColor: 'white' }}>
                                         {/* your div of choice here  */}
 
-                                        <Payment/>
-
+                                        <Payment />
+                                      
+                                       
+                                       
+                                        
 
 
                                     </div>
                             }
-                            
+
                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4, backgroundColor: "white" }}>
                                 <Button
                                     color="inherit"
