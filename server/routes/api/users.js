@@ -15,4 +15,8 @@ router.put("/uupdate/:id", userController.verifyJwT, userController.updateUser);
 
 router.post("/ulogin", userController.login);
 
+router.post("/checkEmail", userController.checkEmail);
+
+router.post("/checkUsername", userController.checkUserName);
+
 module.exports = router;

@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 import api from '../api'
 
 class Signin extends Component {
-    state={
+    state = {
         invalidUserName:false,
         invalidPassword:false,
         username:"",

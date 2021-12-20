@@ -71,32 +71,10 @@ export default class SignUp extends Component {
                 this.setState({invalidPassword:false});
               }
           }
-        
-          if(e.target.name==="email"){
-            //do a get req if email exists 
-            // if(){
-            //   this.setState({invalidEmail:true});
-            // }
-            // else{
-            //   this.setState({invalidEmail:false});
-            // }
-        }
-        if(e.target.name==="username"){
-            //do a get req if userName exists 
-            // if(){
-            //   this.setState({invalidUsername:true});
-            // }
-            //if doesn't exist
-            // else{
-            //   this.setState({invalidUsername:false});
-            // }
-        }
-
-
-          
+     
       }
 
-      handleEmailValidation(e){
+      async handleEmailValidation(e){
         e.preventDefault();
         const value = e.target.value;
         this.setState(
@@ -104,9 +82,18 @@ export default class SignUp extends Component {
                email : value
           });
 
+        
+          await api.validateEmail({Email:this.state.email})
+          .then((res) => {
+              this.setState({invalidEmail:res.data.invalidEmail})
+              console.log(res.data,"res email")
+          },() => console.log(this.state.invalidEmail,"email"))
+          
+          
+
       }
 
-      handleUsernameValidation(e){
+     async handleUsernameValidation(e){
         e.preventDefault();
         const value = e.target.value;
         this.setState(
@@ -114,13 +101,18 @@ export default class SignUp extends Component {
                username : value
           });
 
+          await api.validateUsername({UserName:this.state.username})
+          .then((res) => {
+              this.setState({invalidUsername:res.data.invalidUsername})
+              console.log(res.data,"res")
+          },() => console.log(this.state.invalidUsername,"username"))
+
       }
 
      async handleSubmit(e){
 
         e.preventDefault();
-        // const {closeModal} = this.props;
-        
+       
         const {fname, lname,email,phone,code,address,passport,username,password,invalidEmail,invalidPassport,invalidPhone,invalidUsername,invalidPassword} = this.state;
         
 
@@ -140,26 +132,34 @@ export default class SignUp extends Component {
 
         console.log(newUser,"hehe");
 
-        await api.registerUser(newUser).then((res) => {
-            console.log(res.data.data)
-        },() => { if(!(invalidEmail || invalidPassport || invalidPassword || invalidPhone || invalidUsername)){this.props.closeModal(false);
-            this.setState({
-                fname:"",
-                lname:"",
-                email:"",
-                phone:"",
-                code:"",
-                address:"",
-                passport:"",
-                username:"",
-                password:"",
-                invalidEmail : false,
-                invalidPassport : false,
-                invalidPassword : false,
-                invalidPhone : false,
-                invalidUsername : false ,
+        if(!(invalidPassport || invalidPassword || invalidPhone) ) {
+
+            await api.registerUser(newUser).then((res) => {
+                console.log(res.data.data)
+                this.props.closeModal(false);
+                this.setState({
+                    fname:"",
+                    lname:"",
+                    email:"",
+                    phone:"",
+                    code:"",
+                    address:"",
+                    passport:"",
+                    username:"",
+                    password:"",
+                    invalidEmail : false,
+                    invalidPassport : false,
+                    invalidPassword : false,
+                    invalidPhone : false,
+                    invalidUsername : false ,
             })
-        }})
+            }).catch((err) => {
+                
+            })
+
+        }
+
+       
 
      
 
@@ -190,7 +190,7 @@ export default class SignUp extends Component {
             invalidPassword : false,
             invalidPhone : false,
             invalidUsername : false ,
-        },() =>closeModal(false))
+        },() => closeModal(false))
     }
 
 
@@ -222,7 +222,7 @@ export default class SignUp extends Component {
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                    <Form.Control  size="md"  type="email" placeholder="Email" name="email" value={email} required isInvalid={invalidEmail} onChange={this.handleChange.bind(this)}/>
+                    <Form.Control  size="md"  type="email" placeholder="Email" name="email" value={email} required isInvalid={invalidEmail} onChange={this.handleEmailValidation.bind(this)}/>
                     <Form.Control.Feedback type="invalid">
                         This email is already registered.
                     </Form.Control.Feedback>
@@ -264,7 +264,7 @@ export default class SignUp extends Component {
                             <Col className=" pe-0">
 
                              <Form.Group>
-                                 <Form.Control type="username" placeholder="Username" name="username" value={username} required isInvalid={invalidUsername} onChange={this.handleChange.bind(this)}/>
+                                 <Form.Control type="username" placeholder="Username" name="username" value={username} required isInvalid={invalidUsername} onChange={this.handleUsernameValidation.bind(this)}/>
                                  <Form.Control.Feedback type="invalid" >
                                        Username already exists.
                                     </Form.Control.Feedback>

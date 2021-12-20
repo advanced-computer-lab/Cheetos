@@ -32,7 +32,7 @@ export default function ProfileDropdown(props) {
         
        
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }} style={{color:"white",fontSize:"1.5rem"}}>
-            <Avatar sx={{ width: 33, height: 30,backgroundColor:"#37A1E2" }}>{props.username[0]}</Avatar>
+            <Avatar sx={{ width: 33, height: 30,backgroundColor:"#37A1E2" }}>{props.username}</Avatar>
              <p style={{marginBottom:"0",marginLeft:"0.5rem"}}>{props.username}</p>
             <KeyboardArrowDownIcon/>
           </IconButton>

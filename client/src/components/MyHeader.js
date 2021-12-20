@@ -1,23 +1,20 @@
 import React, { Component } from 'react'
 import Form from "react-bootstrap/Form";
 import Button from "@mui/material/Button";
-import Modal from "react-bootstrap/Modal";
-import PersonIcon from '@mui/icons-material/Person';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import SearchIcon from '@mui/icons-material/Search';
 import Logo from '../components/Logo';
-import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import { Link } from "react-router-dom";
 import Signin from "../components/Signin"
 import { withRouter } from 'react-router';
 import ProfileDropdown from '../components/ProflieDropdown'
-import PassengerCounter from '../components/PassengerCounter'
-import CabinSelect from '../components/CabinSelect'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import api from '../api'
+
 
 class MyHeader extends Component {
   state = {
@@ -35,6 +32,7 @@ class MyHeader extends Component {
     anchorEl:null,
     open : false,
     token : "",
+    userName: "",
 
     anchorElCabinDep:null,
     anchorElCabin:null,
@@ -94,14 +92,8 @@ class MyHeader extends Component {
   }
 
 
-  handleSignInModal() {
-    sessionStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
-    this.setState({
-      showSignin: !this.state.showSignin,
-      userId: sessionStorage.getItem('userId')
-    });
-
-
+  handleSignIn() {
+    this.props.history.push("/signin")
   }
   flightSearch() {
     const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
@@ -115,15 +107,20 @@ class MyHeader extends Component {
     }
 
   }
-  componentDidMount() {
+  async componentDidMount() {
 
     console.log("my pathname is ", this.props.location.pathname)
-    if (sessionStorage.getItem('userId')) {
+    if (localStorage.getItem('token')) {
       this.setState({
         signedIn: true,
         userId: sessionStorage.getItem('userId'),
         token : localStorage.getItem('token'),
-      },()=>console.log("token header",this.state.token))
+      },console.log("this is the token",this.state.token))
+        await api.getUserInfo(this.state.userId).then(user => {
+        this.setState({
+          username: user.data.data.UserName
+        })}).catch((err) => console.log("tt",err))
+        
     }
     
     const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
@@ -181,14 +178,15 @@ class MyHeader extends Component {
             <Logo />
           </Link>
           <div className="header-buttons-container">
-            {sessionStorage.getItem('userId') ? 
+            {localStorage.getItem('token') ? 
               <>
-                <ProfileDropdown username="Mark Potter"/>
+                {console.log("un",this.state.username)}
+                <ProfileDropdown username={this.state.username} />
                 
               </>
               :
               <Button className="header-buttons" style={{ marginRight: "20px" }}
-                onClick={this.handleSignInModal.bind(this)} variant="contained" >
+                onClick={this.handleSignIn.bind(this)} variant="contained" >
                 Sign in
               </Button>
             }
@@ -436,21 +434,7 @@ class MyHeader extends Component {
           </div>
         </div>
 
-        <Modal
-          aria-labelledby="contained-modal-title-vcenter"
-          dialogClassName="my-modal"
-          centered show={showSignin} onHide={this.handleSignInModal.bind(this)}>
-               <Modal.Header closeButton >
-                        <Modal.Title style={{fontWeight:"600"}}>Sign In</Modal.Title>
-                    </Modal.Header>
-
-
-          <div className="signup-form">
-            <Signin />
-          </div>
-
-
-        </Modal>
+    
       </div>
 
     )

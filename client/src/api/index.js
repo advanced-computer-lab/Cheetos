@@ -23,6 +23,8 @@ export const deleteReservationById = id => api.delete(`/reservation/deletereserv
 //authentication
 export const loginUser = payload => api.post(`/user/ulogin`,payload)
 export const registerUser = payload => api.post(`/user/ucreate`,payload);
+export const validateEmail = payload => api.post('/user/checkEmail',payload);
+export const validateUsername = payload => api.post('/user/checkUsername',payload);
 
 const apis = {
     insertFlight,
@@ -39,6 +41,8 @@ const apis = {
 
     loginUser,
     registerUser,
+    validateEmail,
+    validateUsername
 }
 
 export default apis
