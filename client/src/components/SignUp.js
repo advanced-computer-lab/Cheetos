@@ -154,7 +154,7 @@ export default class SignUp extends Component {
                     invalidUsername : false ,
             })
             }).catch((err) => {
-                
+                console.log("ops couldnt register hehe" , err)
             })
 
         }

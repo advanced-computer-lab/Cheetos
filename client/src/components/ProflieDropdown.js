@@ -32,7 +32,7 @@ export default function ProfileDropdown(props) {
         
        
           <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }} style={{color:"white",fontSize:"1.5rem"}}>
-            <Avatar sx={{ width: 33, height: 30,backgroundColor:"#37A1E2" }}>{props.username}</Avatar>
+            <Avatar sx={{ width: 33, height: 30,backgroundColor:"#37A1E2" }}>{props.username ? props.username[0] : ''}</Avatar>
              <p style={{marginBottom:"0",marginLeft:"0.5rem"}}>{props.username}</p>
             <KeyboardArrowDownIcon/>
           </IconButton>
@@ -96,7 +96,11 @@ export default function ProfileDropdown(props) {
         <Divider />
        
       
-        <MenuItem>
+        <MenuItem onClick = {()=>{
+        localStorage.removeItem("userId")
+        localStorage.removeItem("token")git
+        window.location.reload();
+        }}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

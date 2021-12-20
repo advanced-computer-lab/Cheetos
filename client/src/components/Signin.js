@@ -35,18 +35,19 @@ class Signin extends Component {
          */
 
         const loggingInUser = {
-             UserName : username,
-             Password : password
+             "UserName" : username,
+             "Password" : password
          }
 
          console.log("entering submit")
 
         await api.loginUser(loggingInUser)
          .then((res) => {
+             console.log("al rag3ly mn login" , res.data.data) ; 
              localStorage.setItem('token',res.data.token)
-             localStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
-             this.props.history.push("/");
-         }).catch((err) => {
+             localStorage.setItem('userId', res.data.data.userId);
+            
+         }).then( this.props.history.push("/")).catch((err) => {
              console.log("login heho ", err);
              
 
