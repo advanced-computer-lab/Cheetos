@@ -14,7 +14,7 @@ import Logout from '@mui/icons-material/Logout';
 import { Link } from "react-router-dom";
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-
+import { Redirect } from "react-router-dom";
 
 export default function ProfileDropdown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,7 +98,7 @@ export default function ProfileDropdown(props) {
         <MenuItem onClick = {()=>{
         localStorage.removeItem("userId")
         localStorage.removeItem("token")
-        window.location.reload();
+        props.ParentRedirect()
         }}>
           <ListItemIcon>
             <Logout fontSize="small" />

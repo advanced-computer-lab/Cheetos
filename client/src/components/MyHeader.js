@@ -144,7 +144,9 @@ class MyHeader extends Component {
 
     }
   }
-
+  onLogoutRedirect(){
+    this.props.history.push("/");
+  }
   handleMenuItemClick = (event, index) => {
 
     event.preventDefault();
@@ -184,8 +186,7 @@ class MyHeader extends Component {
             {localStorage.getItem('token') ?
               <>
                 {console.log("un", this.state.username)}
-                {console.log("token h",localStorage.getItem('token') )}
-                <ProfileDropdown username={this.state.username} />
+                <ProfileDropdown ParentRedirect = {this.onLogoutRedirect.bind(this)} username={this.state.username} />
 
               </>
               :
