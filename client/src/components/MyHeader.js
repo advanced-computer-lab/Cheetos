@@ -92,19 +92,8 @@ class MyHeader extends Component {
   }
 
 
-<<<<<<< HEAD
-  handleSignInModal() {
-    sessionStorage.setItem('userId', "61b5fa9589a11d084812fd28");
-    this.setState({
-      showSignin: !this.state.showSignin,
-      userId: sessionStorage.getItem('userId')
-    });
-
-
-=======
   handleSignIn() {
     this.props.history.push("/signin")
->>>>>>> katrin-2
   }
   flightSearch() {
     const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
