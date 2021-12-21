@@ -15,7 +15,6 @@ import { Link } from "react-router-dom";
  class Booking extends Component {
 
 
-
     state = {
         showModal: false,
         deptFlight: "",
@@ -84,13 +83,14 @@ import { Link } from "react-router-dom";
                 <div className="booking-card">
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
-                        <div style={{ marginLeft: "2rem", marginBottom: "20px", marginTop: "15px" }}><strong>
+                        <div style={{ marginLeft: "2rem", marginBottom: "7px", marginTop: "20px" }}><strong>
                             <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5>
+                            <h5>Mr. Mark Potter</h5>
                         </strong></div>
 
 
 
-                        <div className="booking-flight"  >
+                        <div className="booking-flight" style={{marginTop:"0px"}}  >
 
 
                             <div className="trip-flex-col">
@@ -114,7 +114,7 @@ import { Link } from "react-router-dom";
                             {/* </Link> */}
 
                         </div>
-                        <div className="booking-flight"  >
+                        <div className="booking-flight" >
 
 
                             <div className="trip-flex-col">
@@ -184,7 +184,6 @@ import { Link } from "react-router-dom";
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
             </>
         )
     }

@@ -188,7 +188,6 @@ class Home extends Component {
             () => {
                 const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
                 if (searchObject) {
-
                     this.handleSearch(searchObject.adultCount, searchObject.childCount, searchObject.deptAirport, searchObject.arrAirport, searchObject.deptDate, searchObject.retDate, searchObject.deptCabinClass, searchObject.arrCabinClass)
                 }
             }
@@ -218,7 +217,7 @@ class Home extends Component {
         if (this.emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)) {
             alert("search fields cannot be empty");
         }
-        else {        //----making the pairs of flights (round trips) from the all flights array 
+        else {        //---making the pairs of flights (round trips) from the all flights array 
             this.setState({
                 deptAirport, arrAirport, deptDate, retDate
             })

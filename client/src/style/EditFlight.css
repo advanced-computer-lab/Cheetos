@@ -1,13 +1,12 @@
 .edit-box{
     display:flex;
-    justify-content: center;
     gap: 0.5rem;
     width:auto;
     overflow: auto;
     background-color: #f0f2f5;
     border-radius: 10px;
     padding: 1rem;
-    max-height: 30rem;
+    max-height: 50vh;
   }
 
   .edit-box::-webkit-scrollbar {

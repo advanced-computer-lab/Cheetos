@@ -13,7 +13,7 @@ import TripDetailsModal from './TripDetailsModal';
  class SingleFlight extends Component {
     state = {
         showModal: false,
-        deptCabin:"EconomySeats",
+        deptCabin:"",
         searchFlight:"",
     }
     handleModalShow() {
@@ -30,17 +30,16 @@ import TripDetailsModal from './TripDetailsModal';
             //console.log("heck2",this.state.deptCabin);
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
-              
-                // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
-         },()=>console.log("heck",this.state.searchFlight,JSON.parse(sessionStorage.getItem('cabinSearch')))) 
+                deptCabin : sessionStorage.getItem('cabinSearch')
+         },() =>console.log("heck",this.state.searchFlight,sessionStorage.getItem('cabinSearch'))) 
          
         }
         else {
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
-                // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
+                deptCabin : sessionStorage.getItem('cabinSearch')
                 
-         })
+         },() => console.log(this.state.deptCabin,"c2"))
          console.log("ahhhhhh");
         }
         
@@ -48,6 +47,7 @@ import TripDetailsModal from './TripDetailsModal';
     render() {
         const { showModal, deptFlight ,searchFlight} = this.props;
         const{deptCabin,}=this.state;
+        const flight = JSON.parse(sessionStorage.getItem('depFlight')) 
         
         return (
             <>
@@ -82,12 +82,17 @@ import TripDetailsModal from './TripDetailsModal';
 
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
-                        {/* <h3>{searchFlight[deptCabin]["AdultPrice"]}</h3> */}
+                      
+                        {/* check type -> adult 
+                        compare prices 
+                        old>new -> old - new 
+                        new>old -> new - old */}
+                        <h3>{flight[sessionStorage.getItem('cabinSearch')].PriceAdult}$</h3>
                         <Button
                            
                             style={{
                                 backgroundColor: "#37A1E2",
-                                width: "2 em",
+                                width: "5 em",
                                 height: "5vh",
                                 fontSize: "small",
                             }}
@@ -100,7 +105,7 @@ import TripDetailsModal from './TripDetailsModal';
                 </div>
 
         <TripDetailsModal show = {this.state.showModal} parentFunc={()=>this.handleModalShow("showModal") } fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
-        depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage =  {deptFlight[deptCabin].BaggageAllowance}/ >
+        depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage =  {deptFlight[sessionStorage.getItem('cabinSearch')].BaggageAllowance}/ >
            
            
             </>

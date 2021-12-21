@@ -41,7 +41,7 @@ export default class TripDetailsModal extends Component {
                                     <p>{depAirport}-{arrAirport}</p>
                                 </div>
 
-                                <strong>{cabinClass}</strong>
+                                <strong>{cabinClass === "EconomySeats"? "Economy" : cabinClass === "BusinessClass" ? "Business Class" : "First Class" }</strong>
 
                             </div>
                             <div className="vl"> </div>

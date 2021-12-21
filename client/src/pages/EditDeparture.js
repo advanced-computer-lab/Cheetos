@@ -205,7 +205,7 @@ to search i need a flight's dep and arr airport( from storage) ,
             
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
-                date:(JSON.parse(sessionStorage.getItem('retFlight'))).ArrivalDate,
+                date:(JSON.parse(sessionStorage.getItem('retFlight'))).DepartureDate,
                 departureFlag:true,
                 depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
          }) 
@@ -216,7 +216,7 @@ to search i need a flight's dep and arr airport( from storage) ,
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
                 date:(JSON.parse(sessionStorage.getItem('depFlight'))).ArrivalDate,
-                depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
+                depDateSearch: (JSON.parse(sessionStorage.getItem('retFlight'))).DepartureDate,
                 departureFlag:false,
          })
          console.log("search flight is",this.state.searchFlight);
@@ -235,31 +235,41 @@ to search i need a flight's dep and arr airport( from storage) ,
            );
     }
     andSearch(){
-        const{flightsArr,deptCabinClass,searchResults,searchFlight,depDateSearch,cabinSearch} = this.state;
+        const{flightsArr,deptCabinClass,searchResults,searchFlight,depDateSearch,cabinSearch,date} = this.state;
         //doing the search and filtering 
 
         console.log("andSearch",searchFlight);
-        this.setState({
-            searchResults: flightsArr.filter((f) =>
-              Date.parse(f.DepartureDate)=== Date.parse(depDateSearch)
-              && f.DepartureAirport === searchFlight.DepartureAirport
-              && f.ArrivalAirport === searchFlight.ArrivalAirport
-              && f[cabinSearch]["AvailableSeats"] >= Number(1)//double check condition if we are adding child parent pairs
-              //add date check
-              
-            ),
-            clickedSearch:true
-          })
-           sessionStorage.setItem('cabinSearch', JSON.stringify(cabinSearch));
+
+        if(this.state.departureFlag){
+            this.setState({
+                searchResults: flightsArr.filter((f) =>
+                  Date.parse(f.DepartureDate) === Date.parse(depDateSearch)
+                  && f.DepartureAirport === searchFlight.DepartureAirport
+                  && f.ArrivalAirport === searchFlight.ArrivalAirport
+                  && f[cabinSearch]["AvailableSeats"] >= Number(1) //double check condition if we are adding child parent pairs
+                  && Date.parse(f.ArrivalDate) < Date.parse(date)
+                  //add date check   
+                ),
+                clickedSearch:true
+              })
+        }
+        else{
+            this.setState({
+                searchResults: flightsArr.filter((f) =>
+                  Date.parse(f.DepartureDate)=== Date.parse(depDateSearch)
+                  && f.DepartureAirport === searchFlight.DepartureAirport
+                  && f.ArrivalAirport === searchFlight.ArrivalAirport
+                  && f[cabinSearch]["AvailableSeats"] >= Number(1) //double check condition if we are adding child parent pairs
+                  && Date.parse(f.DepartureDate) < Date.parse(date)
+                  //add date check
+                ),
+                clickedSearch:true
+              })
+        }
+       
+           sessionStorage.setItem('cabinSearch', cabinSearch);
     }
-    // dates(){
-    //     if(retFlag){
-    //         //check departure not before arrival of DepFlight
-    //     }
-    //     if(depFlag){
-    //         //check arrival not after departure return
-    //     }
-    // }
+  
 
     /*steps :
     1. get the old flight attributes i'm searching for from session
@@ -276,7 +286,7 @@ to search i need a flight's dep and arr airport( from storage) ,
         return (
             <div className = "flex-col">
                 <MyHeader/>
-                <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={ "18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"}/>
+                {/* <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={ "18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"}/> */}
                <div className="search-bar search-bar-box" style={{justifyContent:"center"}}>
                 <Form.Group style={{ width:"20%"}} className="mb-2">
                 <Form.Label style={{color:"white",fontWeight:"bold"}}>Departure Date</Form.Label>
@@ -316,7 +326,7 @@ to search i need a flight's dep and arr airport( from storage) ,
 
                 </div>
 
-              
+               
                 <div className="flex-col edit-box">
                     { searchResults.length>0? 
                     
