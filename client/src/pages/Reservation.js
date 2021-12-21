@@ -54,8 +54,7 @@ class Reservation extends Component {
         })
     }
     async handleConfirm() {
-
-        const userId = sessionStorage.getItem('userId');
+       const  userId = localStorage.getItem('userId') ; 
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = JSON.parse(sessionStorage.getItem('deal'))
         const { deptSeats, arrSeats } = this.state
         let arrOne = deptSeats.map((s) => ({

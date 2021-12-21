@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Form from "react-bootstrap/Form";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import '../style/profile.css';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,6 +7,11 @@ import MyHeader from '../components/MyHeader';
 import Trip from '../components/Trip';
 import api from '../api'
 import { withRouter } from 'react-router';
+import Button from "@mui/material/Button";
+
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import CloseButton from 'react-bootstrap/esm/CloseButton';
 
 class Profile extends Component {
 
@@ -19,9 +23,15 @@ class Profile extends Component {
     lname: "",
     email: "",
     passport: "",
+    showChangePass:false,
+    invalidNewPass:false,
+    invalidOldPass:false,
+    oldPass:"",
+    newPass:"",
+    
   }
   async componentDidMount() {
-    const userId  = sessionStorage.getItem('userId')
+    const userId  = localStorage.getItem('userId')
     console.log("user id is " , userId) ; 
     await api.getUserInfo(userId).then(user => {
       this.setState({
@@ -63,7 +73,8 @@ class Profile extends Component {
   }
 
   async handleSave(att) {
-    const  userId  =sessionStorage.getItem('userId')
+    const  userId  = localStorage.getItem('userId')
+    console.log(userId,"user")
     const { editName, editPassport, editEmail, fname, lname, email, passport } = this.state;
     const newUser = {
       FirstName: fname,
@@ -92,11 +103,39 @@ class Profile extends Component {
     });
   }
 
+  changePassModalShow(){
+    this.setState({showChangePass : !this.state.showChangePass})
+  }
+
+  handleChange(e){
+    e.preventDefault();
+    const value = e.target.value;
+    this.setState({
+      //spreading state 
+      ...this.state,
+      [e.target.name]: value,
+    });
+  }
+
+  handleSubmitPass(e){
+    e.preventDefault();
+    const {oldPass,newPass,invalidOldPass} = this.state
+    //validate new here wla onChange??
+    /* steps :
+    post req to backend validate old pass
+     if valid store new pass else
+     set invalid old pass*/
+     console.log(oldPass);
+     console.log(newPass);
+     this.changePassModalShow();
+  }
+
   render() {
 
 
-    const { editName, editPassport, editEmail, fname, lname, email, passport } = this.state;
+    const { editName, editPassport, editEmail, fname, lname, email, passport ,invalidNewPass,invalidOldPass,oldPass,newPass,showChangePass} = this.state;
     return (
+      <>
       <div className="flex-col-profile" >
 
         <MyHeader />
@@ -149,6 +188,8 @@ class Profile extends Component {
 
                 </tr>
               </table>
+
+              <Button variant="contained" style={{marginTop:"20px",width:"100%"}} show={showChangePass} onClick={this.changePassModalShow.bind(this)}>Change password</Button>
             </div>
           </div>
 
@@ -158,6 +199,55 @@ class Profile extends Component {
         </div>
 
       </div>
+
+
+
+      
+      <Modal aria-labelledby="contained-modal-title-vcenter"dialogClassName="my-modal" centered show={showChangePass}  >
+                <Modal.Header  >
+                    
+                        <Modal.Title style={{fontWeight:"600"}}>Change Password</Modal.Title>
+                        <CloseButton  onClick={this.changePassModalShow.bind(this)}/>
+                    </Modal.Header>
+                    <Modal.Body style={{padding:"0",height:"auto"}}>
+                <div className="signup-form">
+                     <Form onSubmit={this.handleSubmitPass.bind(this)}>
+                  
+
+                    <Form.Group hasvalidation className="mb-3">
+                     
+                          
+                          <Form.Group className='mb-3'>
+                                <Form.Control type="password" placeholder="Password"  required name="oldPass" value={oldPass} isInvalid={invalidOldPass} onChange={this.handleChange.bind(this)}/>
+                                <Form.Control.Feedback type="invalid" >
+                                    Password doesn't match old password.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Control type="password" placeholder="Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
+                                <Form.Control.Feedback type="invalid" >
+                                    Password must be at least 5 characters.
+                                </Form.Control.Feedback>
+                            </Form.Group>
+                          
+                        
+                    </Form.Group>
+                
+                    <div className="flex-col">
+                
+                
+                    <Button variant="contained" size="md" style={{marginTop:"10px" , fontWeight:"600",width:"50%"}} type="submit">
+                            Change Password
+                        </Button>
+                    </div>
+                    </Form>
+                </div>
+                        
+                </Modal.Body>
+            </Modal>
+
+      </>
     )
   }
 }

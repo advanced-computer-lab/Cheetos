@@ -20,6 +20,12 @@ export const updateUserInfo = (id, payload) => api.put(`/user/uupdate/${id}`, pa
 export const getReservationsById = id => api.get(`/reservation/getreservation/${id}`)
 export const deleteReservationById = id => api.delete(`/reservation/deletereservation/${id}`)
 
+//authentication
+export const loginUser = payload => api.post(`/user/ulogin`,payload)
+export const registerUser = payload => api.post(`/user/ucreate`,payload);
+export const validateEmail = payload => api.post('/user/checkEmail',payload);
+export const validateUsername = payload => api.post('/user/checkUsername',payload);
+
 const apis = {
     insertFlight,
     getAllFlights,
@@ -31,7 +37,12 @@ const apis = {
     getUserInfo , 
     updateUserInfo , 
     getReservationsById , 
-    deleteReservationById
+    deleteReservationById,
+
+    loginUser,
+    registerUser,
+    validateEmail,
+    validateUsername
 }
 
 export default apis

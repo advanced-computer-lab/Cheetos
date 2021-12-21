@@ -55,13 +55,12 @@ import { withRouter } from 'react-router';
     }
     
     async componentDidMount() {
-        const  userId  = sessionStorage.getItem('userId');
+        const  userId  = localStorage.getItem('userId');
         await api.getReservationsById(userId).then(reservations => {
             this.setState({
                 bookingsArr : reservations.data.data
             }, () => console.log("reservations are "  , reservations.data.data))
         })
-
     }
     render() {
 

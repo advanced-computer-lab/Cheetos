@@ -1,0 +1,43 @@
+.edit-box{
+    display:flex;
+    gap: 0.5rem;
+    width:auto;
+    overflow: auto;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    padding: 1rem;
+    max-height: 50vh;
+  }
+
+  .edit-box::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  /* Add a thumb */
+  .edit-box::-webkit-scrollbar-thumb {
+    background: gainsboro;
+    border-radius: 10px;
+  }
+  .edit-box::-webkit-scrollbar-thumb:hover {
+    background-color: #aaaaaa;
+  }
+  .no-res{
+      width:45vw;
+      height:30%;
+      padding: 1rem;
+      text-align: center;
+  }
+  .single-confirm{
+    background-color: white;
+    border : 1px solid rgb(182, 182, 182) ;
+    width: 47vw;
+    height: 10rem;
+    padding: 2rem;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .single-confirm:hover{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }

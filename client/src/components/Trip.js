@@ -86,7 +86,6 @@ export default class Trip extends Component {
                                 onClick={() => this.handleViewDeal(totalPrice , retPrice  , deptPrice , adults , children)}
                                 style={{
                                     backgroundColor: "#37A1E2",
-
                                     height: "5vh",
                                     fontSize: "small",
                                 }}

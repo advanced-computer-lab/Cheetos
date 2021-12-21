@@ -13,6 +13,11 @@ import StepperPage from '../components/StepperPage';
 import Reservation from '../pages/Reservation';
 import Payment from '../components/Payment';
 import Test from '../pages/Test';
+import SignUp from '../components/SignUp';
+import PassengerCounter from '../components/PassengerCounter'
+
+import ProfileDropdown from '../components/ProflieDropdown'
+import EditDeparture from '../pages/EditDeparture';
 
 
 function App() {
@@ -49,6 +54,17 @@ function App() {
       </Route>
       <Route path="/test" >
         <Test  />
+        </Route>
+      <Route path="/signUp" >
+        <SignUp/>
+      </Route>
+
+      <Route path="/editDep" >
+        <EditDeparture/>
+      </Route>
+
+      <Route path="/editRet" >
+        <EditDeparture/>
       </Route>
       </Switch>
 

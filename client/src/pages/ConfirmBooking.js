@@ -23,7 +23,7 @@ class ConfirmBooking extends Component {
         this.setState({
             showSignin: !this.state.showSignin , 
         });
-        sessionStorage.setItem('userId', "61ab9713fe61452296d667ca");
+        sessionStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
         this.props.parentFunc()
     }
    
@@ -140,12 +140,17 @@ class ConfirmBooking extends Component {
 
                 <Modal
                     aria-labelledby="contained-modal-title-vcenter" 
-                    size = "sm"
+                    dialogClassName="my-modal"
                     centered show={showSignin} onHide={this.handleSignInModal.bind(this)}>
                    
 
-                    <Signin />
+                   <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Sign In</Modal.Title>
+                    </Modal.Header>
 
+                    <div className="signup-form">
+                        <Signin />
+                    </div>
 
                 </Modal>
 
