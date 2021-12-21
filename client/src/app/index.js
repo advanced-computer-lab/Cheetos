@@ -12,6 +12,7 @@ import Tagline from '../pages/Tagline';
 import StepperPage from '../components/StepperPage';
 import Reservation from '../pages/Reservation';
 import Payment from '../components/Payment';
+import Test from '../pages/Test';
 
 
 function App() {
@@ -46,8 +47,8 @@ function App() {
       <Route path="/reserve" >
         <Reservation/>
       </Route>
-      <Route path="/pay" >
-        <Payment name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191} />
+      <Route path="/test" >
+        <Test  />
       </Route>
       </Switch>
 

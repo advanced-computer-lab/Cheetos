@@ -102,12 +102,12 @@
   
 }
 .first-class::-webkit-scrollbar {
-  width: 2px;
+  width: 3px;
   max-height: 1px;
 }
 /* Add a thumb */
 .first-class::-webkit-scrollbar-thumb {
-  background: rgb(216, 216, 216);
+  background: #a8c9f5a2;
   border-radius: 5px;
 }
 .first-class::-webkit-scrollbar-thumb:hover {
@@ -197,10 +197,10 @@
 }
 @keyframes slide-left {
   0% {
-    transform: translateX(200px);
+    transform: translateX(250px);
   }
   100% {
-    transform: translateX(-10px);
+    transform: translateX(-5px);
   }
 }
 

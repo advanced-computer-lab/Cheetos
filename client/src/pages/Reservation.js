@@ -199,7 +199,7 @@ class Reservation extends Component {
                                     <div style={{ height: '55vh', backgroundColor: 'white' }}>
                                         {/* your div of choice here  */}
 
-                                        <Payment />
+                                        <Payment  name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191}/>
                                       
                                        
                                        
