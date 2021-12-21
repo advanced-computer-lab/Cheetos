@@ -32,8 +32,8 @@ import TripDetailsModal from './TripDetailsModal';
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
               
                 // deptCabin : JSON.parse(sessionStorage.getItem('cabinSearch'))
-         }) 
-         console.log("heck",this.state.searchFlight);
+         },()=>console.log("heck",this.state.searchFlight,JSON.parse(sessionStorage.getItem('cabinSearch')))) 
+         
         }
         else {
             this.setState({

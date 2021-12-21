@@ -250,7 +250,7 @@ to search i need a flight's dep and arr airport( from storage) ,
             ),
             clickedSearch:true
           })
-        //   sessionStorage.setItem('cabinSearch', JSON.stringify(cabinSearch));
+           sessionStorage.setItem('cabinSearch', JSON.stringify(cabinSearch));
     }
     // dates(){
     //     if(retFlag){

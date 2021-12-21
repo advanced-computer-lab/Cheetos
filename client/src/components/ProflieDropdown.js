@@ -88,8 +88,7 @@ export default function ProfileDropdown(props) {
                 <Avatar>
                     <BookmarksIcon fontSize="small" />
                 </Avatar>
-            
-         
+
           My Bookings
         </MenuItem>
         </Link>
@@ -98,7 +97,7 @@ export default function ProfileDropdown(props) {
       
         <MenuItem onClick = {()=>{
         localStorage.removeItem("userId")
-        localStorage.removeItem("token")git
+        localStorage.removeItem("token")
         window.location.reload();
         }}>
           <ListItemIcon>

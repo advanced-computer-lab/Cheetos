@@ -184,10 +184,12 @@ class MyHeader extends Component {
             {localStorage.getItem('token') ?
               <>
                 {console.log("un", this.state.username)}
+                {console.log("token h",localStorage.getItem('token') )}
                 <ProfileDropdown username={this.state.username} />
 
               </>
               :
+              
               <Button className="header-buttons" style={{ marginRight: "20px" }}
                 onClick={this.handleSignIn.bind(this)} variant="contained" >
                 Sign in
