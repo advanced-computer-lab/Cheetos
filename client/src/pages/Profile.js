@@ -31,7 +31,7 @@ class Profile extends Component {
     
   }
   async componentDidMount() {
-    const userId  = sessionStorage.getItem('userId')
+    const userId  = localStorage.getItem('userId')
     console.log("user id is " , userId) ; 
     await api.getUserInfo(userId).then(user => {
       this.setState({
@@ -73,7 +73,7 @@ class Profile extends Component {
   }
 
   async handleSave(att) {
-    const  userId  = sessionStorage.getItem('userId')
+    const  userId  = localStorage.getItem('userId')
     console.log(userId,"user")
     const { editName, editPassport, editEmail, fname, lname, email, passport } = this.state;
     const newUser = {
