@@ -16,9 +16,9 @@ updateFlight = async (req, res) => {
       ArrivalDate: body.ArrivalDate,
       DepartureDate: body.DepartureDate,
       ArrivalTime: body.ArrivalTime,
-      EconomySeats: body.EconomySeats,
-      BusinessSeats: body.BusinessSeats,
-      FirstClassSeats: body.FirstClassSeats,
+      "EconomySeats.AvailableSeats": body.EconomySeats,
+      "BusinessSeats.AvailableSeats": body.BusinessSeats,
+      "FirstClassSeats.AvailableSeats": body.FirstClassSeats,
       DepartureAirport: body.DepartureAirport,
       ArrivalAirport: body.ArrivalAirport,
       DepartureTerminal: body.DepartureTerminal,
@@ -40,35 +40,6 @@ updateFlight = async (req, res) => {
         message: "Flight not updated!",
       });
     });
-
-  // flight.FlightNumber = body.FlightNumber;
-  // flight.DepartureTime = body.DepartureTime;
-  // flight.ArrivalDate = body.ArrivalDate;
-  // flight.DepartureDate = body.DepartureDate;
-  // flight.ArrivalTime = body.ArrivalTime;
-  // flight.EconomySeats = body.EconomySeats;
-  // flight.DepartureAirport = body.DepartureAirport;
-  // flight.ArrivalAirport = body.ArrivalAirport;
-  // flight.BusinessSeats = body.BusinessSeats;
-  // flight.FirstClassSeats = body.FirstClassSeats;
-  // flight.DepartureTerminal = body.DepartureTerminal;
-  // flight.ArrivalTerminal = body.ArrivalTerminal;
-
-  // flight
-  //   .save()
-  //   .then(() => {
-  //     return res.status(200).json({
-  //       success: true,
-  //       id: flight.id,
-  //       message: "Flight updated!",
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     return res.status(404).json({
-  //       error,
-  //       message: "Flight not updated!",
-  //     });
-  //   });
 };
 
 deleteFlight = async (req, res) => {
