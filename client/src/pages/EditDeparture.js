@@ -10,7 +10,7 @@ import '../style/EditFlight.css';
 import moment from 'moment';
 import MyHeader from '../components/MyHeader';
 import SingleFlightConfirm from '../components/SingleFlightConfirm';
-
+import api from '../api'
 
 class EditDeparture extends Component {
    
@@ -183,7 +183,8 @@ class EditDeparture extends Component {
         }
 
         state={
-            flightsArr: [this.deptTrip,this.deptTrip,this.deptTrip2,this.deptTrip,this.deptTrip,this.deptTrip2], //all flights
+            // flightsArr: [this.deptTrip,this.deptTrip,this.deptTrip2,this.deptTrip,this.deptTrip,this.deptTrip2], //all flights
+            flightsArr : "" , 
             searchResults:[], //where i'm putting the filtering
             depDateSearch: "", //user input for dep date
             cabinSearch:"EconomySeats", // user input for cabin class
@@ -202,7 +203,15 @@ to search i need a flight's dep and arr airport( from storage) ,
 
  
 
-    componentDidMount(){
+    async componentDidMount(){
+        //getting all flights to search for when editing a flight 
+        await api.getAllFlights().then(flights => {
+            console.log("fligsht coming from db are "  , flights.data)
+            this.setState({
+                flightsArr: flights.data,
+
+            })
+        })
         if (this.props.location.pathname === "/editDep") {
             
             this.setState({
@@ -251,7 +260,7 @@ to search i need a flight's dep and arr airport( from storage) ,
 
         if(this.state.departureFlag){
             this.setState({
-                searchResults: flightsArr.filter((f) =>
+                searchResults: this.state.flightsArr.filter((f) =>
                   Date.parse(f.DepartureDate) === Date.parse(depDateSearch)
                   && f.DepartureAirport === searchFlight.DepartureAirport
                   && f.ArrivalAirport === searchFlight.ArrivalAirport

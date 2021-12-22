@@ -110,7 +110,7 @@ import { Link } from "react-router-dom";
                             
                             
                             {/* <Link to='/editDep'> */}
-                                <EditIcon className="icon" onClick={this.editDeparture.bind(this)}/>
+                                <EditIcon className={new Date() < new Date(deptFlight.DepartureDate) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(deptFlight.DepartureDate) ? this.editDeparture.bind(this) : '' }/>
                             {/* </Link> */}
 
                         </div>
@@ -131,9 +131,9 @@ import { Link } from "react-router-dom";
                                 <p className="emphasis">{arrFlight.TripDuration} </p>
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport}</p>
                             </div>
-                            <Link to='/editRet'>
-                                <EditIcon className="icon" onClick={this.editReturn.bind(this)}/>
-                            </Link>
+                            
+                                <EditIcon className={ (new Date() )< (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? this.editReturn.bind(this): '' }/>
+                           
                         </div>
 
 

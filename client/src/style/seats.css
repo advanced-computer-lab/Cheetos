@@ -34,7 +34,8 @@
 .seats-row{
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  gap: 1em;
   /* background-color: rgb(105, 105, 105); */
   /* border: 1px solid rgb(146, 146, 146); */
   flex-grow: 1;
@@ -45,7 +46,7 @@
   /* padding-right: 0.5em; */
   padding-bottom: 1em;
   display: flex;
-  width: 45em;
+  width: 60em;
   height: 48vh;
   background-color: white;
   border-radius: 1em;
@@ -65,7 +66,7 @@
   background-color: #aaaaaa;
 }
 .passengers-info{
-  
+  flex-grow: 1;
   padding-top: 1em ;
   justify-content: flex-start; 
   align-items: center;

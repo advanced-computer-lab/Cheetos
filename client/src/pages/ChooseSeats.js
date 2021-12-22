@@ -37,7 +37,7 @@ class ChooseSeats extends Component {
                 {/* <MyHeader /> */}
                 <div className="shuttles">
                     <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
-                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
+                    {/* <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} /> */}
                 </div>
                
                     {/* <Button

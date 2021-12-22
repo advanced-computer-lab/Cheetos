@@ -110,6 +110,13 @@ td {
   cursor: pointer;
   /* color:#35619e; */
 }
+.icon-disabled {
+  color: rgb(143, 136, 136);
+}
+.icon-disabled:hover{
+  cursor :no-drop;
+}
+
 .danger:hover {
   color: rgb(201, 6, 6);
 }
