@@ -178,7 +178,7 @@ class Reservation extends Component {
                         <React.Fragment>
                             {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
                             {activeStep == 0 ?
-                                <div style={{ height: '55vh', backgroundColor: 'white' }}>
+                                <div style={{ height: '59vh', backgroundColor: '#F6F6F6' }}>
                                     {/* your div of choice here  */}
 
 
@@ -187,7 +187,7 @@ class Reservation extends Component {
 
                                 </div> :
                                 activeStep == 1 ?
-                                    <div style={{ height: '55vh', backgroundColor: '#FFFFFF' }}>
+                                    <div style={{ height: '59vh', backgroundColor: '#FFFFFF' }}>
                                         {/* your div of choice here  */}
 
                                         <ChooseSeats deptFlight={deptFlight} arrFlight={arrFlight} deptCabin={deptCabin} arrCabin={arrCabin} parentFunc={(deptSeats, arrSeats) => this.handleSeatsConfirm(deptSeats, arrSeats)} />
@@ -195,11 +195,11 @@ class Reservation extends Component {
 
 
                                     </div> :
-                                    <div style={{ height: '55vh', backgroundColor: 'white' }}>
+                                    <div style={{ height: '59vh', backgroundColor: 'white' }}>
                                         {/* your div of choice here  */}
-
+                                        <ConfirmBooking/>
                                         <Payment  name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191}/>
-                                      
+
                                        
                                        
                                         
@@ -208,7 +208,7 @@ class Reservation extends Component {
                                     </div>
                             }
 
-                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4, backgroundColor: "white" }}>
+                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4, backgroundColor: "whitesmoke" }}>
                                 <Button
                                     color="inherit"
                                     disabled={activeStep === 0}

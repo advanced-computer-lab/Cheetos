@@ -171,7 +171,7 @@ class MyHeader extends Component {
 
   };
 
-
+   testDate = new Date("2021-12-22")  ; 
   render() {
     const { userId } = this.props
     const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn, open, openCabin, openCabinDep } = this.state
@@ -377,6 +377,7 @@ class MyHeader extends Component {
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
 
                 <Form.Control
+                
                   type="text"
                   onFocus={
                     (e) => {
@@ -389,6 +390,7 @@ class MyHeader extends Component {
                   }
                   placeholder="Departure date"
                   value={deptDate}
+                  min= {new Date().toISOString().substring(0, 10)}
                   name="deptDate"
                   onChange={this.handleSearch.bind(this)}
                 />

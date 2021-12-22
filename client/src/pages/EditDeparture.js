@@ -191,6 +191,8 @@ class EditDeparture extends Component {
             date:"", // the date of the other flight
             departureFlag:false,
             clickedSearch : false,
+            minDate : ""  , 
+            maxDate : "" 
         }
 /*
 to search i need a flight's dep and arr airport( from storage) ,
@@ -204,19 +206,26 @@ to search i need a flight's dep and arr airport( from storage) ,
         if (this.props.location.pathname === "/editDep") {
             
             this.setState({
+             // arrival flight info 
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
                 date:(JSON.parse(sessionStorage.getItem('retFlight'))).DepartureDate,
                 departureFlag:true,
-                depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
-         }) 
+                depDateSearch: (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate ,
+                // minDate : (JSON.parse(sessionStorage.getItem('depFlight'))).DepartureDate,
+                minDate : new Date().toISOString().substring(0, 10) ,
+                maxDate : (JSON.parse(sessionStorage.getItem('retFlight'))).DepartureDate,
+         } , () =>  console.log("dates-----------------------------------------",this.state.depDateSearch)) 
          console.log("search flight is",this.state.searchFlight);
+        
         }
         else {
            
             this.setState({
+                //return flight info 
                 searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
                 date:(JSON.parse(sessionStorage.getItem('depFlight'))).ArrivalDate,
                 depDateSearch: (JSON.parse(sessionStorage.getItem('retFlight'))).DepartureDate,
+                minDate : (JSON.parse(sessionStorage.getItem('depFlight'))).ArrivalDate,
                 departureFlag:false,
          })
          console.log("search flight is",this.state.searchFlight);
@@ -281,12 +290,12 @@ to search i need a flight's dep and arr airport( from storage) ,
 
     
     render() {
-        const { searchResults ,flightsArr,depDateSearch,cabinSearch,searchFlight,clickedSearch} = this.state
+        const { searchResults ,flightsArr, depDateSearch,cabinSearch,searchFlight,clickedSearch} = this.state
       
         return (
             <div className = "flex-col">
                 <MyHeader/>
-                {/* <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={ "18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"}/> */}
+                <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={ "18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"}/>
                <div className="search-bar search-bar-box" style={{justifyContent:"center"}}>
                 <Form.Group style={{ width:"20%"}} className="mb-2">
                 <Form.Label style={{color:"white",fontWeight:"bold"}}>Departure Date</Form.Label>
@@ -297,8 +306,9 @@ to search i need a flight's dep and arr airport( from storage) ,
                     value={depDateSearch}
                     name="depDateSearch"
                     onChange={this.handleSearch.bind(this)}
-                    minDate={new Date("12-12-2021")}
-                    maxDate={new Date("12-12-2021")}
+                    min ={this.state.minDate }
+                    max = {this.state.maxDate}
+                    // maxDate={new Date("12-12-2021")}
                 />
                 </Form.Group>
 

@@ -9,10 +9,9 @@ export default class Test extends Component {
     };
     render() {
         return (
-            <div>
-                <h1>hello   </h1>
-                <div style={{ width: '100%', height: '100vh', backgroundColor: 'white', display: 'flex', flexDirection: 'center', alignItems: 'center', justifyContent: 'center' }}>
-                    <DatePicker
+            
+                    <DatePicker 
+                        style = { { width : '2em' , height : '20vh' , padding : '2em'}}
                         selected={this.state.startDate}
                         onChange={date => this.setStartDate(date)}
                         // dateFormat="MMMM d, yyyy"
@@ -21,8 +20,7 @@ export default class Test extends Component {
                         // maxDate={addMonths(new Date(), 5)}
                         showDisabledMonthNavigation
                     />
-                </div>
-            </div>
+             
         )
     }
 }
