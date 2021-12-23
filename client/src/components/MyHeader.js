@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import api from '../api'
-
+import { Typeahead } from 'react-bootstrap-typeahead';;
 
 class MyHeader extends Component {
   state = {
@@ -39,6 +39,12 @@ class MyHeader extends Component {
 
     openCabinDep: false,
     openCabin: false,
+
+    //for the type ahead 
+    deptOptions: [],
+    selectedDepts: [],
+    arrOptions: [],
+    selectedArrivals: []
 
   }
 
@@ -117,13 +123,20 @@ class MyHeader extends Component {
         userId: localStorage.getItem('userId'),
         token: localStorage.getItem('token'),
       }, console.log("this is the token", this.state.token))
-      console.log("ana f my header "  , localStorage.getItem('userId'));
+      console.log("ana f my header ", localStorage.getItem('userId'));
       await api.getUserInfo(localStorage.getItem('userId')).then(user => {
         this.setState({
           username: user.data.data.UserName
         })
       }).catch((err) => console.log("tt", err))
-
+      await api.getAllFlights().then((flights) => {
+        console.log("in headerr ", flights.data);
+        this.setState({
+          deptOptions: (flights.data).map((f) => f.DepartureAirport).filter(this.onlyUnique.bind(this)),
+          arrOptions: (flights.data).map((f) => f.ArrivalAirport).filter(this.onlyUnique.bind(this)),
+        }, () => console.log("i added flights ", this.state.deptOptions))
+      }
+      )
     }
 
     const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
@@ -144,7 +157,9 @@ class MyHeader extends Component {
 
     }
   }
-  onLogoutRedirect(){
+
+
+  onLogoutRedirect() {
     this.props.history.push("/");
   }
   handleMenuItemClick = (event, index) => {
@@ -170,11 +185,28 @@ class MyHeader extends Component {
 
 
   };
-
-   testDate = new Date("2021-12-22")  ; 
+  onlyUnique(value, index, self) {
+    //function for returning unique values of departure and arrival airports to search with in the drop down 
+    return self.indexOf(value) === index;
+  }
+  setDepartureSelections(arr) {
+    this.setState({
+      selectedDepts: arr.filter(this.onlyUnique.bind(this)),
+      deptAirport: arr[0]
+    }, () => console.log("------------> dropdown", this.state.deptAirport))
+  }
+  setArrivalSelections(arr) {
+    this.setState({
+      selectedArrivals: arr.filter(this.onlyUnique.bind(this)),
+      arrAirport: arr[0]
+    }, () => console.log("------------> dropdown", this.state.deptAirport))
+  }
   render() {
     const { userId } = this.props
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass, showSignin, signedIn, open, openCabin, openCabinDep } = this.state
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate,
+      retDate, deptCabinClass, arrCabinClass, showSignin, signedIn,
+      open, openCabin, openCabinDep,
+      deptOptions, selectedDepts, arrOptions, selectedArrivals } = this.state
     return (
       <div className="admin-header logo-buttons-search">
 
@@ -186,11 +218,11 @@ class MyHeader extends Component {
             {localStorage.getItem('token') ?
               <>
                 {console.log("un", this.state.username)}
-                <ProfileDropdown ParentRedirect = {this.onLogoutRedirect.bind(this)} username={this.state.username} />
+                <ProfileDropdown ParentRedirect={this.onLogoutRedirect.bind(this)} username={this.state.username} />
 
               </>
               :
-              
+
               <Button className="header-buttons" style={{ marginRight: "20px" }}
                 onClick={this.handleSignIn.bind(this)} variant="contained" >
                 Sign in
@@ -351,33 +383,51 @@ class MyHeader extends Component {
 
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
 
+                <Typeahead
+                  
+                  id="deptDropDown"
+                  labelKey="name"
+                  onChange={(arr) => { this.setDepartureSelections(arr) }}
+                  options={deptOptions}
+                  placeholder="Departure airport"
+                  selected={selectedDepts}
 
-                <Form.Control
+                />
+                {/* <Form.Control
                   type="text"
                   placeholder="Departure airport"
                   value={deptAirport}
                   name="deptAirport"
                   onChange={this.handleSearch.bind(this)}
-                />
+                /> */}
               </Form.Group>
 
 
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
+                <Typeahead
+                  
+                  id="arrDropDown"
+                  labelKey="name2"
+                  onChange={(arr) => { this.setArrivalSelections(arr) }}
+                  options={arrOptions}
+                  placeholder="Arrival airport"
+                  selected={selectedArrivals}
 
-                <Form.Control
+                />
+                {/* <Form.Control
                   type="text"
                   placeholder="Arrival airport"
                   value={arrAirport}
                   name="arrAirport"
                   onChange={this.handleSearch.bind(this)}
-                />
+                /> */}
 
 
               </Form.Group>
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
 
                 <Form.Control
-                
+
                   type="text"
                   onFocus={
                     (e) => {
@@ -390,7 +440,7 @@ class MyHeader extends Component {
                   }
                   placeholder="Departure date"
                   value={deptDate}
-                  min= {new Date().toISOString().substring(0, 10)}
+                  min={new Date().toISOString().substring(0, 10)}
                   name="deptDate"
                   onChange={this.handleSearch.bind(this)}
                 />
