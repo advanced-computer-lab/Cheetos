@@ -25,7 +25,7 @@ const onToken = (amount, description) => token =>
     axios.post(PAYMENT_SERVER_URL,
         {   
             //***reconcile with backend  */
-            userId : sessionStorage.getItem("userId") ,
+            userId : localStorage.getItem("userId") ,
             // TODO -this is supposed to be used to mail the user his iternary by the backend
             flight : JSON.parse(sessionStorage.getItem("paidFlight")) , 
             description,

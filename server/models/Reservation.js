@@ -15,6 +15,26 @@ const ReservationSchema = new mongoose.Schema({
 
   Reservation: [
     {
+      PassengerFirstName:{
+        type: String,
+        required: true,
+      },
+
+      PassengerLastName:{
+        type: String,
+        required: true,
+      },
+
+      PassengerType:{
+        type: String,
+        required: true,
+      },
+
+      PassengerPassportNumber:{
+        type: String,
+        required: true,
+      },
+
       FlightId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Flight",
@@ -33,29 +53,6 @@ const ReservationSchema = new mongoose.Schema({
 
     },
   ],
-  DepFlight: {
-    Id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Flight",
-    },
-    DeptSeats: [
-      {
-        type: String,
-      },
-    ],
-  },
-
-  ArrFlight: {
-    Id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Flight",
-    },
-    ArrSeats: [
-      {
-        type: String,
-      },
-    ],
-  },
 });
 
 ReservationSchema.post("save", (reservation, next) => {
