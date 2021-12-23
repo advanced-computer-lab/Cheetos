@@ -30,6 +30,11 @@ const ReservationSchema = new mongoose.Schema({
         required: true,
       },
 
+      PassengerPassportNumber:{
+        type: String,
+        required: true,
+      },
+
       FlightId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Flight",

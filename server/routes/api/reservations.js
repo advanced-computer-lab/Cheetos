@@ -12,6 +12,8 @@ router.delete("/deletereservation/:id",reservationController.deleteReservation)
 
 router.post("/createreservation",reservationController.createReservation)
 
-router.put('/updatereservationseat/:id',reservationController.updateReservationSeat)
+router.put("/updatereservationseat/:id",reservationController.updateReservationSeat)
+
+router.put("/updatereservationflight/:id",reservationController.updateReservationFlight)
 
 module.exports = router;
