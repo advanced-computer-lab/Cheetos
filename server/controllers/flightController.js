@@ -9,6 +9,15 @@ updateFlight = async (req, res) => {
       error: "You must provide a body to update",
     });
   }
+  const updatedTime = {
+    _id: req.params.id,
+    DepartureTime: body.DepartureTime,
+    ArrivalDate: body.ArrivalDate,
+    DepartureDate: body.DepartureDate,
+    ArrivalTime: body.ArrivalTime,
+  };
+
+  const duration = updateTripDuration(updatedTime);
   const update = {
     $set: {
       FlightNumber: body.FlightNumber,
@@ -23,10 +32,13 @@ updateFlight = async (req, res) => {
       ArrivalAirport: body.ArrivalAirport,
       DepartureTerminal: body.DepartureTerminal,
       ArrivalTerminal: body.ArrivalTerminal,
+      TripDuration: duration,
     },
   };
+
   await Flight.findOneAndUpdate({ _id: req.params.id }, update, { new: true })
     .then((flight) => {
+      //console.log("Here: ", );
       return res.status(200).json({
         success: true,
         id: flight._id,
@@ -87,6 +99,35 @@ getFlightById = async (req, res) => {
     }
     return res.status(200).json({ success: true, data: flight });
   }).catch((err) => console.log(err));
+};
+
+updateTripDuration = (flight, res) => {
+  console.log("Here", flight);
+  const departure = new Date(
+    flight.DepartureDate + " " + flight.DepartureTime + ":00"
+  );
+  const arrival = new Date(
+    flight.ArrivalDate + " " + flight.ArrivalTime + ":00"
+  );
+  var diffMs = arrival - departure;
+  var diffDays = Math.floor(diffMs / 86400000); // days
+  var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+  var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); //mins
+  for (let i = 0; i < diffDays; i++) {
+    diffHrs = diffHrs + 24;
+  }
+  const duration = diffHrs + "h" + " " + diffMins + "m";
+  // await Flight.findOneAndUpdate(
+  //   { _id: flight._id },
+  //   { TripDuration: diffHrs + "h" + " " + diffMins + "m" },
+  //   { new: true },
+  //   (err, newflight) => {
+  //     if (err) {
+  //       console.log("error");
+  //     }
+  //   }
+  // );
+  return duration;
 };
 
 module.exports = {
