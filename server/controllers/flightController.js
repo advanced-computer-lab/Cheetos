@@ -117,16 +117,6 @@ updateTripDuration = (flight, res) => {
     diffHrs = diffHrs + 24;
   }
   const duration = diffHrs + "h" + " " + diffMins + "m";
-  // await Flight.findOneAndUpdate(
-  //   { _id: flight._id },
-  //   { TripDuration: diffHrs + "h" + " " + diffMins + "m" },
-  //   { new: true },
-  //   (err, newflight) => {
-  //     if (err) {
-  //       console.log("error");
-  //     }
-  //   }
-  // );
   return duration;
 };
 
