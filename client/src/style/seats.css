@@ -75,13 +75,14 @@
   flex-direction: column;
   gap: 2em;
   height: 100%;
+  width: 150vw;
   overflow-y: auto;
 }
 .passenger{
   align-items: center;
   justify-content: center;
   display: flex;
-  width: 5em;
+  width: 10em;
   gap: 1em;
   height: 2em;
   flex-direction: row;

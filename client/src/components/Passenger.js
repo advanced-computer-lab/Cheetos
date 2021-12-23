@@ -41,8 +41,8 @@ export default class Passenger extends Component {
                 <h6>Seat: {seat}</h6>
 
 
-                <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="firstName" value={firstName} size="sm" type="text" placeholder="first name" style = {{width: "30%"}}/>
-                <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="lastName" value={lastName} size="sm" type="text" placeholder="last name" style = {{width: "30%"}} />
+                <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="firstName" value={firstName} size="sm" type="text" placeholder="first name" style = {{width: "60%"}}/>
+                <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="lastName" value={lastName} size="sm" type="text" placeholder="last name" style = {{width: "60%"}} />
                 <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="passport" value={passport} size="sm" type="text" placeholder="passport number" />
                 <Form.Select onChange={this.handlePassengerInfoChange.bind(this)} name="type" value={type} size="sm"  >
                     <option value="Adult">Adult</option>
