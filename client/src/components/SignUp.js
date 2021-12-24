@@ -55,7 +55,7 @@ export default class SignUp extends Component {
         }
 
         if(e.target.name==="passport"){
-            if((e.target.value).length!=9 ){
+            if((e.target.value).length!=10 ){
               this.setState({invalidPassport:true});
             }
             else{
@@ -71,6 +71,12 @@ export default class SignUp extends Component {
                 this.setState({invalidPassword:false});
               }
           }
+          if(e.target.name==="email"){
+              this.setState({invalidEmail:false})
+          }
+          if(e.target.name==="username"){
+            this.setState({invalidEmail:false})
+        }
      
       }
 
@@ -81,16 +87,11 @@ export default class SignUp extends Component {
           {
                email : value
           });
-
-        
           await api.validateEmail({Email:this.state.email})
           .then((res) => {
               this.setState({invalidEmail:res.data.invalidEmail})
               console.log(res.data,"res email")
           },() => console.log(this.state.invalidEmail,"email"))
-          
-          
-
       }
 
      async handleUsernameValidation(e){
@@ -106,7 +107,6 @@ export default class SignUp extends Component {
               this.setState({invalidUsername:res.data.invalidUsername})
               console.log(res.data,"res")
           },() => console.log(this.state.invalidUsername,"username"))
-
       }
 
      async handleSubmit(e){
@@ -135,26 +135,47 @@ export default class SignUp extends Component {
         if(!(invalidPassport || invalidPassword || invalidPhone) ) {
 
             await api.registerUser(newUser).then((res) => {
-                console.log(res.data.data)
-                this.props.closeModal(false);
+
                 this.setState({
-                    fname:"",
-                    lname:"",
-                    email:"",
-                    phone:"",
-                    code:"",
-                    address:"",
-                    passport:"",
-                    username:"",
-                    password:"",
-                    invalidEmail : false,
-                    invalidPassport : false,
-                    invalidPassword : false,
-                    invalidPhone : false,
-                    invalidUsername : false ,
-            })
+                    invalidEmail : res.data.invalidEmail,
+                    invalidUsername : res.data.invalidUsername
+                },()=> console.log("email",res.data.invalidEmail,"username",res.data.invalidUsername))
+
+                if(!(invalidEmail || invalidPassport)){
+                    console.log("this is data ",res.data.data)
+                    this.props.closeModal(false);
+                    this.setState({
+                        fname:"",
+                        lname:"",
+                        email:"",
+                        phone:"",
+                        code:"",
+                        address:"",
+                        passport:"",
+                        username:"",
+                        password:"",
+                        invalidEmail : false,
+                        invalidPassport : false,
+                        invalidPassword : false,
+                        invalidPhone : false,
+                        invalidUsername : false ,
+                })
+                }
+
+            
             }).catch((err) => {
-                console.log("ops couldnt register hehe" , err)
+               if(err.response){
+                   console.log(err.response.data);
+                   if(err.response.data.message==="invalid"){
+                       this.setState({invalidEmail:true,invalidUsername:true})
+                   }
+                   else if(err.response.data.message==="invalid email"){
+                       this.setState({invalidEmail:true})
+                   }
+                   else if(err.response.data.message==="invalid username"){
+                       this.setState({invalidUsername:true})
+                   }
+               }
             })
 
         }
@@ -222,7 +243,7 @@ export default class SignUp extends Component {
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                    <Form.Control  size="md"  type="email" placeholder="Email" name="email" value={email} required isInvalid={invalidEmail} onChange={this.handleEmailValidation.bind(this)}/>
+                    <Form.Control  size="md"  type="email" placeholder="Email" name="email" value={email} required isInvalid={invalidEmail} onChange={this.handleChange.bind(this)}/>
                     <Form.Control.Feedback type="invalid">
                         This email is already registered.
                     </Form.Control.Feedback>
@@ -264,7 +285,7 @@ export default class SignUp extends Component {
                             <Col className=" pe-0">
 
                              <Form.Group>
-                                 <Form.Control type="username" placeholder="Username" name="username" value={username} required isInvalid={invalidUsername} onChange={this.handleUsernameValidation.bind(this)}/>
+                                 <Form.Control type="username" placeholder="Username" name="username" value={username} required isInvalid={invalidUsername} onChange={this.handleChange.bind(this)}/>
                                  <Form.Control.Feedback type="invalid" >
                                        Username already exists.
                                     </Form.Control.Feedback>

@@ -182,9 +182,8 @@ class EditDeparture extends Component {
            
         }
 
-        state={
-            // flightsArr: [this.deptTrip,this.deptTrip,this.deptTrip2,this.deptTrip,this.deptTrip,this.deptTrip2], //all flights
-            flightsArr : "" , 
+        state = {
+            flightsArr: [this.deptTrip,this.deptTrip,this.deptTrip2,this.deptTrip,this.deptTrip,this.deptTrip2], //all flights
             searchResults:[], //where i'm putting the filtering
             depDateSearch: "", //user input for dep date
             cabinSearch:"EconomySeats", // user input for cabin class

@@ -75,31 +75,23 @@ checkEmail = async (req, res) => {
   return res.json({ invalidEmail: false });
 };
 
-checkUserName = async (req, res) => {
-  //Check if username already exists
-  const user = req.bpdy;
-  let existingUser = await User.findOne({ UserName: user.UserName });
-  if (existingUser) {
-    return res.json({
-      invalidUsername: true,
-      message: "Username already exists",
-    });
-  }
-  return res.json({ invalidUsername: false });
-};
+  
 
-createUser = async (req, res) => {
-  const user = req.body;
-  //Check if email already exists
-  let existingUser = await User.findOne({ Email: req.body.Email });
-  if (existingUser) {
-    return res.status(400).send("Email already exists");
+  let existingEmail = await User.findOne({ Email: user.Email }); 
+  let existingUserName = await User.findOne({ UserName: user.UserName }); 
+
+  if(existingEmail && existingUserName){
+    return res.status(400).send({message: "invalid"})
   }
-  //Check if username already exists
-  existingUser = await User.findOne({ UserName: req.body.UserName });
-  if (existingUser) {
-    return res.status(400).send("Username already exists.");
-  }
+
+  else if (existingEmail) { 
+    return res.status(400).send({message: "invalid email"})
+  } 
+
+  else if (existingUserName) {  
+    return res.status(400).send({message: "invalid username"})
+  } 
+    
   user.Password = await bcrypt.hash(req.body.Password, 10);
 
   User.create(user)
@@ -132,8 +124,9 @@ login = (req, res) => {
   const userLoggingIn = req.body;
   User.findOne({ UserName: userLoggingIn.UserName }).then((dbUser) => {
     if (!dbUser) {
-      return res.json({ message: "Invalid Username or Password" });
+      res.status(400).send({message: "invalid username"})
     }
+    else{
     bcrypt
       .compare(userLoggingIn.Password, dbUser.Password)
       .then((isCorrect) => {
@@ -154,9 +147,9 @@ login = (req, res) => {
             }
           );
         } else {
-          res.json({ message: "Invalid Username or Password" });
+          res.status(400).send({message: "invalid password"})
         }
-      });
+      });}
   });
 };
 
