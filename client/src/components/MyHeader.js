@@ -24,8 +24,7 @@ class MyHeader extends Component {
     arrAirport: "",
     deptDate: "",
     retDate: "",
-    deptCabinClass: "",
-    arrCabinClass: "",
+    cabinClass: "EconomySeats",
     userId: '',
     showSignin: false,
     signedIn: false,
@@ -101,12 +100,13 @@ class MyHeader extends Component {
   handleSignIn() {
     this.props.history.push("/signin")
   }
+
   flightSearch() {
-    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass } = this.state
+    const { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass } = this.state
     if (this.props.location.pathname === "/search") {
-      this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)
+      this.props.parentSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass )
     } else {
-      const search = { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass }
+      const search = { adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass }
       sessionStorage.setItem('searchQuery', JSON.stringify(search));
       console.log(search);
       this.props.history.push("/search");
@@ -129,16 +129,16 @@ class MyHeader extends Component {
           username: user.data.data.UserName
         })
       }).catch((err) => console.log("tt", err))
-      await api.getAllFlights().then((flights) => {
-        console.log("in headerr ", flights.data);
-        this.setState({
-          deptOptions: (flights.data).map((f) => f.DepartureAirport).filter(this.onlyUnique.bind(this)),
-          arrOptions: (flights.data).map((f) => f.ArrivalAirport).filter(this.onlyUnique.bind(this)),
-        }, () => console.log("i added flights ", this.state.deptOptions))
-      }
-      )
+     
     }
-
+    await api.getAllFlights().then((flights) => {
+      console.log("in headerr ", flights.data);
+      this.setState({
+        deptOptions: (flights.data).map((f) => f.DepartureAirport).filter(this.onlyUnique.bind(this)),
+        arrOptions: (flights.data).map((f) => f.ArrivalAirport).filter(this.onlyUnique.bind(this)),
+      }, () => console.log("i added flights ", this.state.deptOptions))
+    }
+    )
     const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
     if (searchObject) {
       console.log("this is search object", searchObject);
@@ -150,8 +150,7 @@ class MyHeader extends Component {
           arrAirport: searchObject.arrAirport,
           deptDate: searchObject.deptDate,
           retDate: searchObject.retDate,
-          deptCabinClass: searchObject.deptCabinClass,
-          arrCabinClass: searchObject.arrCabinClass,
+          cabinClass: searchObject.cabinClass,
         }
       )
 
@@ -175,7 +174,7 @@ class MyHeader extends Component {
         [event.target.getAttribute('name')]: value
       }, () => { console.log("this is the state", this.state[event.target.getAttribute('name')]) })
 
-    if (event.target.getAttribute('name') === "deptCabinClass") {
+    if (event.target.getAttribute('name') === "cabinClass") {
       this.handleCloseCabinDep(event)
 
     }
@@ -204,7 +203,7 @@ class MyHeader extends Component {
   render() {
     const { userId } = this.props
     const { adultCount, childCount, deptAirport, arrAirport, deptDate,
-      retDate, deptCabinClass, arrCabinClass, showSignin, signedIn,
+      retDate, cabinClass, showSignin, signedIn,
       open, openCabin, openCabinDep,
       deptOptions, selectedDepts, arrOptions, selectedArrivals } = this.state
     return (
@@ -301,12 +300,13 @@ class MyHeader extends Component {
                   onClick={this.handleClickCabinDep.bind(this)}
                   style={{ color: "white" }}
                 >
-                  {deptCabinClass === "" ? "Departure Cabin " : deptCabinClass === "EconomySeats" ? "Economy" : deptCabinClass === "BusinessSeats" ? "Business Class" : "First Class"}
+                  {cabinClass === "" ? "Departure Cabin " : cabinClass === "EconomySeats" ? "Economy" : cabinClass === "BusinessSeats" ? "Business Class" : "First Class"}
 
                   <KeyboardArrowDownIcon />
                 </Button>
+                
                 <Menu
-                  name="deptCabinClass"
+                  name="cabinClass"
                   onChange={this.handleSearch.bind(this)}
                   id="demo-positioned-menu"
                   aria-labelledby="demo-positioned-button"
@@ -323,59 +323,19 @@ class MyHeader extends Component {
                   }}
                 >
 
-                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="deptCabinClass" value="EconomySeats">Economy
+                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="cabinClass" value="EconomySeats">Economy
                   </MenuItem>
 
-                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="deptCabinClass" value="BusinessSeats">Business-Class
+                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="cabinClass" value="BusinessSeats">Business-Class
                   </MenuItem>
 
-                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="deptCabinClass" value="FirstClassSeats">First-Class
-                  </MenuItem>
-
-                </Menu>
-              </div>
-
-              <div>
-                <Button
-                  id="demo-positioned-button"
-                  aria-controls="demo-positioned-menu"
-                  aria-haspopup="true"
-                  aria-expanded={openCabin ? 'true' : undefined}
-                  onClick={this.handleClickCabin.bind(this)}
-                  style={{ color: "white" }}
-                >
-                  {arrCabinClass === "" ? "Return Cabin " : arrCabinClass === "EconomySeats" ? "Economy" : arrCabinClass === "BusinessSeats" ? "Business Class" : "First Class"}
-                  <KeyboardArrowDownIcon />
-                </Button>
-                <Menu value={arrCabinClass}
-                  name="arrCabinClass"
-                  onChange={this.handleSearch.bind(this)}
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  anchorEl={this.state.anchorElCabin}
-                  open={openCabin}
-                  onClose={this.handleCloseCabin.bind(this)}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                >
-
-                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="arrCabinClass" value="EconomySeats">Economy
-                  </MenuItem>
-
-                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="arrCabinClass" value="BusinessSeats">Business-Class
-                  </MenuItem>
-
-                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="arrCabinClass" value="FirstClassSeats">First-Class
+                  <MenuItem onClick={(event) => this.handleMenuItemClick(event)} name="cabinClass" value="FirstClassSeats">First-Class
                   </MenuItem>
 
                 </Menu>
               </div>
+
+
             </div>
 
 
@@ -384,7 +344,7 @@ class MyHeader extends Component {
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
 
                 <Typeahead
-                  
+
                   id="deptDropDown"
                   labelKey="name"
                   onChange={(arr) => { this.setDepartureSelections(arr) }}
@@ -405,7 +365,7 @@ class MyHeader extends Component {
 
               <Form.Group style={{ flexGrow: 1 }} className="mb-2">
                 <Typeahead
-                  
+
                   id="arrDropDown"
                   labelKey="name2"
                   onChange={(arr) => { this.setArrivalSelections(arr) }}
@@ -450,6 +410,7 @@ class MyHeader extends Component {
               <Form.Group style={{ flexGrow: 1, width: "15%" }} className="mb-2">
 
                 <Form.Control
+                
                   style={{ width: "" }}
                   type="text" onFocus={
                     (e) => {
@@ -464,6 +425,7 @@ class MyHeader extends Component {
                     }}
                   placeholder="Return date"
                   value={retDate}
+                  min = { deptDate ? new Date(deptDate).toISOString().substring(0, 10) : ""}
                   name="retDate"
                   onChange={this.handleSearch.bind(this)}
                 />

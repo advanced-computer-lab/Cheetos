@@ -188,7 +188,7 @@ class Home extends Component {
             () => {
                 const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))
                 if (searchObject) {
-                    this.handleSearch(searchObject.adultCount, searchObject.childCount, searchObject.deptAirport, searchObject.arrAirport, searchObject.deptDate, searchObject.retDate, searchObject.deptCabinClass, searchObject.arrCabinClass)
+                    this.handleSearch(searchObject.adultCount, searchObject.childCount, searchObject.deptAirport, searchObject.arrAirport, searchObject.deptDate, searchObject.retDate, searchObject.cabinClass)
                 }
             }
         )
@@ -198,12 +198,12 @@ class Home extends Component {
         console.log("my user id is ", localStorage.getItem('userId'))
     }
 
-    emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass) {
-
+    emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass) {
+        console.log("--------------------------------------> empty search" , cabinClass)
         if (!adultCount || 
             !deptAirport || !arrAirport ||
             !deptDate || !retDate ||
-            !deptCabinClass || !arrCabinClass) {
+            !cabinClass) {
             return true
         }
         return false;
@@ -212,17 +212,17 @@ class Home extends Component {
     arrCabin = ''
     adultCount = 0
     childCount = 0
-    handleSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass) {
+    handleSearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass) {
 
-        if (this.emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, deptCabinClass, arrCabinClass)) {
+        if (this.emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass)) {
             alert("search fields cannot be empty");
         }
         else {        //---making the pairs of flights (round trips) from the all flights array 
             this.setState({
                 deptAirport, arrAirport, deptDate, retDate
             })
-            this.deptCabin = deptCabinClass;
-            this.arrCabin = arrCabinClass;
+            this.deptCabin = cabinClass;
+            this.arrCabin = cabinClass;
             this.adultCount = adultCount;
             this.childCount = childCount;
             const { flightArr } = this.state;
@@ -243,8 +243,8 @@ class Home extends Component {
                     tripArr: resultArr.filter((p) =>
                         p[0].DepartureAirport === deptAirport && p[0].ArrivalAirport === arrAirport
                         && Date.parse(p[0].DepartureDate) === Date.parse(deptDate) && Date.parse(p[1].ArrivalDate) === Date.parse(retDate)
-                        && p[0][deptCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
-                        && p[1][arrCabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)),
+                        && p[0][cabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)
+                        && p[1][cabinClass]["AvailableSeats"] >= Number(adultCount) + Number(childCount)),
                 }
                 , () => sessionStorage.setItem('searchQuery', null))
 

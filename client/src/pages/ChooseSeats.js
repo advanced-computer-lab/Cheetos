@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 class ChooseSeats extends Component {
     state = {
-        arrSeats: [],
-        deptSeats: []
+        arrSeats : [] ,
+        deptSeats: [] 
     }
-    handleConfirm() {
+    handleConfirm(){
         const {arrSeats , deptSeats} = this.state ; 
         const {  adults, children } = JSON.parse(sessionStorage.getItem('deal')) ; 
         if (arrSeats.length < Number(adults) + Number(children) ||deptSeats.length < Number(adults) + Number(children)  ) {
@@ -17,16 +17,16 @@ class ChooseSeats extends Component {
         }else{
             this.props.parentFunc(deptSeats , arrSeats , JSON.parse(sessionStorage.getItem('deal')))
         }
-    
     }
     handleSeatsChange(att, seats) {
-        console.log(seats)
+        // console.log(seats)
+        sessionStorage.setItem(att , JSON.stringify(seats)) ; 
         this.setState(
             {
                 ...this.state,
                 [att]: seats
             }
-        )
+        , ()=> console.log("in seatsss"  , att , JSON.parse( sessionStorage.getItem(att))  )   )  
     }
     render() {
         const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
@@ -36,8 +36,8 @@ class ChooseSeats extends Component {
             <div className="seats-page slide-left">
                 {/* <MyHeader /> */}
                 <div className="shuttles">
-                    <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
-                    {/* <Seats parentFunc={(att, num) => this.handleSeatsChange(att, num)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} /> */}
+                    <Seats parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
+                    <Seats parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
                 </div>
                
                     {/* <Button

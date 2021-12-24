@@ -38,13 +38,13 @@ import { Link } from "react-router-dom";
         const { confirmationNum, userId, reservation } = this.props
         console.log("reserv coming to booking is ", reservation)
         const { DepFlight, ArrFlight } = reservation
-        await api.getFlightById(DepFlight.Id).then((Flight) => {
+        await api.getFlightById(DepFlight._id).then((Flight) => {
             this.setState({
                 deptFlight: Flight.data.data
             }, () => console.log(Flight.data.data))
         }
         )
-        await api.getFlightById(ArrFlight.Id).then((Flight) => {
+        await api.getFlightById(ArrFlight._id).then((Flight) => {
             this.setState({
                 arrFlight: Flight.data.data
             }, () => console.log(Flight.data.data))
@@ -72,9 +72,6 @@ import { Link } from "react-router-dom";
         const { showModal, deptFlight, arrFlight } = this.state
 
         
-        const { DepFlight, ArrFlight  , Reservation} = reservation
-        const deptCabin = Reservation[0].CabinClass 
-        const arrCabin= Reservation[Reservation.length -1].CabinClass 
 
        
         return (
@@ -99,8 +96,8 @@ import { Link } from "react-router-dom";
                             </div>
 
                             <div className="trip-flex-col">
-                                <div className="emphasis"><AirlineSeatReclineNormalIcon />{DepFlight.DeptSeats ? DepFlight.DeptSeats.toString() : ''}</div>
-                                <p style={{ width: "120px", textAlign: "center" }}>{deptCabin}</p>
+                                <div className="emphasis"><AirlineSeatReclineNormalIcon />seats hereee</div>
+                                <p style={{ width: "120px", textAlign: "center" }}>{reservation.CabinClass}</p>
                             </div>
 
                             <div className="trip-flex-col">
@@ -123,8 +120,8 @@ import { Link } from "react-router-dom";
                             </div>
 
                             <div className="trip-flex-col">
-                                <div className="emphasis"><AirlineSeatReclineNormalIcon />{ArrFlight.ArrSeats ? ArrFlight.ArrSeats.toString():''}</div>
-                                <p style={{ width: "120px", textAlign: "center" }}>{arrCabin}</p>
+                                <div className="emphasis"><AirlineSeatReclineNormalIcon />"sdsd"</div>
+                                <p style={{ width: "120px", textAlign: "center" }}>{reservation.CabinClass}</p>
                             </div>
 
                             <div className="trip-flex-col">

@@ -6,6 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { withRouter } from "react-router";
 import Signin from "../components/Signin"
 import api from '../api'
+import { Token } from 'react-bootstrap-typeahead';
 class ConfirmBooking extends Component {
 
     state = {
@@ -20,11 +21,7 @@ class ConfirmBooking extends Component {
         });
     }
     handleSignInModal() {
-        this.setState({
-            showSignin: !this.state.showSignin , 
-        });
-        sessionStorage.setItem('userId', "61b9137a106dd78dc7e645a4");
-        this.props.parentFunc()
+       this.props.history.push('/signin')
     }
    
     render() {
@@ -120,7 +117,7 @@ class ConfirmBooking extends Component {
                         </div>
                         <div className="trip-flex-col" style={{ width: '30%' }} >
                             <h3>{totalPrice}$</h3>
-                           { !this.state.signedIn ? <Button
+                           { !localStorage.getItem("token") ? <Button
                                 onClick={this.handleSignInModal.bind(this)}
                                 style={{
                                     backgroundColor: "#447fcc",

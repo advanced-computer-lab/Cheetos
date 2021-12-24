@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import Form from "react-bootstrap/Form";
 export default class Passenger extends Component {
     state = {
-        seat: this.props.seat,
+        
         firstName: "",
         lastName: "",
         type: "Adult",
@@ -21,7 +21,7 @@ export default class Passenger extends Component {
                 ...this.state,
                 [e.target.name]: value
             }, () => {
-                this.props.parentFunc(this.state.seat,
+                this.props.parentFunc( this.props.index , 
                     {
                         firstName: this.state.firstName,
                         lastName: this.state.lastName,
@@ -38,13 +38,13 @@ export default class Passenger extends Component {
         return (
                 <div>
             <div className="passenger">
-                <h6>Seat: {seat}</h6>
+                <h6>Passenger: {seat}</h6>
 
 
                 <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="firstName" value={firstName} size="sm" type="text" placeholder="first name" style = {{width: "60%"}}/>
                 <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="lastName" value={lastName} size="sm" type="text" placeholder="last name" style = {{width: "60%"}} />
                 <Form.Control onChange={this.handlePassengerInfoChange.bind(this)} name="passport" value={passport} size="sm" type="text" placeholder="passport number" />
-                <Form.Select onChange={this.handlePassengerInfoChange.bind(this)} name="type" value={type} size="sm"  >
+                <Form.Select  onChange={this.handlePassengerInfoChange.bind(this)} name="type" value={type} size="sm"  style = {{width: "60%"}}>
                     <option value="Adult">Adult</option>
                     <option value="Child">Child</option>
                 </Form.Select>

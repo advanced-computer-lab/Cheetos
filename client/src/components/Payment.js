@@ -10,7 +10,7 @@ import '../style/seats.css';
 
 const CURRENCY = 'USD';
 const  STRIPE_PUBLISHABLE = "pk_test_51K73UMBOwmEi06NGKInoBOHQZH6q5QMvgFA5eWxahjTwpCxe6N8A1yUjeffUbxVWPjNNHBsN0Bjj0sodqsIsSu9n00bJez3NKz";
-const PAYMENT_SERVER_URL   = 'http://localhost/8000/api/';
+const PAYMENT_SERVER_URL   = 'http://localhost/8000/api/payment/';
 
 const fromDollarToCent = amount => parseInt(amount * 100);
 const successPayment = data => {
@@ -33,7 +33,7 @@ const onToken = (amount, description) => token =>
             currency: CURRENCY,
             amount: fromDollarToCent(amount)
         })
-        .then(successPayment)
+        .then(successPayment )
         .catch(errorPayment);
 export default class Payment extends Component {
     render() {

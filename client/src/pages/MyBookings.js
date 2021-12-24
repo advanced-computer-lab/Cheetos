@@ -53,13 +53,32 @@ import { withRouter } from 'react-router';
         // ],
         bookingsArr : [] 
     }
-    
+    customFilter( arr ){
+     
+        let newArr = [] 
+        for(let i = 0 ; i < arr.length/2 ; i++){
+            for(let j = arr.length/2 ; j <arr.length ; j++){
+                if(arr[i].PassengerPassportNumber === arr[j].PassengerPassportNumber ){
+                    newArr.push({
+                        PassengerFirstName : arr[i].PassengerFirstName , 
+                        PassengerLastName : arr[i].PassengerLastName , 
+                        PassengerPassportNumber : arr[i].PassengerPassportNumber,
+                        PassengerType : arr[i].PassengerType , 
+                        deptFlight :  arr[i].FlightId ,
+                        arrFlight :  arr[j].FlightId 
+                    })
+                }
+            }
+        }
+        return newArr ; 
+    }
     async componentDidMount() {
         const  userId  = localStorage.getItem('userId');
+        console.log("user id in bookinggg" , userId) ; 
         await api.getReservationsById(userId).then(reservations => {
             this.setState({
                 bookingsArr : reservations.data.data
-            }, () => console.log("reservations are "  , reservations.data.data))
+            } , () => console.log("reservations are "  , reservations.data.data))
         })
     }
     render() {
@@ -72,8 +91,9 @@ import { withRouter } from 'react-router';
                 <div className="trip-search-results">
                     {
                         bookingsArr.map((b) => (
-                            <Booking confirmationNum={b._id} userId={b.UserId} reservation={b}
-                            />
+                           b.Reservation.map((t) => (
+                            <Booking confirmationNum={t._id} userId={t.UserId} reservation={t}  />
+                           ))
                         ))}
                 </div>
             </div>

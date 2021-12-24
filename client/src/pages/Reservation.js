@@ -13,7 +13,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Payment from '../components/Payment';
 import DatePicker from 'react-datepicker';
-const steps = ["Flight Details", "Select Seats", "Payment"];
+import PassengersInfo from '../components/PassengersInfo';
+
+const steps = ["Flight Details", "Select Seats", "Enter Passengers Info" , "Payment"];
 class Reservation extends Component {
     state = {
         activeStep: 0,
@@ -148,7 +150,7 @@ class Reservation extends Component {
             <div style={{ backgroundColor: "background-color: rgba(0, 0, 0, 0.575)" }}>
                 <MyHeader />
                 <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={activeStep} style={{ backgroundColor: "white", height: "2.7em" }}>
+                    <Stepper activeStep={activeStep} style={{ backgroundColor: "whitesmoke", height: "2.7em" }}>
                         {steps.map((label, index) => {
                             const stepProps = {};
                             const labelProps = {};
@@ -178,7 +180,7 @@ class Reservation extends Component {
                         <React.Fragment>
                             {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
                             {activeStep == 0 ?
-                                <div style={{ height: '59vh', backgroundColor: '#F6F6F6' }}>
+                                <div style={{ height: '59vh', backgroundColor: '#FFFFFF' }}>
                                     {/* your div of choice here  */}
 
 
@@ -195,15 +197,17 @@ class Reservation extends Component {
 
 
                                     </div> :
+                                    activeStep == 2 ?
+                                    <div style={{ height: '59vh', backgroundColor: 'white'  , display : 'flex' ,  alignItems : 'center' , justifyContent: 'center' }}>
+                                       
+                                            <PassengersInfo />
+                                        
+
+                                    </div> :
                                     <div style={{ height: '59vh', backgroundColor: 'white' }}>
                                         {/* your div of choice here  */}
                                         <ConfirmBooking/>
                                         <Payment  name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191}/>
-
-                                       
-                                       
-                                        
-
 
                                     </div>
                             }

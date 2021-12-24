@@ -34,6 +34,15 @@
 .seats-row{
   display: flex;
   align-items: center;
+  justify-content: space-evenly;
+  /* background-color: rgb(105, 105, 105); */
+  /* border: 1px solid rgb(146, 146, 146); */
+  flex-grow: 1;
+  width: 95% ;
+}
+.seats-row-Two{
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
   gap: 1em;
   /* background-color: rgb(105, 105, 105); */
@@ -59,13 +68,29 @@
 }
 /* Add a thumb */
 .passengers-info::-webkit-scrollbar-thumb {
-  background: rgb(119, 119, 119);
+  background: rgb(219, 219, 219);
   border-radius: 5px;
 }
 .passengers-info::-webkit-scrollbar-thumb:hover {
   background-color: #aaaaaa;
 }
 .passengers-info{
+  padding-top: 3em ;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  width: 60%;
+  height: 50vh;
+  overflow-y: auto;
+  border: 1px solid rgb(136, 136, 136); 
+  border-radius: 5px;
+ 
+}
+
+.passengers-info-Two{
   flex-grow: 1;
   padding-top: 1em ;
   justify-content: flex-start; 
@@ -75,8 +100,8 @@
   flex-direction: column;
   gap: 2em;
   height: 100%;
-  width: 150vw;
   overflow-y: auto;
+ 
 }
 .passenger{
   align-items: center;
@@ -89,6 +114,20 @@
   width: auto;
 }
 .shuttle{
+  /* margin-top: 2em; */
+  width: 27rem;
+  height: 50vh;
+  /* border: 2px solid rgb(124, 124, 124); */
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 1em;
+  margin-top: 7px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.shuttleTwo{
   
   width: 20rem;
   /* border: 2px solid rgb(124, 124, 124); */
@@ -116,7 +155,7 @@
   background-color: #aaaaaa;
 }
 
-.first-class{
+.cabinClass{
   border: 1px solid rgb(206, 206, 206); 
   
   display: flex;
@@ -131,7 +170,22 @@
   height: auto;
   overflow-y: auto;
 }
-
+.first-class{
+  border: 1px solid rgb(206, 206, 206); 
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1em;
+  /* border: 1px solid rgba(255, 0, 0, 0.308); */
+  border-radius: 5px;
+  padding-top: 1em;
+  margin-bottom: 0.5em;
+  width: 100%;
+  height: auto;
+  overflow-y: auto;
+}
 
 .seat{
   text-align: center;
