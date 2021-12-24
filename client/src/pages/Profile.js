@@ -225,7 +225,7 @@ class Profile extends Component {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Control type="password" placeholder="Old Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
+                                <Form.Control type="password" placeholder="New Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
                                 <Form.Control.Feedback type="invalid" >
                                     Password must be at least 5 characters.
                                 </Form.Control.Feedback>
