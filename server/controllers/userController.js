@@ -23,7 +23,7 @@ updateUser = async (req, res) => {
 
     //user.UserName = body.UserName;
 
-    user.Password = body.Password;
+    //user.Password = body.Password;
 
     user.FirstName = body.FirstName;
 
@@ -184,11 +184,59 @@ verifyJwT = (req, res, next) => {
     res.json({ message: "Incorrect Token Given", isLoggedIn: false });
   }
 };
+changeUserPassword = async (req, res) => {
+  const body = req.body;
+
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: "You must provide a body to update",
+    });
+  }
+
+  User.findOne({ _id: req.params.id }, (err, user) => {
+    if (err) {
+      return res.status(404).json({
+        err,
+        message: "User not found!",
+      });
+    }
+    console.log(user);
+    var x = "$2b$10$zBxIyN3CXf1sjX10yilLs.Kr6GB9ehk6AcVFiRY6Dq1db4ri4pPoS";
+    console.log(x);
+    bcrypt
+    .compare(body.oldPassword,user.Password)
+    .then(async(isCorrect) => {
+      if (isCorrect) {
+        user.Password =  await bcrypt.hash(body.newPassword, 10);
+        
+        console.log("YESSS");
+        }
+    
+    
+    user
+      .save()
+      .then(() => {
+        return res.status(200).json({
+          success: true,
+          id: user.id,
+          message: "Password updated!",
+        });
+      })
+      .catch((error) => {
+        return res.status(404).json({
+          error,
+          message: "Password not updated!",
+        });
+      });
+  });
+});}
 
 module.exports = {
   updateUser,
   deleteUser,
   createUser,
+  changeUserPassword,
   getUser,
   getUserById,
   login,
