@@ -33,7 +33,6 @@ class Signin extends Component {
          if succesful get token and store it locally
          then route to home 
          */
-
         const loggingInUser = {
              "UserName" : username,
              "Password" : password
@@ -46,16 +45,21 @@ class Signin extends Component {
              console.log("al rag3ly mn login" , res.data.data) ; 
              localStorage.setItem('token',res.data.token)
              localStorage.setItem('userId', res.data.data.userId);
-             this.props.history.push("/")
-            
+             this.props.history.push("/")  
          }).catch((err) => {
              console.log("login heho ", err);
-             
 
+             if(err.response){
+                console.log(err.response.data);
+                if(err.response.data.message==="invalid username"){
+                    this.setState({invalidUserName:true})
+                }
+                else if(err.response.data.message==="invalid password"){
+                    this.setState({invalidPassword:true,invalidUserName:false})
+                }
+            }
          })
          console.log("token heho",localStorage.getItem('token'))
-         
-      
     }
 
     //for sign up 

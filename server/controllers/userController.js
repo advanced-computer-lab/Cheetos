@@ -87,19 +87,23 @@ checkEmail = async (req, res) => { const user = req.body; //Check if email alrea
 createUser = async (req, res) => {
   const user = req.body;
 
-  let existingUser = await User.findOne({ UserName: user.UserName }); 
-      if (existingUser) { 
-        return res.json({ invalidUsername: true, message: "Username already exists", }); 
-      } 
-     
-
-   existingUser = await User.findOne({ Email: user.Email }); 
-   if (existingUser) 
-   { 
-     return res.json({ invalidEmail: true, message: "Email already exists" });
-   } 
   
 
+  let existingEmail = await User.findOne({ Email: user.Email }); 
+  let existingUserName = await User.findOne({ UserName: user.UserName }); 
+
+  if(existingEmail && existingUserName){
+    return res.status(400).send({message: "invalid"})
+  }
+
+  else if (existingEmail) { 
+    return res.status(400).send({message: "invalid email"})
+  } 
+
+  else if (existingUserName) {  
+    return res.status(400).send({message: "invalid username"})
+  } 
+    
   user.Password = await bcrypt.hash(req.body.Password, 10);
 
   User.create(user)
@@ -132,8 +136,9 @@ login = (req, res) => {
   const userLoggingIn = req.body;
   User.findOne({ UserName: userLoggingIn.UserName }).then((dbUser) => {
     if (!dbUser) {
-      return res.json({ message: "Invalid Username or Password" });
+      res.status(400).send({message: "invalid username"})
     }
+    else{
     bcrypt
       .compare(userLoggingIn.Password, dbUser.Password)
       .then((isCorrect) => {
@@ -154,9 +159,9 @@ login = (req, res) => {
             }
           );
         } else {
-          res.json({ message: "Invalid Username or Password" });
+          res.status(400).send({message: "invalid password"})
         }
-      });
+      });}
   });
 };
 

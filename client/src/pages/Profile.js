@@ -218,14 +218,14 @@ class Profile extends Component {
                      
                           
                           <Form.Group className='mb-3'>
-                                <Form.Control type="password" placeholder="Password"  required name="oldPass" value={oldPass} isInvalid={invalidOldPass} onChange={this.handleChange.bind(this)}/>
+                                <Form.Control type="password" placeholder="Old Password"  required name="oldPass" value={oldPass} isInvalid={invalidOldPass} onChange={this.handleChange.bind(this)}/>
                                 <Form.Control.Feedback type="invalid" >
                                     Password doesn't match old password.
                                 </Form.Control.Feedback>
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Control type="password" placeholder="Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
+                                <Form.Control type="password" placeholder="Old Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
                                 <Form.Control.Feedback type="invalid" >
                                     Password must be at least 5 characters.
                                 </Form.Control.Feedback>
