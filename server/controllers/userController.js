@@ -65,15 +65,27 @@ deleteUser = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
-checkEmail = async (req, res) => {
+checkEmail = async (req, res) => { const user = req.body; //Check if email already exists
+   let existingUser = await User.findOne({ Email: user.Email }); 
+   if (existingUser) 
+   { 
+     return res.json({ invalidEmail: true, message: "Email already exists" });
+   } 
+   return res.json({ invalidEmail: false });
+  };
+
+   checkUserName = async (req, res) => { 
+     //Check if username already exists
+      const user = req.body; 
+      let existingUser = await User.findOne({ UserName: user.UserName }); 
+      if (existingUser) { 
+        return res.json({ invalidUsername: true, message: "Username already exists", }); 
+      } 
+      return res.json({ invalidUsername: false });
+    };
+
+createUser = async (req, res) => {
   const user = req.body;
-  //Check if email already exists
-  let existingUser = await User.findOne({ Email: user.Email });
-  if (existingUser) {
-    return res.json({ invalidEmail: true, message: "Email already exists" });
-  }
-  return res.json({ invalidEmail: false });
-};
 
   
 
@@ -176,8 +188,6 @@ verifyJwT = (req, res, next) => {
 module.exports = {
   updateUser,
   deleteUser,
-  checkEmail,
-  checkUserName,
   createUser,
   getUser,
   getUserById,
