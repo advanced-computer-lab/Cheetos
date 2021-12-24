@@ -26,6 +26,9 @@ export const registerUser = payload => api.post(`/user/ucreate`,payload);
 export const validateEmail = payload => api.post('/user/checkEmail',payload);
 export const validateUsername = payload => api.post('/user/checkUsername',payload);
 
+//sprint 3
+export const updatePassword = (id,payload) => api.put(`/user/passupdate/${id}`,payload)
+
 const apis = {
     insertFlight,
     getAllFlights,
@@ -42,7 +45,8 @@ const apis = {
     loginUser,
     registerUser,
     validateEmail,
-    validateUsername
+    validateUsername,
+    updatePassword,
 }
 
 export default apis

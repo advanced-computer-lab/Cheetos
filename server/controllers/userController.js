@@ -184,26 +184,22 @@ verifyJwT = (req, res, next) => {
     res.json({ message: "Incorrect Token Given", isLoggedIn: false });
   }
 };
+
+
 changeUserPassword = async (req, res) => {
   const body = req.body;
 
   if (!body) {
-    return res.status(400).json({
-      success: false,
-      error: "You must provide a body to update",
-    });
+    return res.status(400).send({message: "invalid"})
   }
 
-  User.findOne({ _id: req.params.id }, (err, user) => {
+  User.findOne({ _id: req.params.id}, (err, user) => {
     if (err) {
-      return res.status(404).json({
-        err,
-        message: "User not found!",
-      });
+      return res.status(400).send({message: "invalid"})
     }
     console.log(user);
-    var x = "$2b$10$zBxIyN3CXf1sjX10yilLs.Kr6GB9ehk6AcVFiRY6Dq1db4ri4pPoS";
-    console.log(x);
+    // var x = "$2b$10$zBxIyN3CXf1sjX10yilLs.Kr6GB9ehk6AcVFiRY6Dq1db4ri4pPoS";
+    // console.log(x);
     bcrypt
     .compare(body.oldPassword,user.Password)
     .then(async(isCorrect) => {
@@ -212,6 +208,9 @@ changeUserPassword = async (req, res) => {
         
         console.log("YESSS");
         }
+      else{
+        return res.status(400).send({message : "incorrect"})
+      }
     
     
     user
@@ -224,10 +223,7 @@ changeUserPassword = async (req, res) => {
         });
       })
       .catch((error) => {
-        return res.status(404).json({
-          error,
-          message: "Password not updated!",
-        });
+       return res.status(404).send({message:"pass not updated"})
       });
   });
 });}

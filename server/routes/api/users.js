@@ -14,6 +14,7 @@ router.delete("/udelete/:id", userController.deleteUser);
 router.put("/uupdate/:id", userController.verifyJwT, userController.updateUser);
 //router.put("/passupdate/:id", userController.verifyJwT, userController.changeUserPassword);
 router.put("/passupdate/:id", userController.changeUserPassword);
+
 router.post("/ulogin", userController.login);
 
 router.post("/checkEmail", userController.checkEmail);
