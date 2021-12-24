@@ -15,7 +15,7 @@ import Payment from '../components/Payment';
 import DatePicker from 'react-datepicker';
 import PassengersInfo from '../components/PassengersInfo';
 
-const steps = ["Flight Details", "Select Seats", "Enter Passengers Info" , "Payment"];
+const steps = ["Flight Details", "Select Seats", "Enter Passengers Info", "Payment"];
 class Reservation extends Component {
     state = {
         activeStep: 0,
@@ -24,11 +24,16 @@ class Reservation extends Component {
         showModal: false,
         resId: "",
         deptSeats: [],
-        arrSeats: [] , 
-       
-         
+        arrSeats: [],
+
+
     }
-    
+    componentWillUnmount(){
+        sessionStorage.removeItem("deptSeats")
+        sessionStorage.removeItem("arrSeats")
+        sessionStorage.removeItem("deal")
+    }
+
     handleModalShow() {
         if (this.state.showModal) {
             this.setState({
@@ -46,7 +51,7 @@ class Reservation extends Component {
         this.setState({
             deptSeats: deptSeats,
             arrSeats: arrSeats,
-        }, () => this.handleConfirm())
+        }, () => console.log("##################", this.state.deptSeats, this.state.arrSeats))
     }
     handleSignedIn() {
         this.setState({
@@ -56,7 +61,7 @@ class Reservation extends Component {
         })
     }
     async handleConfirm() {
-       const  userId = localStorage.getItem('userId') ; 
+        const userId = localStorage.getItem('userId');
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = JSON.parse(sessionStorage.getItem('deal'))
         const { deptSeats, arrSeats } = this.state
         let arrOne = deptSeats.map((s) => ({
@@ -100,16 +105,36 @@ class Reservation extends Component {
         };
 
         const handleNext = () => {
-            console.log("handling next ")
-            let newSkipped = skipped;
-            if (isStepSkipped(activeStep)) {
-                newSkipped = new Set(newSkipped.values());
-                newSkipped.delete(activeStep);
+            if (this.state.activeStep === 1) {
+                let deptSeats = JSON.parse(sessionStorage.getItem("deptSeats"))
+                let arrSeats = JSON.parse(sessionStorage.getItem("arrSeats"))
+                //choosing seats 
+                const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
+                if (arrSeats.length < Number(adults) + Number(children) || deptSeats.length < Number(adults) + Number(children)) {
+                    alert("you must choose all seats")
+                } else {
+                    let newSkipped = skipped;
+                    if (isStepSkipped(activeStep)) {
+                        newSkipped = new Set(newSkipped.values());
+                        newSkipped.delete(activeStep);
+                    }
+                    this.setState({
+                        activeStep: this.state.activeStep + 1,
+                        skipped: newSkipped
+                    }, () => console.log(this.state.activeStep))
+                } 
+            } else {
+                console.log("handling next ")
+                let newSkipped = skipped;
+                if (isStepSkipped(activeStep)) {
+                    newSkipped = new Set(newSkipped.values());
+                    newSkipped.delete(activeStep);
+                }
+                this.setState({
+                    activeStep: this.state.activeStep + 1,
+                    skipped: newSkipped
+                }, () => console.log(this.state.activeStep))
             }
-            this.setState({
-                activeStep: this.state.activeStep + 1,
-                skipped: newSkipped
-            }, () => console.log(this.state.activeStep))
 
         };
 
@@ -144,7 +169,7 @@ class Reservation extends Component {
             })
         };
 
-        const {startDate} = this.state
+        const { startDate } = this.state
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = sessionStorage.getItem('deal')
         return (
             <div style={{ backgroundColor: "background-color: rgba(0, 0, 0, 0.575)" }}>
@@ -198,18 +223,18 @@ class Reservation extends Component {
 
                                     </div> :
                                     activeStep == 2 ?
-                                    <div style={{ height: '59vh', backgroundColor: 'white'  , display : 'flex' ,  alignItems : 'center' , justifyContent: 'center' }}>
-                                       
+                                        <div style={{ height: '59vh', backgroundColor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
                                             <PassengersInfo />
-                                        
 
-                                    </div> :
-                                    <div style={{ height: '59vh', backgroundColor: 'white' }}>
-                                        {/* your div of choice here  */}
-                                        <ConfirmBooking/>
-                                        <Payment  name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191}/>
 
-                                    </div>
+                                        </div> :
+                                        <div style={{ height: '59vh', backgroundColor: 'white' }}>
+                                            {/* your div of choice here  */}
+                                            <ConfirmBooking />
+                                            <Payment name={"Boomerang"} description={"flight from CAI to LAX "} amount={2191} />
+
+                                        </div>
                             }
 
                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4, backgroundColor: "whitesmoke" }}>
@@ -232,7 +257,9 @@ class Reservation extends Component {
 
                                 }
 
-                                <Button onClick={handleNext}>
+                                <Button onClick={handleNext}
+                                    disabled={!localStorage.getItem("token") ? true : false}
+                                >
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                 </Button>
                             </Box>

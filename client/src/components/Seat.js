@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Seat extends Component {
     state = {
-        chosen: false
+        chosen: this.props.parentChosen
     }
     handleChoseSeat(seat) {
 

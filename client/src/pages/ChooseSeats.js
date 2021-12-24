@@ -5,9 +5,10 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 class ChooseSeats extends Component {
+    
     state = {
-        arrSeats : [] ,
-        deptSeats: [] 
+        arrSeats : JSON.parse( sessionStorage.getItem("arrSeats") ) ? JSON.parse( sessionStorage.getItem("arrSeats") ) : []  ,
+        deptSeats: JSON.parse(sessionStorage.getItem("deptSeats")) ? JSON.parse(sessionStorage.getItem("deptSeats")) : [] 
     }
     handleConfirm(){
         const {arrSeats , deptSeats} = this.state ; 
@@ -36,8 +37,8 @@ class ChooseSeats extends Component {
             <div className="seats-page slide-left">
                 {/* <MyHeader /> */}
                 <div className="shuttles">
-                    <Seats parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
-                    <Seats parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
+                    <Seats preChosen = {this.state.deptSeats} parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats = {deptFlight[deptCabin].Seats} att="deptSeats" type="Departure flight" seatClass={deptCabin} passengers={Number(adults) + Number(children)} />
+                    <Seats preChosen = {this.state.arrSeats} parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats = {arrFlight[arrCabin].Seats} att="arrSeats" type="Return flight" seatClass={arrCabin} passengers={Number(adults) + Number(children)} />
                 </div>
                
                     {/* <Button

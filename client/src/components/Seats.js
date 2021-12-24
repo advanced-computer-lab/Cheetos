@@ -6,8 +6,8 @@ import Seat from './Seat';
 
 class Seats extends Component {
     state = {
-        chosenSeats: [],
-        canChose: true,
+        chosenSeats: this.props.preChosen ? this.props.preChosen : [],
+        canChose: this.props.preChosen.length === this.props.passengers ? false : true,
         passengers: this.props.passengers, //should be initialised from props 
         seats: this.props.seats,
         // busArr : this.props.seats.map((e) => (
@@ -33,7 +33,9 @@ class Seats extends Component {
     // busArr = [...this.busArr, this.resSeat, this.resSeat, this.resSeat, this.resSeat, this.resSeat, this.resSeat, this.resSeat, this.resSeat]
 
     // ecArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    componentDidMount() {
 
+    }
     subs(arr) {
         let newArr = []
         let sub = []
@@ -53,7 +55,7 @@ class Seats extends Component {
         return newArr;
     }
     handleChoseSeat(seat, chosen) {
-        
+
         if (!seat.Reserved) {
             if (this.state.passengers > 0) {
                 let newPassengers = this.state.passengers - 1;
@@ -99,16 +101,16 @@ class Seats extends Component {
 
             <div className="shuttle">
                 <h3>{type}</h3>
-                <h4>{ seatClass === "FirstClassSeats" ? "First class" :
-                        seatClass === "BusinessSeats" ? "Business class" :
-                          seatClass === "EconomySeats" ? "Economy class" : "" }  : {this.state.chosenSeats.length}/{passengers} </h4>
+                <h4>{seatClass === "FirstClassSeats" ? "First class" :
+                    seatClass === "BusinessSeats" ? "Business class" :
+                        seatClass === "EconomySeats" ? "Economy class" : ""}  : {this.state.chosenSeats.length}/{passengers} </h4>
                 <div className="first-class">
 
                     {this.props.seats ? this.subs(this.props.seats).map((r) =>
                         <div className="seats-row">
                             {
                                 r.map((s) =>
-                                    <Seat seat={s} parentChoseSeats={(s, chosen) => this.handleChoseSeat(s, chosen)} canChose={this.state.canChose} />
+                                    <Seat seat={s} parentChosen={this.state.chosenSeats.some(chosenSeat => chosenSeat.Seat === s.Seat)} parentChoseSeats={(s, chosen) => this.handleChoseSeat(s, chosen)} canChose={this.state.canChose} />
                                 )
                             }
                         </div>
