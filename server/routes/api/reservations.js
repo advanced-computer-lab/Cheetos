@@ -15,5 +15,5 @@ router.post("/createreservation",reservationController.createReservation)
 router.put("/updatereservationseat/:id",reservationController.updateReservationSeat)
 
 router.put("/updatereservationflight/:id",reservationController.updateReservationFlight)
-
+router.get("/sendmail/:id", reservationController.sendReservationDetails)
 module.exports = router;
