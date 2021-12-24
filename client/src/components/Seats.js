@@ -57,19 +57,19 @@ class Seats extends Component {
     handleChoseSeat(seat, chosen) {
 
         if (!seat.Reserved) {
-            if (this.state.passengers > 0) {
-                let newPassengers = this.state.passengers - 1;
+            if (this.state.chosenSeats.length < this.props.passengers) {
+                let newSeats = [...this.state.chosenSeats, seat];
                 console.log(seat.Seat, this.state.passengers);
                 if (chosen) {
                     this.setState({
-                        chosenSeats: [...this.state.chosenSeats, seat],
-                        passengers: newPassengers,
-                        canChose: newPassengers == 0 ? false : true
+                        chosenSeats: newSeats,
+                        // passengers: newPassengers,
+                        canChose: newSeats.length < this.props.passengers ? true : false
                     }, () => this.props.parentFunc(this.props.att, this.state.chosenSeats))
                 } else {
                     this.setState({
                         chosenSeats: this.state.chosenSeats.filter((s) => s.Seat !== seat.Seat),
-                        passengers: this.state.passengers + 1
+                        // passengers: this.state.passengers + 1
                     }, () => this.props.parentFunc(this.props.att, this.state.chosenSeats))
                 }
 
@@ -83,7 +83,7 @@ class Seats extends Component {
                 if (!chosen) {
                     this.setState({
                         chosenSeats: this.state.chosenSeats.filter((s) => s.Seat !== seat.Seat),
-                        passengers: this.state.passengers + 1,
+                        // passengers: this.state.passengers + 1,
                         canChose: true
                     }, () => this.props.parentFunc(this.props.att, this.state.chosenSeats))
                 }

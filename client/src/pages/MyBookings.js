@@ -3,7 +3,7 @@ import MyHeader from '../components/MyHeader'
 import Booking from '../components/Booking'
 import api from '../api'
 import { withRouter } from 'react-router';
- class MyBookings extends Component {
+class MyBookings extends Component {
     state = {
         // bookingsArr: [
         //     {
@@ -51,35 +51,40 @@ import { withRouter } from 'react-router';
         //         }]
         //     }
         // ],
-        bookingsArr : [] 
+        bookingsArr: []
     }
-    customFilter( arr ){
-     
-        let newArr = [] 
-        for(let i = 0 ; i < arr.length/2 ; i++){
-            for(let j = arr.length/2 ; j <arr.length ; j++){
-                if(arr[i].PassengerPassportNumber === arr[j].PassengerPassportNumber ){
-                    newArr.push({
-                        PassengerFirstName : arr[i].PassengerFirstName , 
-                        PassengerLastName : arr[i].PassengerLastName , 
-                        PassengerPassportNumber : arr[i].PassengerPassportNumber,
-                        PassengerType : arr[i].PassengerType , 
-                        deptFlight :  arr[i].FlightId ,
-                        arrFlight :  arr[j].FlightId 
-                    })
-                }
-            }
+    customFilter(arr) {
+
+        let newArr = []
+        for (let i = 0; i < arr.length / 2; i++) {
+            let j = i + arr.length / 2;
+
+            newArr.push({
+                PassengerFirstName: arr[i].PassengerFirstName,
+                PassengerLastName: arr[i].PassengerLastName,
+                PassengerPassportNumber: arr[i].PassengerPassportNumber,
+                PassengerType: arr[i].PassengerType,
+                DepFlight: arr[i].FlightId,
+                ArrFlight: arr[j].FlightId
+            })
+
         }
-        return newArr ; 
+        return newArr;
     }
+
     async componentDidMount() {
-        const  userId  = localStorage.getItem('userId');
-        console.log("user id in bookinggg" , userId) ; 
+        const userId = localStorage.getItem('userId');
+        console.log("user id in bookinggg", userId);
         await api.getReservationsById(userId).then(reservations => {
+            let arr = reservations.data.data
+            for (let i = 0; i < arr.length; i++) {
+                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah " , this.customFilter(arr[i].Reservation));
+            }
             this.setState({
-                bookingsArr : reservations.data.data
-            } , () => console.log("reservations are "  , reservations.data.data))
+                bookingsArr: reservations.data.data
+            }, () => console.log("reservations are ------->", reservations.data.data))
         })
+
     }
     render() {
 
@@ -90,11 +95,11 @@ import { withRouter } from 'react-router';
                 <MyHeader />
                 <div className="trip-search-results">
                     {
-                        bookingsArr.map((b) => (
-                           b.Reservation.map((t) => (
-                            <Booking confirmationNum={t._id} userId={t.UserId} reservation={t}  />
-                           ))
-                        ))}
+                        bookingsArr ? bookingsArr.map((b) => (
+                            b.Reservation ? this.customFilter(b.Reservation).map((t) => (
+                                <Booking confirmationNum={b._id} userId={b.UserId} reservation={t} />
+                            )) : ""
+                        )) : "" }
                 </div>
             </div>
         )

@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
         deptFlight: "",
         arrFlight: ""
     }
+    
     handleModalShow() {
         this.setState({
             showModal: this.state.showModal ? false : true,
@@ -68,7 +69,7 @@ import { Link } from "react-router-dom";
     render() {
         let price = 0;
         const { confirmationNum, userId, reservation } = this.props
-        
+        const{PassengerFirstName , PassengerLastName} = reservation 
         const { showModal, deptFlight, arrFlight } = this.state
 
         
@@ -82,7 +83,7 @@ import { Link } from "react-router-dom";
 
                         <div style={{ marginLeft: "2rem", marginBottom: "7px", marginTop: "20px" }}><strong>
                             <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5>
-                            <h5>Mr. Mark Potter</h5>
+                            <h5>{PassengerFirstName  + " " + PassengerLastName}</h5>
                         </strong></div>
 
 

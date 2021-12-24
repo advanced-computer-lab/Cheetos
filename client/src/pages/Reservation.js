@@ -31,9 +31,10 @@ class Reservation extends Component {
     componentWillUnmount(){
         sessionStorage.removeItem("deptSeats")
         sessionStorage.removeItem("arrSeats")
+        sessionStorage.removeItem("passengersInfo")
         sessionStorage.removeItem("deal")
     }
-
+    
     handleModalShow() {
         if (this.state.showModal) {
             this.setState({
@@ -106,11 +107,10 @@ class Reservation extends Component {
 
         const handleNext = () => {
             if (this.state.activeStep === 1) {
-                let deptSeats = JSON.parse(sessionStorage.getItem("deptSeats"))
-                let arrSeats = JSON.parse(sessionStorage.getItem("arrSeats"))
+              
                 //choosing seats 
                 const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
-                if (arrSeats.length < Number(adults) + Number(children) || deptSeats.length < Number(adults) + Number(children)) {
+                if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
                     alert("you must choose all seats")
                 } else {
                     let newSkipped = skipped;
