@@ -28,9 +28,10 @@ class Profile extends Component {
     invalidOldPass:false,
     oldPass:"",
     newPass:"",
-    
+    passUpdated:false,
   }
   async componentDidMount() {
+    this.setState({passUpdated:false})
     const userId  = localStorage.getItem('userId')
     console.log("user id is " , userId) ; 
     await api.getUserInfo(userId).then(user => {
@@ -101,10 +102,16 @@ class Profile extends Component {
       ...this.state,
       [e.target.name]: value,
     });
+
+   
   }
 
   changePassModalShow(){
     this.setState({showChangePass : !this.state.showChangePass})
+    this.setState({
+      oldPass: "",
+      newPass: ""
+    })
   }
 
   handleChange(e){
@@ -115,25 +122,60 @@ class Profile extends Component {
       ...this.state,
       [e.target.name]: value,
     });
+
+    if(e.target.name==="newPass"){
+      if((e.target.value).length<5){
+        this.setState({invalidNewPass:true});
+      }
+      else{
+        this.setState({invalidNewPass:false});
+      }
   }
 
-  handleSubmitPass(e){
+  if(e.target.name==="oldPass"){
+    this.setState({invalidOldPass:false})
+  }
+  }
+
+  async handleSubmitPass(e){
     e.preventDefault();
-    const {oldPass,newPass,invalidOldPass} = this.state
+    const {oldPass,newPass,invalidOldPass,invalidNewPass} = this.state
     //validate new here wla onChange??
     /* steps :
     post req to backend validate old pass
      if valid store new pass else
      set invalid old pass*/
+
+     const userId  = localStorage.getItem('userId')
+
+     const passwords = {
+       "oldPassword" : oldPass,
+       "newPassword" : newPass
+     }
+     await api.updatePassword(userId,passwords).then((res) => {
+       if(!invalidNewPass){
+         this.setState({passUpdated:true})
+        this.changePassModalShow();
+        
+       }
+       console.log("sucessfully changed password")
+     }).catch((err)=>{
+       if(err.response){
+
+
+         if(err.response.data.message === "incorrect"){
+           this.setState({invalidOldPass : true})
+         }
+       }
+     })
      console.log(oldPass);
      console.log(newPass);
-     this.changePassModalShow();
   }
 
   render() {
 
 
-    const { editName, editPassport, editEmail, fname, lname, email, passport ,invalidNewPass,invalidOldPass,oldPass,newPass,showChangePass} = this.state;
+    const { editName, editPassport, editEmail, fname, lname, email, passport ,invalidNewPass,invalidOldPass,oldPass,newPass,showChangePass,passUpdated} = this.state;
     return (
       <>
       <div className="flex-col-profile" >
@@ -147,7 +189,7 @@ class Profile extends Component {
               <div className="account-icon"><AccountCircleIcon style={{ color: "#12228F", fontSize: "10rem" }} /></div>
               {
                 !editName ?
-                  <div className="name">{fname}  {lname} <EditIcon className="icon" onClick={this.handleEditName.bind(this)} /></div> :
+                  <div className="name">{fname} {lname} <EditIcon className="icon" onClick={this.handleEditName.bind(this)} /></div> :
                   <div className="name">
                     <Form.Control style={{ width: '60%' }} size="sm" name="fname" type="text" placeholder="first name" value={fname} onChange={this.handleEditChange.bind(this)} />
                     <Form.Control style={{ width: '60%' }} size="sm" name="lname" type="text" placeholder="last name" value={lname} onChange={this.handleEditChange.bind(this)} />
@@ -189,7 +231,13 @@ class Profile extends Component {
                 </tr>
               </table>
 
+             
               <Button variant="contained" style={{marginTop:"20px",width:"100%"}} show={showChangePass} onClick={this.changePassModalShow.bind(this)}>Change password</Button>
+            
+              {passUpdated? 
+              <p className='flex-row' style={{marginTop:"10px",color:"#198754", marginBottom:"0px"}}> Password successfully reset!</p> :
+              ""}
+              
             </div>
           </div>
 
@@ -211,13 +259,13 @@ class Profile extends Component {
                     </Modal.Header>
                     <Modal.Body style={{padding:"0",height:"auto"}}>
                 <div className="signup-form">
-                     <Form onSubmit={this.handleSubmitPass.bind(this)}>
+                     <Form hasValidation onSubmit={this.handleSubmitPass.bind(this)}>
                   
 
                     <Form.Group hasvalidation className="mb-3">
                      
                           
-                          <Form.Group className='mb-3'>
+                          <Form.Group className='mb-3' valid>
                                 <Form.Control type="password" placeholder="Old Password"  required name="oldPass" value={oldPass} isInvalid={invalidOldPass} onChange={this.handleChange.bind(this)}/>
                                 <Form.Control.Feedback type="invalid" >
                                     Password doesn't match old password.
@@ -225,13 +273,11 @@ class Profile extends Component {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Control type="password" placeholder="Old Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
+                                <Form.Control type="password" placeholder="New Password"  required name="newPass" value={newPass} isInvalid={invalidNewPass} onChange={this.handleChange.bind(this)}/>
                                 <Form.Control.Feedback type="invalid" >
                                     Password must be at least 5 characters.
                                 </Form.Control.Feedback>
                             </Form.Group>
-                          
-                        
                     </Form.Group>
                 
                     <div className="flex-col">
@@ -240,6 +286,8 @@ class Profile extends Component {
                     <Button variant="contained" size="md" style={{marginTop:"10px" , fontWeight:"600",width:"50%"}} type="submit">
                             Change Password
                         </Button>
+
+                   
                     </div>
                     </Form>
                 </div>

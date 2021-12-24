@@ -222,7 +222,7 @@ class MyHeader extends Component {
               </>
               :
 
-              <Button className="header-buttons" style={{ marginRight: "20px" }}
+              <Button className="header-buttons" 
                 onClick={this.handleSignIn.bind(this)} variant="contained" >
                 Sign in
               </Button>
@@ -263,7 +263,7 @@ class MyHeader extends Component {
                   }}
                 >
 
-                  <MenuItem >  <TextField
+                  <MenuItem ><TextField
                     id="outlined-number"
                     label="Adults"
                     type="number"
