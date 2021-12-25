@@ -57,6 +57,20 @@ html {
   align-self: center;
   flex-wrap: wrap;
 }
+.search-bar-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 45%;
+  align-self: center;
+  flex-wrap: wrap;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 7px;
+  background-color: #f0f2f5;
+  margin-top: 15px;
+ 
+}
 
 .flight-list::-webkit-scrollbar {
   width: 5px;
