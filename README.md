@@ -42,8 +42,8 @@ JWT_SECRET = //any string of your choice to use in hashing the users’ password
 “npm start”
 
 ### Useful Links and Credits:
-https://dev.to/salarc123/mern-stack-authentication-tutorial-part-1-the-backend-1c57
-https://www.geeksforgeeks.org/node-js-crud-operations-using-mongoose-and-mongodb-atlas/ 
-https://blog.logrocket.com/mern-stack-tutorial/ 
-https://reactjs.org/docs/create-a-new-react-app.html 
-https://nodemailer.com/about/
+* https://dev.to/salarc123/mern-stack-authentication-tutorial-part-1-the-backend-1c57
+* https://www.geeksforgeeks.org/node-js-crud-operations-using-mongoose-and-mongodb-atlas/ 
+* https://blog.logrocket.com/mern-stack-tutorial/ 
+* https://reactjs.org/docs/create-a-new-react-app.html 
+* https://nodemailer.com/about/
