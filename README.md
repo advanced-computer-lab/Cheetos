@@ -11,9 +11,11 @@ The project build status now is completed successfully with no current errors.
 ###Our Cding Style was:
 It was the standard one.
 * Use 2 spaces for indentation.
-* Use double quotes for strings
+* Use double quotes for strings.
 * Add a space after keywords.
 * Add a space before a function declaration's parentheses.
+* For multi-line if statements, use curly braces.
+* Always handle the err function parameter.
 
 
 ### Screenshots
