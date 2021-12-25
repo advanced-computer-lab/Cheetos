@@ -330,3 +330,7 @@ body::-webkit-scrollbar-thumb:hover {
   gap: 0.5rem;
   justify-content: flex-end;
 }
+
+.my-modal2{
+  width : auto
+}

@@ -62,7 +62,7 @@ class MyBookings extends Component {
         // ],
         bookingsArr: [],
         showModal: false,
-        confirmation:"",
+        confirmation: "",
     }
 
 
@@ -73,13 +73,13 @@ class MyBookings extends Component {
         });
     }
 
-    handleModalClose(){
+    handleModalClose() {
         this.setState({
-            showModal:false
+            showModal: false
         })
     }
 
-    handleSendEmail(){
+    handleSendEmail() {
 
     }
 
@@ -93,7 +93,7 @@ class MyBookings extends Component {
 
     }
 
-    customFilter(arr) {
+    customFilter(arr , id) {
 
         let newArr = []
         for (let i = 0; i < arr.length / 2; i++) {
@@ -103,14 +103,15 @@ class MyBookings extends Component {
                 PassengerFirstName: arr[i].PassengerFirstName,
                 PassengerLastName: arr[i].PassengerLastName,
                 PassengerPassportNumber: arr[i].PassengerPassportNumber,
-                PassengerType : arr[i].PassengerType , 
+                PassengerType: arr[i].PassengerType,
                 PassengerType: arr[i].PassengerType,
                 DepFlight: arr[i].FlightId,
-                DepSeat : arr[i].ChosenSeat , 
-                DepCabin : arr[i].CabinClass , 
-                ArrFlight: arr[j].FlightId , 
-                ArrSeat : arr[j].ChosenSeat,
-                ArrCabin : arr[i].CabinClass
+                DepSeat: arr[i].ChosenSeat,
+                DepCabin: arr[i].CabinClass,
+                ArrFlight: arr[j].FlightId,
+                ArrSeat: arr[j].ChosenSeat,
+                ArrCabin: arr[j].CabinClass ,
+                id : id
             })
 
         }
@@ -119,25 +120,25 @@ class MyBookings extends Component {
 
     async componentDidMount() {
         const userId = localStorage.getItem('userId');
-        if(!userId ){
+        if (!userId) {
             this.props.history.push('/');
         }
         // else if (userId && localStorage.getItem('type')){
         //     this.props.history.push('/admin');
         // }
-        else{
+        else {
             console.log("user id in bookinggg", userId);
             await api.getReservationsById(userId).then(reservations => {
                 let arr = reservations.data.data
                 for (let i = 0; i < arr.length; i++) {
-                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah " , this.customFilter(arr[i].Reservation));
+                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah ", this.customFilter(arr[i].Reservation));
                 }
                 this.setState({
                     bookingsArr: reservations.data.data
                 }, () => console.log("reservations are ------->", reservations.data.data))
             })
         }
-        
+
 
     }
     render() {
@@ -159,11 +160,11 @@ class MyBookings extends Component {
                            )) : "" }
 
                 </div>
-            </div>
+                </div>
 
-            <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
+                <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
                     <Modal.Header closeButton >
-                        <Modal.Title style={{fontWeight:"600"}}>Heads up!!</Modal.Title>
+                        <Modal.Title style={{ fontWeight: "600" }}>Heads up!!</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
                     <Modal.Footer>
@@ -175,11 +176,9 @@ class MyBookings extends Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-
-
-                
             </>
         )
+
     }
 }
 export default withRouter(MyBookings)
