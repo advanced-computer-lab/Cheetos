@@ -33,7 +33,7 @@ export const confirmFlight = (payload) =>
 
 
 export const editReservation = (id, payload) =>
-  api.post(`/reservation/updatereservationflight/${id}`, payload,
+  api.put(`/reservation/updatereservationflight/${id}`, payload,
     {
       headers: {
         "x-access-token": localStorage.getItem("token"),

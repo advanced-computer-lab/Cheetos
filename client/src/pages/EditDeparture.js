@@ -355,7 +355,36 @@ class EditDeparture extends Component {
             }
         )
     }
+    async handleFinalChange(){
+        let reservation = JSON.parse(sessionStorage.getItem("editReservation"));
+        console.log("reservation isssssssssssssssssssssssssssssssssss" , reservation)
+        let oldFlight = JSON.parse(sessionStorage.getItem("oldFlight"));
+        let newFlight = JSON.parse(sessionStorage.getItem("newFlight"));
+        let seats = JSON.parse(sessionStorage.getItem("chosenSeats"));
+        let passengersInfo = JSON.parse(sessionStorage.getItem("passengersInfo"));
+        let oldCabin = sessionStorage.getItem("oldCabin")
+        let newCabin = sessionStorage.getItem("cabinSearch");
+        let updateFlight = {
+            OldFlightId: oldFlight._id,
+            OldChosenSeat: sessionStorage.getItem("oldSeat"),
+            OldCabinClass: oldCabin,
+            NewFlightId: newFlight._id,
+            NewChosenSeat: seats[0].Seat,
+            NewCabinClass: newCabin === "EconomySeats" ? "Economy" :
+                newCabin === "BusinessSeats" ? "Business" :
+                    newCabin === "FirstClass" ? "FirstClass" : "",
+            PassengerFirstName: passengersInfo[0].firstName,
+            PassengerLastName: passengersInfo[0].lastName,
+            PassengerType: passengersInfo[0].type,
+            PassengerPassportNumber: passengersInfo[0].passport
+        }
 
+        console.log("my update flight is ", updateFlight);
+        await api.editReservation(reservation.id, updateFlight).then((res) => {
+            alert("doneeeeeee edit")
+        }
+        )
+    }
 
 
 
@@ -389,8 +418,8 @@ class EditDeparture extends Component {
             if (this.state.activeStep === 1) {
 
                 //choosing seats 
-                const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
-                if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
+                // const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
+                if (this.state.chosenSeats  = 0 ) {
                     alert("you must choose all seats")
                     this.setState({seatsWarningModal: true})
                 } else {
@@ -404,6 +433,9 @@ class EditDeparture extends Component {
                         skipped: newSkipped
                     }, () => console.log(this.state.activeStep))
                 }
+            }else if(this.state.activeStep === 2){
+                this.handleFinalChange()
+
             }else {
                 console.log("handling next ")
                 let newSkipped = skipped;
@@ -429,35 +461,7 @@ class EditDeparture extends Component {
 
         };
 
-        function handleFinalChange(){
-            let reservation = JSON.parse(sessionStorage.getItem("editReservation"));
-            let oldFlight = JSON.parse(sessionStorage.getItem("oldFlight"));
-            let newFlight = JSON.parse(sessionStorage.getItem("newFlight"));
-            let seats = JSON.parse(sessionStorage.getItem("chosenSeats"));
-            let passengersInfo = JSON.parse(sessionStorage.getItem("passengersInfo"));
-            let oldCabin = sessionStorage.getItem("oldCabin")
-            let newCabin = sessionStorage.getItem("cabinSearch");
-            let updateFlight = {
-                OldFlightId: oldFlight._id,
-                OldChosenSeat: sessionStorage.getItem("oldSeat"),
-                OldCabinClass: oldCabin,
-                NewFlightId: newFlight._id,
-                NewChosenSeat: seats[0].Seat,
-                NewCabinClass: newCabin === "EconomySeats" ? "Economy" :
-                    newCabin === "BusinessSeats" ? "Business" :
-                        newCabin === "FirstClass" ? "FirstClass" : "",
-                PassengerFirstName: passengersInfo[0].firstName,
-                PassengerLastName: passengersInfo[0].lastName,
-                PassengerType: passengersInfo[0].type,
-                PassengerPassportNumber: passengersInfo[0].passport
-            }
-    
-            console.log("my update flight is ", updateFlight);
-            await api.editReservation(reservation._id, updateFlight).then((res) => {
-                alert("doneeeeeee edit")
-            }
-            )
-        }
+        
         const handleReset = () => {
             this.setState({
                 activeStep: 0
@@ -639,7 +643,7 @@ class EditDeparture extends Component {
 
                                 }
 
-                                {this.state.activeStep === 2 ?
+                                {this.state.activeStep === 3 ?
                                     <Payment single={true} name={"Boomerang"} description={"flight  "} amount={this.state.editReservation.TotalPrice} />
                                     :
                                     <Button

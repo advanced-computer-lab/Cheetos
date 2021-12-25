@@ -61,7 +61,7 @@ class MyBookings extends Component {
         // ],
         bookingsArr: [],
         showModal: false,
-        confirmation:"",
+        confirmation: "",
     }
 
 
@@ -72,13 +72,13 @@ class MyBookings extends Component {
         });
     }
 
-    handleModalClose(){
+    handleModalClose() {
         this.setState({
-            showModal:false
+            showModal: false
         })
     }
 
-    handleSendEmail(){
+    handleSendEmail() {
 
     }
 
@@ -92,7 +92,7 @@ class MyBookings extends Component {
 
     }
 
-    customFilter(arr) {
+    customFilter(arr , id) {
 
         let newArr = []
         for (let i = 0; i < arr.length / 2; i++) {
@@ -102,14 +102,15 @@ class MyBookings extends Component {
                 PassengerFirstName: arr[i].PassengerFirstName,
                 PassengerLastName: arr[i].PassengerLastName,
                 PassengerPassportNumber: arr[i].PassengerPassportNumber,
-                PassengerType : arr[i].PassengerType , 
+                PassengerType: arr[i].PassengerType,
                 PassengerType: arr[i].PassengerType,
                 DepFlight: arr[i].FlightId,
-                DepSeat : arr[i].ChosenSeat , 
-                DepCabin : arr[i].CabinClass , 
-                ArrFlight: arr[j].FlightId , 
-                ArrSeat : arr[j].ChosenSeat,
-                ArrCabin : arr[i].CabinClass
+                DepSeat: arr[i].ChosenSeat,
+                DepCabin: arr[i].CabinClass,
+                ArrFlight: arr[j].FlightId,
+                ArrSeat: arr[j].ChosenSeat,
+                ArrCabin: arr[j].CabinClass ,
+                id : id
             })
 
         }
@@ -118,25 +119,25 @@ class MyBookings extends Component {
 
     async componentDidMount() {
         const userId = localStorage.getItem('userId');
-        if(!userId ){
+        if (!userId) {
             this.props.history.push('/');
         }
         // else if (userId && localStorage.getItem('type')){
         //     this.props.history.push('/admin');
         // }
-        else{
+        else {
             console.log("user id in bookinggg", userId);
             await api.getReservationsById(userId).then(reservations => {
                 let arr = reservations.data.data
                 for (let i = 0; i < arr.length; i++) {
-                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah " , this.customFilter(arr[i].Reservation));
+                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah ", this.customFilter(arr[i].Reservation));
                 }
                 this.setState({
                     bookingsArr: reservations.data.data
                 }, () => console.log("reservations are ------->", reservations.data.data))
             })
         }
-        
+
 
     }
     render() {
@@ -145,71 +146,72 @@ class MyBookings extends Component {
 
         return (
             <>
-            <div className="flex-col">
-                <MyHeader />
-                <div className="trip-search-results">
-                    
+                <div className="flex-col">
+                    <MyHeader />
+                    <div className="trip-search-results">
 
-                        {   bookingsArr ? bookingsArr.map((b) => (
-                        <div className='reservation-containor'>
-                            <div className='flex-row' style={{justifyContent: "space-between"}}>
-                                <p className='emphasis'> Confirmation Number : {b._id.toUpperCase()}</p>
-                                
 
-                                <div className="reservation-buttons">
-                                    <Button
-                                    onClick={this.handleSendEmail.bind(this)}
-                                    style={{
-                                        backgroundColor: "#37a1e2",
-                                        width: "10px",
-                                        padding:"0",
-                                        height: "5vh",
-                                        fontSize: "small",
-                                        borderRadius:"10px"
-                                    }}
-                                    variant="contained"
-                                                            >
-                                    <MailIcon/>
-                                    </Button>
-                                    <Button
-                                    onClick={this.handleModalShow.bind(this,b._id)}
-                                    style={{
-                                        backgroundColor: "rgb(201, 6, 6)",
-                                        width: "10px",
-                                        padding:"0",
-                                        height: "5vh",
-                                        fontSize: "small",
-                                        borderRadius:"10px"
-                                    }}
-                                    variant="contained"
-                                                            >
-                                    <DeleteIcon/>
-                                    </Button>
+                        {bookingsArr ? bookingsArr.map((b) => (
+
+                            <div className='reservation-containor'>
+                                <div className='flex-row' style={{ justifyContent: "space-between" }}>
+                                    <p className='emphasis'> Confirmation Number : {b._id.toUpperCase()}</p>
+
+
+                                    <div className="reservation-buttons">
+                                        <Button
+                                            onClick={this.handleSendEmail.bind(this)}
+                                            style={{
+                                                backgroundColor: "#37a1e2",
+                                                width: "10px",
+                                                padding: "0",
+                                                height: "5vh",
+                                                fontSize: "small",
+                                                borderRadius: "10px"
+                                            }}
+                                            variant="contained"
+                                        >
+                                            <MailIcon />
+                                        </Button>
+                                        <Button
+                                            onClick={this.handleModalShow.bind(this, b._id)}
+                                            style={{
+                                                backgroundColor: "rgb(201, 6, 6)",
+                                                width: "10px",
+                                                padding: "0",
+                                                height: "5vh",
+                                                fontSize: "small",
+                                                borderRadius: "10px"
+                                            }}
+                                            variant="contained"
+                                        >
+                                            <DeleteIcon />
+                                        </Button>
+                                    </div>
+
+
                                 </div>
 
-                               
+
+
+                                {b.Reservation ? this.customFilter(b.Reservation,b._id).map((t) => (
+                                    <Booking userId={b.UserId} reservation={t} />
+                                )) : ""}
+
                             </div>
 
-                         
-                            
-                                   { b.Reservation ? this.customFilter(b.Reservation).map((t) => (
-                                        <Booking  userId={b.UserId} reservation={t} />
-                                        )) : ""}
 
-                        </div>
-                               
-                           
-                           
-                           )) : "" }
 
-                        
-                    
+                        )) : ""}
+
+
+
+                    </div>
                 </div>
-            </div>
 
-            <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
+                <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
                     <Modal.Header closeButton >
-                        <Modal.Title style={{fontWeight:"600"}}>Heads up!!</Modal.Title>
+                        <Modal.Title style={{ fontWeight: "600" }}>Heads up!!</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
                     <Modal.Footer>
@@ -223,7 +225,7 @@ class MyBookings extends Component {
                 </Modal>
 
 
-                
+
             </>
         )
     }
