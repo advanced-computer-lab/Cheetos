@@ -15,7 +15,11 @@ export const deleteFlightById = (id) =>
 
 //sprint 2
 export const confirmFlight = (payload) =>
-  api.post(`/reservation/createreservation`, payload);
+  api.post(`/reservation/createreservation`, payload, {
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+    },
+  });
 
 //user profile
 export const getUserInfo = (id) => api.get(`/user/u/${id}`);
@@ -26,9 +30,16 @@ export const updateUserInfo = (id, payload) =>
     },
   });
 //
-export const getReservationsById = id => api.get(`/reservation/getreservation/${id}`)
-export const deleteReservationById = id => api.delete(`/reservation/deletereservation/${id}`)
-export const payReservation = (id, payload) => api.post(`/reservation/sendmailpay/${id}`, payload)
+export const getReservationsById = (id) =>
+  api.get(`/reservation/getreservation/${id}`);
+export const deleteReservationById = (id) =>
+  api.delete(`/reservation/deletereservation/${id}`);
+export const payReservation = (id, payload) =>
+  api.post(`/reservation/sendmailpay/${id}`, payload, {
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+    },
+  });
 
 //authentication
 export const loginUser = (payload) => api.post(`/user/ulogin`, payload);
