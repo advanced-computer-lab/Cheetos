@@ -136,7 +136,8 @@ class MyHeader extends Component {
       this.setState({
         deptOptions: (flights.data).map((f) => f.DepartureAirport).filter(this.onlyUnique.bind(this)),
         arrOptions: (flights.data).map((f) => f.ArrivalAirport).filter(this.onlyUnique.bind(this)),
-      }, () => console.log("i added flights ", this.state.deptOptions))
+      })
+      //, () => console.log("i added flights ", this.state.deptOptions)
     }
     )
     const searchObject = JSON.parse(sessionStorage.getItem('searchQuery'))

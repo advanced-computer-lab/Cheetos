@@ -27,9 +27,15 @@ class Reservation extends Component {
         showModal: false,
         resId: "",
         deptSeats: [],
-        arrSeats: [] , 
-       
-         
+        arrSeats: [],
+
+
+    }
+    componentWillUnmount(){
+        sessionStorage.removeItem("deptSeats")
+        sessionStorage.removeItem("arrSeats")
+        sessionStorage.removeItem("passengersInfo")
+        sessionStorage.removeItem("deal")
     }
     
     handleModalShow() {
@@ -49,7 +55,7 @@ class Reservation extends Component {
         this.setState({
             deptSeats: deptSeats,
             arrSeats: arrSeats,
-        }, () => this.handleConfirm())
+        }, () => console.log("##################", this.state.deptSeats, this.state.arrSeats))
     }
     handleSignedIn() {
         this.setState({
@@ -59,7 +65,7 @@ class Reservation extends Component {
         })
     }
     async handleConfirm() {
-       const  userId = localStorage.getItem('userId') ; 
+        const userId = localStorage.getItem('userId');
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = JSON.parse(sessionStorage.getItem('deal'))
         const { deptSeats, arrSeats } = this.state
         let arrOne = deptSeats.map((s) => ({
@@ -103,16 +109,35 @@ class Reservation extends Component {
         };
 
         const handleNext = () => {
-            console.log("handling next ")
-            let newSkipped = skipped;
-            if (isStepSkipped(activeStep)) {
-                newSkipped = new Set(newSkipped.values());
-                newSkipped.delete(activeStep);
+            if (this.state.activeStep === 1) {
+              
+                //choosing seats 
+                const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
+                if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
+                    alert("you must choose all seats")
+                } else {
+                    let newSkipped = skipped;
+                    if (isStepSkipped(activeStep)) {
+                        newSkipped = new Set(newSkipped.values());
+                        newSkipped.delete(activeStep);
+                    }
+                    this.setState({
+                        activeStep: this.state.activeStep + 1,
+                        skipped: newSkipped
+                    }, () => console.log(this.state.activeStep))
+                } 
+            } else {
+                console.log("handling next ")
+                let newSkipped = skipped;
+                if (isStepSkipped(activeStep)) {
+                    newSkipped = new Set(newSkipped.values());
+                    newSkipped.delete(activeStep);
+                }
+                this.setState({
+                    activeStep: this.state.activeStep + 1,
+                    skipped: newSkipped
+                }, () => console.log(this.state.activeStep))
             }
-            this.setState({
-                activeStep: this.state.activeStep + 1,
-                skipped: newSkipped
-            }, () => console.log(this.state.activeStep))
 
         };
 
@@ -147,7 +172,7 @@ class Reservation extends Component {
             })
         };
 
-        const {startDate} = this.state
+        const { startDate } = this.state
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = sessionStorage.getItem('deal')
         return (
             <div style={{ backgroundColor: "background-color: rgba(0, 0, 0, 0.575)" }}>
@@ -204,7 +229,6 @@ class Reservation extends Component {
                                     <div style={{ height: '59vh'  , display : 'flex' ,  alignItems : 'center' , justifyContent: 'center' }}>
                                        
                                             <PassengersInfo />
-                                        
 
                                     </div> :
                                     <div style={{ height: '59vh' }}>
@@ -212,7 +236,9 @@ class Reservation extends Component {
                                         <ConfirmBooking/>
                                         <Payment  name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191}/>
 
-                                    </div>
+                                        
+
+                                        </div>
                             }
 
                             <div style={{ display:"flex",justifyContent:"space-around",color:"white",marginRight:"4%",marginLeft:"4%"}}>
@@ -236,6 +262,7 @@ class Reservation extends Component {
                                 }
 
                                 <Button onClick={handleNext} style={{color:"white"}}>
+                                disabled={!localStorage.getItem("token") ? true : false}
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'} <ArrowForwardIosIcon/>
                                 </Button>
                             </div>

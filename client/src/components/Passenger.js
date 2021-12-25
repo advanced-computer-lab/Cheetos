@@ -5,10 +5,10 @@ import Form from "react-bootstrap/Form";
 export default class Passenger extends Component {
     state = {
         
-        firstName: "",
-        lastName: "",
-        type: "Adult",
-        passport: ""
+        firstName: this.props.firstName,
+        lastName: this.props.lastName,
+        type: this.props.type,
+        passport: this.props.passport
     }
     handlePassengerInfoChange(e) {
         e.preventDefault();

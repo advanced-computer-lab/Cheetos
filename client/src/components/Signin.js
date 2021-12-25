@@ -45,7 +45,7 @@ class Signin extends Component {
              console.log("al rag3ly mn login" , res.data.data) ; 
              localStorage.setItem('token',res.data.token)
              localStorage.setItem('userId', res.data.data.userId);
-             this.props.history.push("/")  
+             this.props.history.goBack() 
          }).catch((err) => {
              console.log("login heho ", err);
 
