@@ -261,8 +261,8 @@ class Reservation extends Component {
 
                                 }
 
-                                <Button onClick={handleNext} style={{color:"white"}}>
-                                disabled={!localStorage.getItem("token") ? true : false}
+                                <Button onClick={handleNext} style={{color:"white"}} disabled={!localStorage.getItem("token") ? true : false}>
+                                
                                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'} <ArrowForwardIosIcon/>
                                 </Button>
                             </div>

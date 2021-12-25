@@ -3,6 +3,13 @@ import MyHeader from '../components/MyHeader'
 import Booking from '../components/Booking'
 import api from '../api'
 import { withRouter } from 'react-router';
+
+import Button from "@mui/material/Button";
+import '../style/booking.css';
+import '../style/trip.css';
+import Modal from "react-bootstrap/Modal";
+import DeleteIcon from '@mui/icons-material/Delete';
+
 class MyBookings extends Component {
     state = {
         // bookingsArr: [
@@ -51,8 +58,34 @@ class MyBookings extends Component {
         //         }]
         //     }
         // ],
-        bookingsArr: []
+        bookingsArr: [],
+        showModal: false,
+        confirmation:"",
     }
+
+
+    handleModalShow(confirmation) {
+        this.setState({
+            showModal: this.state.showModal ? false : true,
+            confirmation: confirmation
+        });
+    }
+
+    handleModalClose(){
+        this.setState({
+            showModal:false
+        })
+    }
+    async handleDelete() {
+        await api.deleteReservationById(this.state.confirmation).then(
+            // alert("flight with conf num is deleted " , this.props.confirmationNum)  , 
+            console.log("deleted", this.state.confirmation),
+            this.handleModalClose(),
+            window.location.reload()
+        )
+
+    }
+
     customFilter(arr) {
 
         let newArr = []
@@ -96,17 +129,69 @@ class MyBookings extends Component {
         const { bookingsArr } = this.state
 
         return (
+            <>
             <div className="flex-col">
                 <MyHeader />
                 <div className="trip-search-results">
-                    {
-                        bookingsArr ? bookingsArr.map((b) => (
-                            b.Reservation ? this.customFilter(b.Reservation).map((t) => (
-                                <Booking confirmationNum={b._id} userId={b.UserId} reservation={t} />
-                            )) : ""
-                        )) : "" }
+                    
+
+                        {   bookingsArr ? bookingsArr.map((b) => (
+                        <div className='reservation-containor'>
+                            <div className='flex-row' style={{justifyContent: "space-between"}}>
+                                <p className='emphasis'> Confirmation Number : {b._id.toUpperCase()}</p>
+                                
+                                <Button
+                                onClick={this.handleModalShow.bind(this,b._id)}
+                                style={{
+                                    backgroundColor: "rgb(201, 6, 6)",
+                                    width: "10px",
+                                    padding:"0",
+                                    height: "5vh",
+                                    fontSize: "small",
+                                    borderRadius:"10px"
+
+                                }}
+                                variant="contained"
+                                                        >
+                                <DeleteIcon/>
+                                </Button>
+                            </div>
+
+                         
+                            
+                                   { b.Reservation ? this.customFilter(b.Reservation).map((t) => (
+                                        <Booking  userId={b.UserId} reservation={t} />
+                                        )) : ""}
+
+                        </div>
+                               
+                           
+                           
+                           )) : "" }
+
+                        
+                    
                 </div>
             </div>
+
+            <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
+                    <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Heads up!!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
+                            Cancel
+                        </Button>
+                        <Button variant="secondary" style={{ color: "red" }} onClick={this.handleDelete.bind(this)}>
+                            Yes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+
+                
+            </>
         )
     }
 }
