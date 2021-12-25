@@ -8,6 +8,13 @@ Boomerang Airline Reservation System was created to make it easier for users to 
 ### Current Build Status of the project:
 The project build status now is completed successfully with no current errors.
 
+###Our Cding Style was:
+It was the standard one.
+* Use 2 spaces for indentation.
+* Use double quotes for strings
+* Add a space after keywords.
+* Add a space before a function declaration's parentheses.
+
 
 ### Screenshots
 This is the Sign In page where the user can enter their username and password.
