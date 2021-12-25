@@ -1,5 +1,6 @@
 const Reservation = require("../models/Reservation");
 const Flight = require("../models/Flight");
+const nodemailer = require("nodemailer");
 
 deleteReservation = async (req, res) => {
     await Reservation.findByIdAndDelete({ _id: req.params.id }, (err, reservation) => {
@@ -214,7 +215,8 @@ deleteReservation = async (req, res) => {
       );
   };
 
-  sendReservationDetails = (req, res) => {
+  sendReservationDetailsP = (req, res) => {
+    const body=req.body
     Reservation.findOne({ _id: req.params.id },
          (err, reservation) =>{
          console.log(reservation);
@@ -245,7 +247,7 @@ deleteReservation = async (req, res) => {
         let mail="";
         console.log("wwwwwwwwwwwwwwwwwwwwww");
         console.log(reservation);
-        for(let i=0;i<reservation.Reservation.length;i++){
+        for(let i=0;i<reservation.Reservation.length/2;i++){
           mail= mail+
          " with the following details "+"\n" +"ticket number: "+(i+1)+"\n"
          +"Passenger First Name:  "+ reservation.Reservation[i].PassengerFirstName+"\n" +
@@ -260,19 +262,50 @@ deleteReservation = async (req, res) => {
             "\n "+"Chosen Seat :"+reservation.Reservation[i].ChosenSeat 
             
           
-          let x= Flight.findOne({_id: reservation.Reservation[i].FlightId}).then((flight) => {
-            mail=mail+"Flight number: "+flight.FlightNumber+"\n"
-          +"Departure Date: "+flight.DepartureDate+"\n"
-          +"Departure Time: "+flight.DepartureTime+"\n"
-          +"Arrival Date: "+flight.ArrivalDate+"\n"
-          +"Arrival Time: "+flight.ArrivalTime+"\n"
-          +"Departure Airport: "+flight.DepartureAirport+"\n"
-          +"Arrival Airpirt: "+flight.ArrivalAirport+"\n"
-          +"Departure Terminal: "+flight.DepartureTerminal+"\n"
-          +"Arrival Terminal: "+flight.ArrivalTerminal+"\n"
-          +"trip Duration: "+flight.TripDuration+"\n"});
-         
-         
+          
+            mail=mail+"Departure Flight number: "+body.deptFlightFlightNumber+"\n"
+          +"Departure Date: "+body.deptFlight.DepartureDate+"\n"
+          +"Departure Time: "+body.deptFlight.DepartureTime+"\n"
+          
+          +"Arrival Date: "+body.deptFlight.ArrivalDate+"\n"
+          +"Arrival Time: "+body.deptFlight.ArrivalTime+"\n"
+          +"Departure Airport: "+body.deptFlight.DepartureAirport+"\n"
+          +"Arrival Airpirt: "+body.deptFlight.ArrivalAirport+"\n"
+          +"Departure Terminal: "+body.deptFlight.DepartureTerminal+"\n"
+          +"Arrival Terminal: "+body.deptFlight.ArrivalTerminal+"\n"
+          +"Departure trip Duration: "+body.deptFlight.TripDuration +"\n"+
+          
+          + "\n "
+          + "\n " + "\n "
+        }
+
+          
+        for(let i=(reservation.Reservation.length/2);i<reservation.Reservation.length;i++){
+          mail= mail+
+         " with the following details "+"\n" +"ticket number: "+(i+1)+"\n"
+         +"Passenger First Name:  "+ reservation.Reservation[i].PassengerFirstName+"\n" +
+            
+            "\n "+"Passenger LastName : "+reservation.Reservation[i].PassengerLastName +
+           // "\n "+"Flight id : "+reservation.Reservation[i].FlightId +
+            "\n "+"Passenger Type : "+reservation.Reservation[i].PassengerType +
+            "\n "+"Passenger PassportNumber : "+reservation.Reservation[i].PassengerPassportNumber +
+            
+  
+            "\n "+"Cabin Class : "+reservation.Reservation[i].CabinClass +
+            "\n "+"Chosen Seat :"+reservation.Reservation[i].ChosenSeat 
+
+            +"Arrival Flight number: "+body.arrFlight.FlightNumber+"\n"
+          +"Departure Date: "+body.arrFlight.DepartureDate+"\n"
+          +"Departure Time: "+body.arrFlight.DepartureTime+"\n"
+          
+          +"Arrival Date: "+body.arrFlight.ArrivalDate+"\n"
+          +"Arrival Time: "+body.arrFlight.ArrivalTime+"\n"
+          +"Departure Airport: "+body.arrFlight.DepartureAirport+"\n"
+          +"Arrival Airpirt: "+body.arrFlight.ArrivalAirport+"\n"
+          +"Departure Terminal: "+body.arrFlight.DepartureTerminal+"\n"
+          +"Arrival Terminal: "+body.arrFlight.ArrivalTerminal+"\n"
+          +"Arrival trip Duration: "+body.arrFlight.TripDuration +"\n"
+
         }
         let mailDetails = {
           from: "cheetosmym1@outlook.com",
@@ -299,7 +332,110 @@ deleteReservation = async (req, res) => {
       }
     });
   })
+  return res.status(200).json({ success: true});
     }
+
+
+
+
+
+
+  sendReservationDetailsAll = (req, res) => {
+    
+    Reservation.find({ UserId: req.params.id },
+         (err, reservation) =>{
+         console.log(reservation);
+       if (err) {
+         return res.status(400).json({ success: false, error: err });
+       }
+   
+       if (!reservation) {
+         return res
+           .status(404)
+           .json({ success: false, error: "Reservation not found" });
+       }
+       
+     
+     User.findById(req.params.id, " FirstName Email", (err, user) => {
+      
+      if (err) {
+        console.log(err);
+      } else {
+        
+        console.log(user.Email);
+        let mailTransporter = nodemailer.createTransport({
+          service: "hotmail",
+          auth: {
+            user: "cheetosmym1@outlook.com",
+            pass: "Acltestingmail.1",
+          },
+        });
+        console.log(user);
+        let mail="";
+        console.log("wwwwwwwwwwwwwwwwwwwwww");
+        console.log(reservation);
+        for(let j=0;j<reservation.length;j++){
+         mail=mail+  
+         "\n"+ " confirmation number:  " + reservation[j]._id + "\n"+
+            " total Price : " +
+            reservation[j].TotalPrice
+        for(let i=0;i<reservation[j].Reservation.length;i++){
+          mail= mail+
+         "\n" +"ticket number: "+(i+1)+"\n"
+         +"Passenger First Name:  "+ reservation[j].Reservation[i].PassengerFirstName +
+            
+            "\n "+"Passenger LastName : "+reservation[j].Reservation[i].PassengerLastName +
+           // "\n "+"Flight id : "+reservation.Reservation[i].FlightId +
+            "\n "+"Passenger Type : "+reservation[j].Reservation[i].PassengerType +
+            "\n "+"Passenger PassportNumber : "+reservation[j].Reservation[i].PassengerPassportNumber +
+            
+  
+            "\n "+"Cabin Class : "+reservation[j].Reservation[i].CabinClass +
+            "\n "+"Chosen Seat :"+reservation[j].Reservation[i].ChosenSeat 
+           
+          
+          
+            mail=mail+"Departure Flight number: "+body.deptFlight.FlightNumber+"\n"
+          +"Departure Date: "+body.deptFlight.DepartureDate+"\n"
+          +"Departure Time: "+body.deptFlight.DepartureTime+"\n"
+          "Arrival Flight number: "+body.arrFlight.FlightNumber+"\n"
+          +"Arrival Date: "+body.arrFlight.ArrivalDate+"\n"
+          +"Arrival Time: "+body.arrFlight.ArrivalTime+"\n"
+          +"Departure Airport: "+body.deptFlight.DepartureAirport+"\n"
+          +"Arrival Airpirt: "+body.arrFlight.ArrivalAirport+"\n"
+          +"Departure Terminal: "+body.deptFlight.DepartureTerminal+"\n"
+          +"Arrival Terminal: "+body.arrFlight.ArrivalTerminal+"\n"
+          +"Departure trip Duration: "+body.deptFlight.TripDuration+"\n"+ "\n "+ "\n " + "\n "
+         
+         
+        }}
+        let mailDetails = {
+          from: "cheetosmym1@outlook.com",
+          to: user.Email,
+          subject: "Flight Confirmation",
+          text:
+            "Dear " +
+            user.FirstName +
+            
+            "\n " +
+            " , \n This email was sent upon your request these are all your bookings " +"\n"+
+            mail
+            
+  
+        };
+        mailTransporter.sendMail(mailDetails, function (err, data) {
+          if (err) {
+            console.log("Error Occured", err);
+          } else {
+            console.log("Email sent successfully");
+          }
+        });
+      }
+    });
+  })
+  return res.status(200).json({ success: true});
+    }
+    
 
 
   module.exports = {
@@ -308,5 +444,6 @@ deleteReservation = async (req, res) => {
     getReservationById,
     updateReservationSeat,
     updateReservationFlight,
-    sendReservationDetails
+    sendReservationDetailsP,
+    sendReservationDetailsAll
   };

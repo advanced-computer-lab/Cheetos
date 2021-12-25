@@ -4,7 +4,6 @@ const router = express.Router();
 
 const reservationController = require('../../controllers/reservationController')
 
-const Reservation = require("../../models/Flight");
 
 router.get("/getreservation/:id", reservationController.getReservationById)
 
@@ -15,5 +14,9 @@ router.post("/createreservation",reservationController.createReservation)
 router.put("/updatereservationseat/:id",reservationController.updateReservationSeat)
 
 router.put("/updatereservationflight/:id",reservationController.updateReservationFlight)
-router.get("/sendmail/:id", reservationController.sendReservationDetails)
+
+router.get("/sendmailpay/:id", reservationController.sendReservationDetailsP)
+
+router.get("/sendmailall/:id", reservationController.sendReservationDetailsAll)
+
 module.exports = router;
