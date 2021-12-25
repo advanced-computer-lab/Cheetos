@@ -1,0 +1,16 @@
+*Front End* : 
+-Katrin Emad : 
+Sign Up, Sign In, Change Password, Search, View Search Results, Details modal
+
+-Mark Malak  :
+Payment, Adding Passenger Info, Updating Flight in Reservation, Updating Seat in Reservation
+
+*Back End* :
+-Youssef Youhanna : 
+Updating User password, Sending mail
+
+-Maria Maged : 
+Updating Seats in Reservation (Departure and Return), Updating Flights in Reservation (Departure and Return)
+
+-Maryse Fahim :
+Authentication and Authorization, Payment
