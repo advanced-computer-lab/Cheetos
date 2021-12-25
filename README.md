@@ -90,9 +90,9 @@ There were two ways used for testing. As for testing backend alone,  it was by s
 
 ### How can you contribute to the project:
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.
-* As for pushing guidelines: 
-   * Create a separate branch for your modifications if it is your first time to modify, if not commit to your previously created branch.
-   * You should always resolve conflicts and make sure that no changes that were made previously are lost. 
+As for pushing guidelines: 
+  * Create a separate branch for your modifications if it is your first time to modify, if not commit to your previously created branch.
+  * You should always resolve conflicts and make sure that no changes that were made previously are lost. 
 
 ### Useful Links and Credits:
 * https://dev.to/salarc123/mern-stack-authentication-tutorial-part-1-the-backend-1c57
