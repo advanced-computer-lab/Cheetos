@@ -154,7 +154,7 @@ class MyBookings extends Component {
 
                         {   bookingsArr ? bookingsArr.map((b) => (
                   
-                              <BookingReservation confirmation={b.id} b ={b}/>
+                              <BookingReservation   b ={b} />
                            
                            
                            )) : "" }
