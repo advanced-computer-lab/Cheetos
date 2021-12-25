@@ -36,4 +36,16 @@ router.put(
   reservationController.updateReservationFlight
 );
 
+router.get(
+  "/sendmailpay/:id",
+  middleware.verifyJwT,
+  reservationController.sendReservationDetailsP
+);
+
+router.get(
+  "/sendmailall/:id",
+  middleware.verifyJwT,
+  reservationController.sendReservationDetailsAll
+);
+
 module.exports = router;
