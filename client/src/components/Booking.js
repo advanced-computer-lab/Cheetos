@@ -56,13 +56,22 @@ class Booking extends Component {
 
     }
 
-    editDeparture() {
+    editDeparture(oldFlight) {
+        sessionStorage.setItem("oldCabin" , this.props.reservation.DepCabin);
+        sessionStorage.setItem("oldSeat" ,reservation.DepSeat )
+        sessionStorage.setItem("oldFlight" , JSON.stringify(oldFlight));
+        const { reservation } = this.props
+        sessionStorage.setItem("editReservation", JSON.stringify(reservation));
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
         sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
         this.props.history.push("/editDep");
     }
-    editReturn() {
-
+    editReturn(oldFlight) {
+        sessionStorage.setItem("oldCabin" , this.props.reservation.ArrCabin);
+        const { reservation } = this.props
+        sessionStorage.setItem("oldSeat" ,reservation.ArrSeat )
+        sessionStorage.setItem("oldFlight" , JSON.stringify(oldFlight));
+        sessionStorage.setItem("editReservation", JSON.stringify(reservation));
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
         sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
         this.props.history.push("/editRet");
@@ -87,7 +96,7 @@ class Booking extends Component {
                 DepCabin === "FirstClass" ? "FirstClassSeats" : ""
         let depType = PassengerType === "Adult" ? "PriceAdult" : "PriceChild"
         let arrType = PassengerType === "Adult" ? "PriceAdult" : "PriceChild"
-        let totalPrice = deptFlight && arrFlight ?  deptFlight[dep][depType] + arrFlight[arr][arrType] : 0 ;
+        let totalPrice = deptFlight && arrFlight ? deptFlight[dep][depType] + arrFlight[arr][arrType] : 0;
         // let totalPrice = 0;
 
 
@@ -114,7 +123,7 @@ class Booking extends Component {
 
                             <div className="trip-flex-col">
                                 <div className="emphasis"><AirlineSeatReclineNormalIcon />{DepSeat}</div>
-                                <p style={{ width: "120px", textAlign: "center" }}>{reservation.CabinClass}</p>
+                                <p style={{ width: "120px", textAlign: "center" }}>{reservation.DepCabin}</p>
                             </div>
 
                             <div className="trip-flex-col">
@@ -124,7 +133,7 @@ class Booking extends Component {
 
 
                             {/* <Link to='/editDep'> */}
-                            <EditIcon className={new Date() < new Date(deptFlight.DepartureDate) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(deptFlight.DepartureDate) ? this.editDeparture.bind(this) : ''} />
+                            <EditIcon className={new Date() < new Date(deptFlight.DepartureDate) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(deptFlight.DepartureDate) ? () => this.editDeparture(deptFlight) : ''} />
                             {/* </Link> */}
 
                         </div>
@@ -138,7 +147,7 @@ class Booking extends Component {
 
                             <div className="trip-flex-col">
                                 <div className="emphasis"><AirlineSeatReclineNormalIcon />{ArrSeat}</div>
-                                <p style={{ width: "120px", textAlign: "center" }}>{reservation.CabinClass}</p>
+                                <p style={{ width: "120px", textAlign: "center" }}>{reservation.ArrCabin}</p>
                             </div>
 
                             <div className="trip-flex-col">
@@ -146,7 +155,7 @@ class Booking extends Component {
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport}</p>
                             </div>
 
-                            <EditIcon className={(new Date()) < (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? this.editReturn.bind(this) : ''} />
+                            <EditIcon className={(new Date()) < (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? ()=> this.editReturn(arrFlight ) : ''} />
 
                         </div>
 

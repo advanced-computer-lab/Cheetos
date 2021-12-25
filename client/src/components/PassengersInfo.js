@@ -25,9 +25,15 @@ export default class PassengersInfo extends Component {
                 passengersInfo: oldInfo
             })
         } else {
-            const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
-            const { passengers } = this.props;
-            const totalPassenger = Number(adults) + Number(children)
+            let totalPassenger = 0 ; 
+            if(!this.props.single){
+                const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
+                const { passengers } = this.props;
+                totalPassenger = Number(adults) + Number(children)
+            }else{
+                totalPassenger = 1 ; 
+            }
+            
             //first time to come here 
             let newPassengers = []
             let info = {
@@ -49,9 +55,7 @@ export default class PassengersInfo extends Component {
     }
     render() {
 
-        const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
-        const { passengers } = this.props;
-        const totalPassenger = Number(adults) + Number(children)
+       
 
         return (
             <div className="passengers-info">

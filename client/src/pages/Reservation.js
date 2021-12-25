@@ -228,13 +228,13 @@ class Reservation extends Component {
                                     activeStep == 2 ?
                                         <div style={{ height: '59vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-                                            <PassengersInfo />
+                                            <PassengersInfo single = {false} />
 
                                         </div> :
                                         <div style={{ height: '59vh' }}>
                                             {/* your div of choice here  */}
                                             <ConfirmBooking />
-                                            <Payment name={"Boomerang"} description={"flight from CAI to LAX "} amount={2191} />
+                                            <Payment single = {false} name={"Boomerang"} description={"flight from CAI to LAX "} amount={2191} />
 
 
 

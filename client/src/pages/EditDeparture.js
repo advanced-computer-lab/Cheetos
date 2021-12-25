@@ -18,11 +18,14 @@ import ConfirmBooking from './ConfirmBooking';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import Payment from '../components/Payment';
+import PassengersInfo from '../components/PassengersInfo';
+import SingleSeats from '../components/SingleSeats'
+import eachDayOfIntervalWithOptions from 'date-fns/esm/fp/eachDayOfIntervalWithOptions/index.js';
 
 
 
 
-const steps = ["Search", "Confirm", "Seats", "Payment"];
+const steps = ["Search", "Seats", "Passenger Info", "Payment"];
 
 class EditDeparture extends Component {
 
@@ -208,6 +211,10 @@ class EditDeparture extends Component {
         activeStep: 0,
         skipped: new Set(),
         step: 0,
+        editReservation: {},
+        editFlight: "",
+        chosenSeats: [],
+        updateFlight: {}
     }
     /*
     to search i need a flight's dep and arr airport( from storage) ,
@@ -219,10 +226,15 @@ class EditDeparture extends Component {
 
     async componentDidMount() {
         //getting all flights to search for when editing a flight 
+        let editReservation = JSON.parse(sessionStorage.getItem("editReservation"))
+
+        console.log("the reservation i am editing in ", editReservation);
         await api.getAllFlights().then(flights => {
             console.log("fligsht coming from db are ", flights.data)
             this.setState({
                 flightsArr: flights.data,
+                editReservation: editReservation,
+
 
             })
         })
@@ -305,8 +317,43 @@ class EditDeparture extends Component {
         sessionStorage.setItem('cabinSearch', cabinSearch);
     }
 
+    handleConfirmFlight(flight) {
+        sessionStorage.setItem("newFlight", JSON.stringify(flight))
+        let editReservation = JSON.parse(sessionStorage.getItem("editReservation"))
+        let passengersInfo = []
+        if (editReservation) {
+            let info = {
+                firstName: editReservation.PassengerFirstName,
+                lastName: editReservation.PassengerLastName,
+                type: editReservation.PassengerType,
+                passport: editReservation.PassengerPassportNumber
+            }
+
+            passengersInfo.push(info)
+        }
+        sessionStorage.setItem("passengersInfo", JSON.stringify(passengersInfo));
+        console.log("hereeeeeeeeeeeeeeeeee")
+        // sessionStorage.setItem("editFlight" , JSON.parse(flight) )
+        this.setState(
+            {
+                editFlight: flight,
+                activeStep: 1
+            }
+        )
+    }
 
 
+
+    handleSeatsChange(att, seats) {
+        console.log("chosen seats are ", att, seats)
+        sessionStorage.setItem(att, JSON.stringify(seats));
+        this.setState(
+            {
+                ...this.state,
+                [att]: seats
+            }
+        )
+    }
 
 
 
@@ -324,6 +371,7 @@ class EditDeparture extends Component {
         const { searchResults, flightsArr, depDateSearch, cabinSearch,
             searchFlight, clickedSearch,
             activeStep, skipped, step } = this.state
+
         const handleBack = () => {
             this.setState({
                 activeStep: this.state.activeStep - 1,
@@ -335,9 +383,9 @@ class EditDeparture extends Component {
             if (this.state.activeStep === 1) {
 
                 //choosing seats 
-                const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
-                if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
-                    alert("you must choose all seats")
+
+                if (this.state.chosenSeats.length == 0) {
+                    alert("you must choose a seat to continue ")
                 } else {
                     let newSkipped = skipped;
                     if (isStepSkipped(activeStep)) {
@@ -349,7 +397,7 @@ class EditDeparture extends Component {
                         skipped: newSkipped
                     }, () => console.log(this.state.activeStep))
                 }
-            } else {
+            }else {
                 console.log("handling next ")
                 let newSkipped = skipped;
                 if (isStepSkipped(activeStep)) {
@@ -362,7 +410,47 @@ class EditDeparture extends Component {
                 }, () => console.log(this.state.activeStep))
             }
 
+            console.log(
+                "pleassw workkk----------------------------------------------------",
+                "reserve", this.state.editReservation,
+                "new flight", this.state.editFlight,
+                "seats", this.state.chosenSeats
+            )
+
+
+
+
         };
+
+        function handleFinalChange(){
+            let reservation = JSON.parse(sessionStorage.getItem("editReservation"));
+            let oldFlight = JSON.parse(sessionStorage.getItem("oldFlight"));
+            let newFlight = JSON.parse(sessionStorage.getItem("newFlight"));
+            let seats = JSON.parse(sessionStorage.getItem("chosenSeats"));
+            let passengersInfo = JSON.parse(sessionStorage.getItem("passengersInfo"));
+            let oldCabin = sessionStorage.getItem("oldCabin")
+            let newCabin = sessionStorage.getItem("cabinSearch");
+            let updateFlight = {
+                OldFlightId: oldFlight._id,
+                OldChosenSeat: sessionStorage.getItem("oldSeat"),
+                OldCabinClass: oldCabin,
+                NewFlightId: newFlight._id,
+                NewChosenSeat: seats[0].Seat,
+                NewCabinClass: newCabin === "EconomySeats" ? "Economy" :
+                    newCabin === "BusinessSeats" ? "Business" :
+                        newCabin === "FirstClass" ? "FirstClass" : "",
+                PassengerFirstName: passengersInfo[0].firstName,
+                PassengerLastName: passengersInfo[0].lastName,
+                PassengerType: passengersInfo[0].type,
+                PassengerPassportNumber: passengersInfo[0].passport
+            }
+    
+            console.log("my update flight is ", updateFlight);
+            await api.editReservation(reservation._id, updateFlight).then((res) => {
+                alert("doneeeeeee edit")
+            }
+            )
+        }
         const handleReset = () => {
             this.setState({
                 activeStep: 0
@@ -392,7 +480,7 @@ class EditDeparture extends Component {
 
         };
         return (
-            <div className="flex-col" style = {{gap : '0'}}>
+            <div className="flex-col" style={{ gap: '0' }}>
                 <MyHeader />
                 {/* <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={"18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"} /> */}
 
@@ -432,7 +520,7 @@ class EditDeparture extends Component {
 
 
                                     {/* //search */}
-                                    <div className = "flex-col">
+                                    <div className="flex-col">
                                         <div className="search-bar search-bar-box" style={{ justifyContent: "center" }}>
                                             <Form.Group style={{ width: "20%" }} className="mb-2">
                                                 <Form.Label style={{ color: "white", fontWeight: "bold" }}>Departure Date</Form.Label>
@@ -467,11 +555,11 @@ class EditDeparture extends Component {
                                                 </Button>
                                             </div >
                                         </div>
-                                        
+
                                         <div className="flex-col edit-box">
                                             {searchResults.length > 0 ?
                                                 searchResults.map((t) => (
-                                                    <SingleFlight deptFlight={t} />
+                                                    <SingleFlight parentFunc={(flight) => this.handleConfirmFlight(flight)} flight={t} />
                                                 ))
                                                 : clickedSearch ?
                                                     <>
@@ -495,28 +583,28 @@ class EditDeparture extends Component {
                                 </div> :
                                 activeStep == 1 ?
 
-                                    <ConfirmBooking />
+                                    <div className="flex-col">
+                                        <SingleSeats preChosen={[]} parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats={this.state.editFlight.EconomySeats.Seats} att="chosenSeats" type={this.state.departureFlag ? "Departure flight" : "Return Flight"} seatClass={this.state.cabinSearch} passengers={1} />
+                                    </div>
 
                                     :
                                     activeStep == 2 ?
                                         <div style={{ height: '59vh' }}>
-                                            {/* your div of choice here  */}
-                                            <h1>choose seaaaaaaaaaaaaaaaaaaaaaats</h1>
-                                            {/* <ChooseSeats deptFlight={deptFlight} arrFlight={arrFlight} deptCabin={deptCabin} arrCabin={arrCabin} parentFunc={(deptSeats, arrSeats) => this.handleSeatsConfirm(deptSeats, arrSeats)} /> */}
-
+                                            <div className="flex-col" style={{ marginTop: '1em' }}>
+                                                <PassengersInfo single={true} />
+                                            </div>
 
 
                                         </div> :
                                         activeStep == 3 ?
                                             <div style={{ height: '59vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                <h1>passnegersssssssssssssssssss seaaaaaaaaaaaaaaaaaaaaaats</h1>
-                                                {/* <PassengersInfo /> */}
+
+                                                <Payment single={true} name={"Boomerang"} description={"flight"} amount={this.state.editReservation.TotalPrice} />
 
                                             </div> :
                                             <div style={{ height: '59vh' }}>
-                                                {/* your div of choice here  */}
-                                                <ConfirmBooking />
-                                                <Payment name={"Boomerang"} description={"flight from CAI to LAX "} amount={2191} />
+                                                <h1>"ssssssssssssssssss"</h1>
+
 
 
 
@@ -543,12 +631,15 @@ class EditDeparture extends Component {
 
                                 }
 
-                                <Button
-                                    disabled={!localStorage.getItem("token") ? true : false}
-                                    onClick={handleNext} style={{ color: "white" }}>
+                                {this.state.activeStep === 2 ?
+                                    <Payment single={true} name={"Boomerang"} description={"flight  "} amount={this.state.editReservation.TotalPrice} />
+                                    :
+                                    <Button
+                                        disabled={!localStorage.getItem("token") ? true : false}
+                                        onClick={handleNext} style={{ color: "white" }}>
 
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'} <ArrowForwardIosIcon />
-                                </Button>
+                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'} <ArrowForwardIosIcon />
+                                    </Button>}
                             </div>
                         </React.Fragment>
                     )}

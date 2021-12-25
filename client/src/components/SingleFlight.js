@@ -10,93 +10,93 @@ import { withRouter } from 'react-router';
 import TripDetailsModal from './TripDetailsModal';
 
 
- class SingleFlight extends Component {
+class SingleFlight extends Component {
     state = {
         showModal: false,
-        deptCabin:"",
-        searchFlight:"",
+        deptCabin: "",
+        searchFlight: "",
     }
     handleModalShow() {
-       
+
         this.setState(
             {
-           
-              showModal: !this.state.showModal
+
+                showModal: !this.state.showModal
             });
     }
-    componentDidMount(){
+    componentDidMount() {
         if (this.props.location.pathname === "/editDep") {
-   
+
             //console.log("heck2",this.state.deptCabin);
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('depFlight')),
-                deptCabin : sessionStorage.getItem('cabinSearch')
-         },() =>console.log("heck",this.state.searchFlight,sessionStorage.getItem('cabinSearch'))) 
-         
+                deptCabin: sessionStorage.getItem('cabinSearch')
+            }, () => console.log("heck", this.state.searchFlight, sessionStorage.getItem('cabinSearch')))
+
         }
         else {
             this.setState({
                 searchFlight: JSON.parse(sessionStorage.getItem('retFlight')),
-                deptCabin : sessionStorage.getItem('cabinSearch')
-                
-         },() => console.log(this.state.deptCabin,"c2"))
-         console.log("ahhhhhh");
+                deptCabin: sessionStorage.getItem('cabinSearch')
+
+            }, () => console.log(this.state.deptCabin, "c2"))
+            console.log("ahhhhhh");
         }
-        
+
     }
     render() {
-        const { showModal, deptFlight ,searchFlight} = this.props;
-        const{deptCabin,}=this.state;
-        const flight = JSON.parse(sessionStorage.getItem('depFlight')) 
-        
+        const { showModal, flight, searchFlight } = this.props;
+        const { deptCabin, } = this.state;
+        // const flight = JSON.parse(sessionStorage.getItem('depFlight'))
+
         return (
             <>
-            <div className="single-card">
-                
+                <div className="single-card">
+
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
 
                         <div className="booking-flight"  >
 
-                        <p className="emphasis"> {deptFlight.FlightNumber}</p>
+                            <p className="emphasis"> {flight.FlightNumber}</p>
                             <div className="trip-flex-col">
-                                <p className="emphasis">{deptFlight.DepartureDate}{">"} {deptFlight.ArrivalDate}  </p>
-                                <p>{deptFlight.DepartureTime} {">"} {deptFlight.ArrivalTime}</p>
+                                <p className="emphasis">{flight.DepartureDate}{">"} {flight.ArrivalDate}  </p>
+                                <p>{flight.DepartureTime} {">"} {flight.ArrivalTime}</p>
                             </div>
 
-                            
+
 
                             <div className="trip-flex-col">
-                                <p className="emphasis">{deptFlight.TripDuration} </p>
-                                <p>{deptFlight.DepartureAirport}-{deptFlight.ArrivalAirport}</p>
+                                <p className="emphasis">{flight.TripDuration} </p>
+                                <p>{flight.DepartureAirport}-{flight.ArrivalAirport}</p>
                             </div>
-                            
-                            
-                            <a href="#" onClick={this.handleModalShow.bind(this,"showModal")}>Details {">"}</a>
+
+
+                            <a href="#" onClick={this.handleModalShow.bind(this, "showModal")}>Details {">"}</a>
 
                         </div>
-                        
+
 
                     </div>
                     <div className="vl">
 
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
-                      
+
                         {/* check type -> adult 
                         compare prices 
                         old>new -> old - new 
                         new>old -> new - old */}
                         <h3>{flight[sessionStorage.getItem('cabinSearch')].PriceAdult}$</h3>
                         <Button
-                           
+
                             style={{
                                 backgroundColor: "#37A1E2",
                                 width: "5 em",
                                 height: "5vh",
                                 fontSize: "small",
                             }}
-
+                            onClick = {()=> this.props.parentFunc(flight)}
                             variant="contained"
                         >
                             Reserve
@@ -104,10 +104,10 @@ import TripDetailsModal from './TripDetailsModal';
                     </div>
                 </div>
 
-        <TripDetailsModal show = {this.state.showModal} parentFunc={()=>this.handleModalShow("showModal") } fNum ={deptFlight.FlightNumber} depDate ={deptFlight.DepartureDate} arrDate={deptFlight.ArrivalDate} depTime={deptFlight.DepartureTime} arrTime={deptFlight.ArrivalTime} duration={deptFlight.TripDuration} 
-        depAirport={deptFlight.DepartureAirport} arrAirport={deptFlight.ArrivalAirport} cabinClass={deptCabin}  baggage =  {deptFlight[sessionStorage.getItem('cabinSearch')].BaggageAllowance}/ >
-           
-           
+                <TripDetailsModal show={this.state.showModal} parentFunc={() => this.handleModalShow("showModal")} fNum={flight.FlightNumber} depDate={flight.DepartureDate} arrDate={flight.ArrivalDate} depTime={flight.DepartureTime} arrTime={flight.ArrivalTime} duration={flight.TripDuration}
+                    depAirport={flight.DepartureAirport} arrAirport={flight.ArrivalAirport} cabinClass={deptCabin} baggage={flight[sessionStorage.getItem('cabinSearch')].BaggageAllowance} />
+
+
             </>
         )
     }

@@ -15,7 +15,27 @@ const PAYMENT_SERVER_URL = 'http://localhost:8000/api/payment/';
 //PassengerFirstName, PassengerLastName, PassengerType, PassengerPassportNumber , FlightId ,  ChosenSeat , CabinSeat
 const fromDollarToCent = amount => parseInt(amount * 100);
 
+
+
+// let updateFlight = {
+//     OldFlightId :  , 
+//     OldChosenSeat : , 
+//     OldCabinClass : , 
+//     NewFlightId : , 
+//     NewChosenSeat : , 
+//     NewCabinClass : ,
+//     PassengerFirstName : , PassengerLastName: , PassengerType: , PassengerPassportNumber
+// }
+
+// updateFlight: 
+// OldFlightId, OldChosenSeat, OldCabinClass, 
+// NewFlightId, NewChosenSeat, NewCabinClass, 
+// PassengerFirstName, PassengerLastName, PassengerType, PassengerPassportNumber
+
 async function successPayment(data) {
+
+
+
     alert('Payment Successful');
     const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
     let deptSeats = JSON.parse(sessionStorage.getItem("deptSeats"))
@@ -85,13 +105,13 @@ async function successPayment(data) {
         arrFLight: arrFlight
     }
     await api.confirmFlight(reservation).then((res) => {
-        console.log("ressssssss is " , res)
-         api.payReservation(res.data.data, payload).then(
+        console.log("ressssssss is ", res)
+        api.payReservation(res.data.data, payload).then(
             alert("mail sent successfuly")
         )
     }
-
     )
+
 }
 
 const errorPayment = data => {
@@ -105,7 +125,15 @@ const onToken = (amount, description) => token =>
             source: token.id,
             currency: CURRENCY,
             amount: fromDollarToCent(amount)
-        })
+        },
+
+        {
+            headers: {
+                "x-access-token": localStorage.getItem("token"),
+            },
+        }
+
+    )
         .then(successPayment)
 // .catch(errorPayment);
 export default class Payment extends Component {
