@@ -372,7 +372,7 @@ class EditDeparture extends Component {
             NewChosenSeat: seats[0].Seat,
             NewCabinClass: newCabin === "EconomySeats" ? "Economy" :
                 newCabin === "BusinessSeats" ? "Business" :
-                    newCabin === "FirstClass" ? "FirstClass" : "",
+                    newCabin === "FirstClassSeats" ? "FirstClass" : "",
             PassengerFirstName: passengersInfo[0].firstName,
             PassengerLastName: passengersInfo[0].lastName,
             PassengerType: passengersInfo[0].type,
@@ -381,7 +381,8 @@ class EditDeparture extends Component {
 
         console.log("my update flight is ", updateFlight);
         await api.editReservation(reservation.id, updateFlight).then((res) => {
-            alert("doneeeeeee edit")
+            // alert("doneeeeeee edit")
+            this.props.history.push('/bookings')
         }
         )
     }
