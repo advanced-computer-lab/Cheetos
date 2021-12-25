@@ -10,6 +10,7 @@ import api from '../api'
 import { withRouter } from 'react-router';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
+import SingleSeats from './SingleSeats';
 
 
 class Booking extends Component {
@@ -55,11 +56,21 @@ class Booking extends Component {
         )
 
     }
+    handleSeatsChange(att, seats) {
+        console.log("chosen seats are ", att, seats)
+        sessionStorage.setItem(att, JSON.stringify(seats));
+        this.setState(
+            {
+                ...this.state,
+                [att]: seats
+            }
+        )
+    }
 
     editDeparture(oldFlight) {
-        sessionStorage.setItem("oldCabin" , this.props.reservation.DepCabin);
-        sessionStorage.setItem("oldSeat" ,reservation.DepSeat )
-        sessionStorage.setItem("oldFlight" , JSON.stringify(oldFlight));
+        sessionStorage.setItem("oldCabin", this.props.reservation.DepCabin);
+        sessionStorage.setItem("oldSeat", reservation.DepSeat)
+        sessionStorage.setItem("oldFlight", JSON.stringify(oldFlight));
         const { reservation } = this.props
         sessionStorage.setItem("editReservation", JSON.stringify(reservation));
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
@@ -67,10 +78,10 @@ class Booking extends Component {
         this.props.history.push("/editDep");
     }
     editReturn(oldFlight) {
-        sessionStorage.setItem("oldCabin" , this.props.reservation.ArrCabin);
+        sessionStorage.setItem("oldCabin", this.props.reservation.ArrCabin);
         const { reservation } = this.props
-        sessionStorage.setItem("oldSeat" ,reservation.ArrSeat )
-        sessionStorage.setItem("oldFlight" , JSON.stringify(oldFlight));
+        sessionStorage.setItem("oldSeat", reservation.ArrSeat)
+        sessionStorage.setItem("oldFlight", JSON.stringify(oldFlight));
         sessionStorage.setItem("editReservation", JSON.stringify(reservation));
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
         sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
@@ -140,6 +151,7 @@ class Booking extends Component {
                             {/* </Link> */}
 
                         </div>
+
                         <div className="booking-flight" >
 
 
@@ -156,7 +168,7 @@ class Booking extends Component {
 
 
                                 <p style={{ width: "120px", textAlign: "center" }}>{reservation.ArrCabin}</p>
-                                
+
                             </div>
 
                             <div className="trip-flex-col">
@@ -164,7 +176,7 @@ class Booking extends Component {
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport}</p>
                             </div>
 
-                            <EditIcon className={(new Date()) < (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? ()=> this.editReturn(arrFlight ) : ''} />
+                            <EditIcon className={(new Date()) < (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? () => this.editReturn(arrFlight) : ''} />
 
                         </div>
 
@@ -186,13 +198,14 @@ class Booking extends Component {
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
                         <h3>{totalPrice}$</h3>
-                       
+
                     </div>
                 </div>
-                <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
+                <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal2">
                     <Modal.Header closeButton >
-                        <Modal.Title style={{fontWeight:"600"}}>Edit your Seats</Modal.Title>
+                        <Modal.Title style={{ fontWeight: "600" }}>Edit your Seats</Modal.Title>
                     </Modal.Header>
+                    <SingleSeats preChosen={[]} parentFunc={(att, seats) => this.handleSeatsChange(att, seats)} seats={[]} att="editSeats" type={""} seatClass={""} passengers={1} />
                     <Modal.Body>
 
 
@@ -201,7 +214,7 @@ class Booking extends Component {
                         <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
                             Confirm
                         </Button>
-                        
+
                     </Modal.Footer>
                 </Modal>
             </>
