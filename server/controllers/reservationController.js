@@ -224,11 +224,11 @@ deleteReservation = async (req, res) => {
          return res.status(400).json({ success: false, error: err });
        }
    
-       if (!reservation) {
-         return res
-           .status(404)
-           .json({ success: false, error: "Reservation not found" });
-       }
+      //  if (!reservation) {
+      //    return res
+      //      .status(404)
+      //      .json({ success: false, error: "Reservation not found" });
+      //  }
        //return res.status(200).json({ success: true, data: reservation});
      
      User.findById(reservation.UserId, " FirstName Email", (err, user) => {
@@ -263,7 +263,7 @@ deleteReservation = async (req, res) => {
             
           
           
-            mail=mail+"Departure Flight number: "+body.deptFlightFlightNumber+"\n"
+            mail=mail+"Departure Flight number: "+body.deptFlight.FlightNumber+"\n"
           +"Departure Date: "+body.deptFlight.DepartureDate+"\n"
           +"Departure Time: "+body.deptFlight.DepartureTime+"\n"
           

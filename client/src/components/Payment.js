@@ -15,7 +15,7 @@ const PAYMENT_SERVER_URL = 'http://localhost:8000/api/payment/';
 //PassengerFirstName, PassengerLastName, PassengerType, PassengerPassportNumber , FlightId ,  ChosenSeat , CabinSeat
 const fromDollarToCent = amount => parseInt(amount * 100);
 
- async function successPayment(data) {
+async function successPayment(data) {
     alert('Payment Successful');
     const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } = JSON.parse(sessionStorage.getItem('deal'))
     let deptSeats = JSON.parse(sessionStorage.getItem("deptSeats"))
@@ -24,7 +24,7 @@ const fromDollarToCent = amount => parseInt(amount * 100);
     let deptTickets = []
     let arrTickets = []
     let totalPrice = 0;
-    console.log("passengerss areeeeeeeee" , passengersInfo) ; 
+    console.log("passengerss areeeeeeeee", passengersInfo);
     // making dept tickets 
 
     for (let i = 0; i < passengersInfo.length; i++) {
@@ -51,17 +51,17 @@ const fromDollarToCent = amount => parseInt(amount * 100);
 
     // return tickets
     for (let i = 0; i < passengersInfo.length; i++) {
-        let passenger = passengersInfo[i] ;
+        let passenger = passengersInfo[i];
         let ticket = {
-            PassengerFirstName: passenger.firstName ,
-            PassengerLastName: passenger.lastName ,
-            PassengerType: passenger.type ,
+            PassengerFirstName: passenger.firstName,
+            PassengerLastName: passenger.lastName,
+            PassengerType: passenger.type,
             PassengerPassportNumber: passenger.passport,
             FlightId: arrFlight._id,
             ChosenSeat: arrSeats[i].Seat,
             CabinClass: arrCabin === "EconomySeats" ? "Economy" :
-            deptCabin === "BusinessSeats" ? "Business" : 
-            deptCabin === "FirstClass" ? "FirstClass" : ''
+                deptCabin === "BusinessSeats" ? "Business" :
+                    deptCabin === "FirstClass" ? "FirstClass" : ''
         }
         arrTickets.push(ticket)
         if (passenger.type === "adult") {
@@ -79,15 +79,18 @@ const fromDollarToCent = amount => parseInt(amount * 100);
         TotalPrice: sessionStorage.getItem("totalPrice"),
         Reservation: JSON.parse(sessionStorage.getItem("ticketsArr"))
     }
-    console.log("reservation object--->" , reservation )
+    console.log("reservation object--->", reservation)
     let payload = {
-        depFlight : deptFlight, 
-        arrFLight : arrFlight
+        depFlight: deptFlight,
+        arrFLight: arrFlight
     }
-    await api.confirmFlight(reservation).then(
-       await api.payReservation(reservation._id , payload).then(
-           alert("mail sent successfuly") 
-       )
+    await api.confirmFlight(reservation).then((res) => {
+        console.log("ressssssss is " , res)
+         api.payReservation(res.data.data, payload).then(
+            alert("mail sent successfuly")
+        )
+    }
+
     )
 }
 
@@ -104,7 +107,7 @@ const onToken = (amount, description) => token =>
             amount: fromDollarToCent(amount)
         })
         .then(successPayment)
-        // .catch(errorPayment);
+// .catch(errorPayment);
 export default class Payment extends Component {
     render() {
         const { name, description, amount } = this.props

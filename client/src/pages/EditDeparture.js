@@ -271,13 +271,14 @@ to search i need a flight's dep and arr airport( from storage) ,
               })
         }
         else{
+            console.log("searching for return " , flightsArr)
             this.setState({
                 searchResults: flightsArr.filter((f) =>
-                  Date.parse(f.DepartureDate)=== Date.parse(depDateSearch)
+                  Date.parse(f.DepartureDate) ===  Date.parse(depDateSearch)
                   && f.DepartureAirport === searchFlight.DepartureAirport
                   && f.ArrivalAirport === searchFlight.ArrivalAirport
                   && f[cabinSearch]["AvailableSeats"] >= Number(1) //double check condition if we are adding child parent pairs
-                  && Date.parse(f.DepartureDate) < Date.parse(date)
+                  && Date.parse(f.DepartureDate) > Date.parse(date)
                   //add date check
                 ),
                 clickedSearch:true

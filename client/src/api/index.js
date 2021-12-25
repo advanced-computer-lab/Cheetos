@@ -24,7 +24,7 @@ export const updateUserInfo = (id, payload) => api.put(`/user/uupdate/${id}`, pa
 //
 export const getReservationsById = id => api.get(`/reservation/getreservation/${id}`)
 export const deleteReservationById = id => api.delete(`/reservation/deletereservation/${id}`)
-export const payReservation = (id, payload) => api.post(`/sendmailpay/${id}`, payload)
+export const payReservation = (id, payload) => api.post(`/reservation/sendmailpay/${id}`, payload)
 
 //authentication
 export const loginUser = payload => api.post(`/user/ulogin`, payload)
