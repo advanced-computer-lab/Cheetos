@@ -37,7 +37,7 @@ This project was implemented using MERN stack,so for someone to use/edit this pr
 
 ### Some Code Examples
 Veryfing Token for the user 
-“`verifyJwT = (req, res, next) => {
+```verifyJwT = (req, res, next) => {
   const token = req.headers["x-access-token"]?.split(" ")[1];
   console.log(token);
   if (token) {
@@ -56,6 +56,7 @@ Veryfing Token for the user
     res.json({ message: "Incorrect Token Given", isLoggedIn: false });
   }
 };
+```
 
 ### Softwares that need to be downloaded:
 * Install VS Code or any similar IDE https://code.visualstudio.com/download 
