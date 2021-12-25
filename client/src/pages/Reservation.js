@@ -18,7 +18,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { withToken } from 'react-bootstrap-typeahead';
 
-const steps = ["Flight Details", "Seat Selection", "Passenger Information" , "Payment"];
+const steps = ["Flight Details", "Seat Selection", "Passenger Information", "Payment"];
 class Reservation extends Component {
     state = {
         activeStep: 0,
@@ -31,13 +31,13 @@ class Reservation extends Component {
 
 
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         sessionStorage.removeItem("deptSeats")
         sessionStorage.removeItem("arrSeats")
         sessionStorage.removeItem("passengersInfo")
         sessionStorage.removeItem("deal")
     }
-    
+
     handleModalShow() {
         if (this.state.showModal) {
             this.setState({
@@ -110,7 +110,7 @@ class Reservation extends Component {
 
         const handleNext = () => {
             if (this.state.activeStep === 1) {
-              
+
                 //choosing seats 
                 const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
                 if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
@@ -125,7 +125,7 @@ class Reservation extends Component {
                         activeStep: this.state.activeStep + 1,
                         skipped: newSkipped
                     }, () => console.log(this.state.activeStep))
-                } 
+                }
             } else {
                 console.log("handling next ")
                 let newSkipped = skipped;
@@ -178,7 +178,7 @@ class Reservation extends Component {
             <div style={{ backgroundColor: "background-color: rgba(0, 0, 0, 0.575)" }}>
                 <MyHeader />
                 <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={activeStep}  style={{ backgroundColor: "#edf0f0", height: "auto",padding:"15px" ,paddingLeft:"4.5%",paddingRight:"4.5%",marginTop:"0"}}>
+                    <Stepper activeStep={activeStep} style={{ backgroundColor: "#edf0f0", height: "auto", padding: "15px", paddingLeft: "4.5%", paddingRight: "4.5%", marginTop: "0" }}>
                         {steps.map((label, index) => {
                             const stepProps = {};
                             const labelProps = {};
@@ -188,7 +188,7 @@ class Reservation extends Component {
                             }
                             return (
                                 <Step key={label} {...stepProps}  >
-                                    <StepLabel style={{marginTop:"0px !important",color:"white"}} {...labelProps}>{label}</StepLabel>
+                                    <StepLabel style={{ marginTop: "0px !important", color: "white" }} {...labelProps}>{label}</StepLabel>
 
                                 </Step>
                             );
@@ -226,29 +226,29 @@ class Reservation extends Component {
 
                                     </div> :
                                     activeStep == 2 ?
-                                    <div style={{ height: '59vh'  , display : 'flex' ,  alignItems : 'center' , justifyContent: 'center' }}>
-                                       
+                                        <div style={{ height: '59vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
                                             <PassengersInfo />
 
-                                    </div> :
-                                    <div style={{ height: '59vh' }}>
-                                        {/* your div of choice here  */}
-                                        <ConfirmBooking/>
-                                        <Payment  name = {"Boomerang"} description = {"flight from CAI to LAX "} amount  = {2191}/>
+                                        </div> :
+                                        <div style={{ height: '59vh' }}>
+                                            {/* your div of choice here  */}
+                                            <ConfirmBooking />
+                                            <Payment name={"Boomerang"} description={"flight from CAI to LAX "} amount={2191} />
 
-                                        
+
 
                                         </div>
                             }
 
-                            <div style={{ display:"flex",justifyContent:"space-around",color:"white",marginRight:"4%",marginLeft:"4%"}}>
+                            <div style={{ display: "flex", justifyContent: "space-around", color: "white", marginRight: "4%", marginLeft: "4%" }}>
                                 <Button
                                     color="inherit"
                                     disabled={activeStep === 0}
                                     onClick={handleBack}
                                     sx={{ mr: 1 }}
                                 >
-                                    <ArrowBackIosNewIcon/>Back
+                                    <ArrowBackIosNewIcon />Back
                                 </Button>
                                 <Box sx={{ flex: '1 1 auto' }} />
                                 {
@@ -261,9 +261,11 @@ class Reservation extends Component {
 
                                 }
 
-                                <Button onClick={handleNext} style={{color:"white"}} disabled={!localStorage.getItem("token") ? true : false}>
-                                
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'} <ArrowForwardIosIcon/>
+                                <Button
+                                    disabled={!localStorage.getItem("token") ? true : false}
+                                    onClick={handleNext} style={{ color: "white" }}>
+
+                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'} <ArrowForwardIosIcon />
                                 </Button>
                             </div>
                         </React.Fragment>
