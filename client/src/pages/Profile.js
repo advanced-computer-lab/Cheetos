@@ -31,6 +31,10 @@ class Profile extends Component {
     passUpdated:false,
   }
   async componentDidMount() {
+    if(!localStorage.getItem('token')){
+      this.props.history.push('/');
+    }
+
     this.setState({passUpdated:false})
     const userId  = localStorage.getItem('userId')
     console.log("user id is " , userId) ; 

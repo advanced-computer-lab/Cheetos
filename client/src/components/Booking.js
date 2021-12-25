@@ -106,9 +106,9 @@ class Booking extends Component {
                 <div className="booking-card">
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
-                        <div style={{ marginLeft: "2rem", marginBottom: "7px", marginTop: "20px" }}><strong>
-                            <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5>
-                            <h5>{PassengerFirstName + " " + PassengerLastName}</h5>
+                        <div style={{ marginLeft: "2rem", marginBottom: "7px", marginTop: "0px" }}><strong>
+                            {/* <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5> */}
+                            <h5 className='emphasis'>{PassengerFirstName.toUpperCase() + " " + PassengerLastName.toUpperCase()}</h5>
                         </strong></div>
 
 
@@ -122,7 +122,10 @@ class Booking extends Component {
                             </div>
 
                             <div className="trip-flex-col">
-                                <div className="emphasis"><AirlineSeatReclineNormalIcon />{DepSeat}</div>
+                                <div className='flex-row'>
+                                    <div className="emphasis"><AirlineSeatReclineNormalIcon />{DepSeat}</div>
+                                    <EditIcon className={new Date() < new Date(deptFlight.DepartureDate) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(deptFlight.DepartureDate) ? this.handleModalShow.bind(this) : ''} />
+                                </div>
                                 <p style={{ width: "120px", textAlign: "center" }}>{reservation.DepCabin}</p>
                             </div>
 
@@ -146,8 +149,14 @@ class Booking extends Component {
                             </div>
 
                             <div className="trip-flex-col">
-                                <div className="emphasis"><AirlineSeatReclineNormalIcon />{ArrSeat}</div>
+                                <div className='flex-row'>
+                                    <div className="emphasis"><AirlineSeatReclineNormalIcon />{ArrSeat}</div>
+                                    <EditIcon className={(new Date()) < (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? this.handleModalShow.bind(this) : ''} />
+                                </div>
+
+
                                 <p style={{ width: "120px", textAlign: "center" }}>{reservation.ArrCabin}</p>
+                                
                             </div>
 
                             <div className="trip-flex-col">
@@ -177,34 +186,22 @@ class Booking extends Component {
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
                         <h3>{totalPrice}$</h3>
-                        <Button
-                            onClick={this.handleModalShow.bind(this)}
-                            style={{
-                                backgroundColor: "rgb(201, 6, 6)",
-                                width: "2 em",
-                                height: "5vh",
-                                fontSize: "small",
-                            }}
-
-                            variant="contained"
-                        >
-                            Cancel Booking
-                        </Button>
+                       
                     </div>
                 </div>
-
-                <Modal centered show={showModal} onHide={this.handleModalShow.bind(this)}>
-                    <Modal.Header closeButton style={{ backgroundColor: "#14279b" }}>
-                        <Modal.Title style={{ color: "white" }}>Heads up!!</Modal.Title>
+                <Modal centered show={this.state.showModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
+                    <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Edit your Seats</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
+                    <Modal.Body>
+
+
+                    </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
-                            Cancel
+                            Confirm
                         </Button>
-                        <Button variant="secondary" style={{ color: "red" }} onClick={this.handleDelete.bind(this)}>
-                            Yes
-                        </Button>
+                        
                     </Modal.Footer>
                 </Modal>
             </>

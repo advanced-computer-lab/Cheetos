@@ -5,6 +5,7 @@ import Booking from '../components/Booking'
 import api from '../api'
 import { withRouter } from 'react-router'
 import NoResults from '../components/NoResults'
+import SearchIcon from '@mui/icons-material/Search';
 class Home extends Component {
     deptTrip = {
         FlightNumber: "1175",
@@ -164,6 +165,7 @@ class Home extends Component {
         arrAirport: '',
         deptDate: '',
         retDate: '',
+        empty : false ,
         //array containing pairs of dept and arrival flights i.e round trip ,computed at search
         // tripArr: [[this.deptTrip, this.arrTrip],
         // [this.deptTrip, this.arrTrip],
@@ -216,6 +218,7 @@ class Home extends Component {
 
         if (this.emptySearch(adultCount, childCount, deptAirport, arrAirport, deptDate, retDate, cabinClass)) {
             alert("search fields cannot be empty");
+            this.setState({empty:true})
         }
         else {        //---making the pairs of flights (round trips) from the all flights array 
             this.setState({
@@ -261,7 +264,20 @@ class Home extends Component {
                 <div className="trip-search-results">
                     { tripArr && tripArr.length > 0 ? 
                         tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]} deptCabin={this.deptCabin} arrCabin={this.arrCabin} adults={this.adultCount} children={this.childCount} userId={this.state.userId} />)
-                       : <NoResults deptAirport = {this.state.deptAirport} arrAirport = {this.state.arrAirport} deptDate = {this.state.deptDate} arrDate = {this.state.retDate} />
+
+                       : 
+                       
+                       <NoResults deptAirport = {this.state.deptAirport} arrAirport = {this.state.arrAirport} deptDate = {this.state.deptDate} arrDate = {this.state.retDate} />
+                    /*this.state.empty? 
+                       <>
+                       <div className="no-result">
+                       <SearchIcon style={{ fontSize: "5rem" }} />
+                       <h2>Please Enter All Search Fields to find A relevant result</h2>
+                       <h6 style={{ color: "grey" }}>Airports may not have regularly scheduled flights or there may be restrictions that impact routes.
+                       </h6>
+                   </div>
+                   </>:   */
+                     
                         
               }  </div>
             </div>

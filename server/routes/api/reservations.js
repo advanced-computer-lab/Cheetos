@@ -36,13 +36,13 @@ router.put(
   reservationController.updateReservationFlight
 );
 
-router.get(
+router.post(
   "/sendmailpay/:id",
   middleware.verifyJwT,
   reservationController.sendReservationDetailsP
 );
 
-router.get(
+router.post(
   "/sendmailall/:id",
   middleware.verifyJwT,
   reservationController.sendReservationDetailsAll

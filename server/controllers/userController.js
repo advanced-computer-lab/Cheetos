@@ -130,6 +130,7 @@ login = async (req, res) => {
                   message: "Success",
                   token: "Bearer " + token,
                   data: payload,
+                  type : dbUser.admin
                 });
               }
             );
