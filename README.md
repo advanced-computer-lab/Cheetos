@@ -6,7 +6,7 @@
 Boomerang Airline Reservation System was created to make it easier for users to reserve round trips through different options and airlines and be able to choose the best routes or flights according to their preferences.
 
 ### Screenshots
-Sign In Page
+This is the Sign In page where the user can enter their username and password.
 ![WhatsApp Image 2021-12-25 at 8 51 46 PM (2)](https://user-images.githubusercontent.com/89047287/147393310-ee9964b4-e9b4-4070-9c6d-2f4fb9a7c409.jpeg)
 
 ### Used Frameworks:
