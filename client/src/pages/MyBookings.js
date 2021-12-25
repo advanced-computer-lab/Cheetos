@@ -63,9 +63,14 @@ class MyBookings extends Component {
                 PassengerFirstName: arr[i].PassengerFirstName,
                 PassengerLastName: arr[i].PassengerLastName,
                 PassengerPassportNumber: arr[i].PassengerPassportNumber,
+                PassengerType : arr[i].PassengerType , 
                 PassengerType: arr[i].PassengerType,
                 DepFlight: arr[i].FlightId,
-                ArrFlight: arr[j].FlightId
+                DepSeat : arr[i].ChosenSeat , 
+                DepCabin : arr[i].CabinClass , 
+                ArrFlight: arr[j].FlightId , 
+                ArrSeat : arr[j].ChosenSeat,
+                ArrCabin : arr[i].CabinClass
             })
 
         }

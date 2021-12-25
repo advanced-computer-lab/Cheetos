@@ -12,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
 
 
- class Booking extends Component {
+class Booking extends Component {
 
 
     state = {
@@ -20,61 +20,77 @@ import { Link } from "react-router-dom";
         deptFlight: "",
         arrFlight: ""
     }
-    
+
     handleModalShow() {
         this.setState({
             showModal: this.state.showModal ? false : true,
         });
     }
-   async handleDelete() {
+    async handleDelete() {
         await api.deleteReservationById(this.props.confirmationNum).then(
             // alert("flight with conf num is deleted " , this.props.confirmationNum)  , 
-            console.log("deleted" , this.props.confirmationNum)  , 
-            this.handleModalShow() ,
+            console.log("deleted", this.props.confirmationNum),
+            this.handleModalShow(),
             window.location.reload()
         )
-       
+
     }
     async componentDidMount() {
         const { confirmationNum, userId, reservation } = this.props
-        console.log("reserv coming to booking is ", reservation)
+        // console.log("reserv coming to booking is ", reservation)
         const { DepFlight, ArrFlight } = reservation
         await api.getFlightById(DepFlight._id).then((Flight) => {
             this.setState({
                 deptFlight: Flight.data.data
             }, () => console.log(Flight.data.data))
+            //, () => console.log(Flight.data.data)
         }
         )
         await api.getFlightById(ArrFlight._id).then((Flight) => {
             this.setState({
                 arrFlight: Flight.data.data
             }, () => console.log(Flight.data.data))
+            //, () => console.log(Flight.data.data)
         }
         )
 
     }
 
-    editDeparture(){
+    editDeparture() {
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
         sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
         this.props.history.push("/editDep");
     }
-    editReturn(){
-       
+    editReturn() {
+
         sessionStorage.setItem('depFlight', JSON.stringify(this.state.deptFlight));
         sessionStorage.setItem('retFlight', JSON.stringify(this.state.arrFlight));
         this.props.history.push("/editRet");
     }
-  
+
     render() {
-        let price = 0;
+
         const { confirmationNum, userId, reservation } = this.props
-        const{PassengerFirstName , PassengerLastName} = reservation 
+        const { PassengerFirstName, PassengerLastName,
+            PassengerType,
+            ArrFlight, DepFlight,
+            DepCabin, ArrCabin,
+            DepSeat, ArrSeat } = reservation
+
         const { showModal, deptFlight, arrFlight } = this.state
+        console.log("--------------------------------------> ", deptFlight, arrFlight)
+        let dep = DepCabin === "Economy" ? "EconomySeats" :
+            DepCabin === "Business" ? "BusinessSeats" :
+                DepCabin === "FirstClass" ? "FirstClassSeats" : ""
+        let arr = DepCabin === "Economy" ? "EconomySeats" :
+            DepCabin === "Business" ? "BusinessSeats" :
+                DepCabin === "FirstClass" ? "FirstClassSeats" : ""
+        let depType = PassengerType === "Adult" ? "PriceAdult" : "PriceChild"
+        let arrType = PassengerType === "Adult" ? "PriceAdult" : "PriceChild"
+        let totalPrice = deptFlight && arrFlight ?  deptFlight[dep][depType] + arrFlight[arr][arrType] : 0 ;
+        // let totalPrice = 0;
 
-        
 
-       
         return (
             <>
 
@@ -83,12 +99,12 @@ import { Link } from "react-router-dom";
 
                         <div style={{ marginLeft: "2rem", marginBottom: "7px", marginTop: "20px" }}><strong>
                             <h5>Confirmation Number : {confirmationNum.toUpperCase()}</h5>
-                            <h5>{PassengerFirstName  + " " + PassengerLastName}</h5>
+                            <h5>{PassengerFirstName + " " + PassengerLastName}</h5>
                         </strong></div>
 
 
 
-                        <div className="booking-flight" style={{marginTop:"0px"}}  >
+                        <div className="booking-flight" style={{ marginTop: "0px" }}  >
 
 
                             <div className="trip-flex-col">
@@ -97,7 +113,7 @@ import { Link } from "react-router-dom";
                             </div>
 
                             <div className="trip-flex-col">
-                                <div className="emphasis"><AirlineSeatReclineNormalIcon />seats hereee</div>
+                                <div className="emphasis"><AirlineSeatReclineNormalIcon />{DepSeat}</div>
                                 <p style={{ width: "120px", textAlign: "center" }}>{reservation.CabinClass}</p>
                             </div>
 
@@ -105,10 +121,10 @@ import { Link } from "react-router-dom";
                                 <p className="emphasis">{deptFlight.TripDuration} </p>
                                 <p>{deptFlight.DepartureAirport}-{deptFlight.ArrivalAirport}</p>
                             </div>
-                            
-                            
+
+
                             {/* <Link to='/editDep'> */}
-                                <EditIcon className={new Date() < new Date(deptFlight.DepartureDate) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(deptFlight.DepartureDate) ? this.editDeparture.bind(this) : '' }/>
+                            <EditIcon className={new Date() < new Date(deptFlight.DepartureDate) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(deptFlight.DepartureDate) ? this.editDeparture.bind(this) : ''} />
                             {/* </Link> */}
 
                         </div>
@@ -121,7 +137,7 @@ import { Link } from "react-router-dom";
                             </div>
 
                             <div className="trip-flex-col">
-                                <div className="emphasis"><AirlineSeatReclineNormalIcon />"sdsd"</div>
+                                <div className="emphasis"><AirlineSeatReclineNormalIcon />{ArrSeat}</div>
                                 <p style={{ width: "120px", textAlign: "center" }}>{reservation.CabinClass}</p>
                             </div>
 
@@ -129,9 +145,9 @@ import { Link } from "react-router-dom";
                                 <p className="emphasis">{arrFlight.TripDuration} </p>
                                 <p>{arrFlight.DepartureAirport}-{arrFlight.ArrivalAirport}</p>
                             </div>
-                            
-                                <EditIcon className={ (new Date() )< (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? this.editReturn.bind(this): '' }/>
-                           
+
+                            <EditIcon className={(new Date()) < (new Date(arrFlight.DepartureDate)) ? "icon" : "icon-disabled"} onClick={new Date() < new Date(arrFlight.DepartureDate) ? this.editReturn.bind(this) : ''} />
+
                         </div>
 
 
@@ -151,7 +167,7 @@ import { Link } from "react-router-dom";
 
                     </div>
                     <div className="trip-flex-col" style={{ width: '30%' }} >
-                        <h3>{reservation.TotalPrice}$</h3>
+                        <h3>{totalPrice}$</h3>
                         <Button
                             onClick={this.handleModalShow.bind(this)}
                             style={{
@@ -174,7 +190,7 @@ import { Link } from "react-router-dom";
                     </Modal.Header>
                     <Modal.Body>Are you sure you want to cancel this booking?</Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary"  onClick={this.handleModalShow.bind(this)}>
+                        <Button variant="primary" onClick={this.handleModalShow.bind(this)}>
                             Cancel
                         </Button>
                         <Button variant="secondary" style={{ color: "red" }} onClick={this.handleDelete.bind(this)}>
