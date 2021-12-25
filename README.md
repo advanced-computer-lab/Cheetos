@@ -6,6 +6,7 @@
 Boomerang Airline Reservation System was created to make it easier for users to reserve round trips through different options and airlines and be able to choose the best routes or flights according to their preferences.
 
 ### Screenshots
+![WhatsApp Image 2021-12-25 at 8 51 46 PM (2)](https://user-images.githubusercontent.com/89047287/147393310-ee9964b4-e9b4-4070-9c6d-2f4fb9a7c409.jpeg)
 
 ### Used Frameworks:
 This project was implemented using MERN stack,so for someone to use/edit this project they need a basic understanding of React.js, HTML,& CSS which were used for the frontend and Node.js  which was used for the backend in addition to JavaScript.
