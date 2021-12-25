@@ -9,6 +9,8 @@ Boomerang Airline Reservation System was created to make it easier for users to 
 This is the Sign In page where the user can enter their username and password.
 ![WhatsApp Image 2021-12-25 at 8 51 46 PM (2)](https://user-images.githubusercontent.com/89047287/147393310-ee9964b4-e9b4-4070-9c6d-2f4fb9a7c409.jpeg)
 
+![WhatsApp Image 2021-12-25 at 8 51 47 PM](https://user-images.githubusercontent.com/89047287/147393345-6752077d-49d5-4f5b-bf88-bf5b16a76719.jpeg)
+
 ### Used Frameworks:
 This project was implemented using MERN stack,so for someone to use/edit this project they need a basic understanding of React.js, HTML,& CSS which were used for the frontend and Node.js  which was used for the backend in addition to JavaScript.
 
