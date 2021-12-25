@@ -2,18 +2,38 @@ const express = require("express");
 
 const router = express.Router();
 
-const reservationController = require('../../controllers/reservationController')
+const reservationController = require("../../controllers/reservationController");
+const middleware = require("../../controllers/middleware");
 
-const Reservation = require("../../models/Flight");
+//Existing User
+router.get(
+  "/getreservation/:id",
+  middleware.verifyJwT,
+  reservationController.getReservationById
+);
 
-router.get("/getreservation/:id", reservationController.getReservationById)
+router.delete(
+  "/deletereservation/:id",
+  middleware.verifyJwT,
+  reservationController.deleteReservation
+);
 
-router.delete("/deletereservation/:id",reservationController.deleteReservation)
+router.post(
+  "/createreservation",
+  middleware.verifyJwT,
+  reservationController.createReservation
+);
 
-router.post("/createreservation",reservationController.createReservation)
+router.put(
+  "/updatereservationseat/:id",
+  middleware.verifyJwT,
+  reservationController.updateReservationSeat
+);
 
-router.put("/updatereservationseat/:id",reservationController.updateReservationSeat)
-
-router.put("/updatereservationflight/:id",reservationController.updateReservationFlight)
+router.put(
+  "/updatereservationflight/:id",
+  middleware.verifyJwT,
+  reservationController.updateReservationFlight
+);
 
 module.exports = router;

@@ -1,23 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../../controllers/userController");
-
-// Load User model
-const User = require("../../models/User");
+const middleware = require("../../controllers/middleware");
 
 router.get("/u/:id", userController.getUserById);
 
 router.post("/ucreate", userController.createUser);
 
+//Existing User
+router.put("/uupdate/:id", middleware.verifyJwT, userController.updateUser);
+
+router.put(
+  "/passupdate/:id",
+  middleware.verifyJwT,
+  userController.changeUserPassword
+);
+
 router.delete("/udelete/:id", userController.deleteUser);
 
-router.put("/uupdate/:id", userController.verifyJwT, userController.updateUser);
-//router.put("/passupdate/:id", userController.verifyJwT, userController.changeUserPassword);
-router.put("/passupdate/:id", userController.changeUserPassword);
 router.post("/ulogin", userController.login);
-
-router.post("/checkEmail", userController.checkEmail);
-
-router.post("/checkUsername", userController.checkUserName);
 
 module.exports = router;

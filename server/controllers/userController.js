@@ -21,10 +21,6 @@ updateUser = async (req, res) => {
     }
     console.log(user);
 
-    //user.UserName = body.UserName;
-
-    //user.Password = body.Password;
-
     user.FirstName = body.FirstName;
 
     user.LastName = body.LastName;
@@ -63,29 +59,6 @@ deleteUser = async (req, res) => {
 
     return res.status(200).json({ success: true, data: user });
   }).catch((err) => console.log(err));
-};
-
-checkEmail = async (req, res) => {
-  const user = req.body;
-  //Check if email already exists
-  let existingUser = await User.findOne({ Email: user.Email });
-  if (existingUser) {
-    return res.json({ invalidEmail: true, message: "Email already exists" });
-  }
-  return res.json({ invalidEmail: false });
-};
-
-checkUserName = async (req, res) => {
-  //Check if username already exists
-  const user = req.bpdy;
-  let existingUser = await User.findOne({ UserName: user.UserName });
-  if (existingUser) {
-    return res.json({
-      invalidUsername: true,
-      message: "Username already exists",
-    });
-  }
-  return res.json({ invalidUsername: false });
 };
 
 createUser = async (req, res) => {
@@ -128,9 +101,10 @@ getUserById = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
-login = (req, res) => {
+login = async (req, res) => {
   const userLoggingIn = req.body;
-  User.findOne({ UserName: userLoggingIn.UserName }).then((dbUser) => {
+  console.log("LOGIN ");
+  await User.findOne({ UserName: userLoggingIn.UserName }).then((dbUser) => {
     if (!dbUser) {
       return res.json({ message: "Invalid Username or Password" });
     }
@@ -160,25 +134,6 @@ login = (req, res) => {
   });
 };
 
-verifyJwT = (req, res, next) => {
-  const token = req.headers["x-access-token"]?.split(" ")[1];
-  console.log(token);
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err)
-        return res.json({
-          isLoggedIn: false,
-          message: "Failed To Authenticate",
-        });
-      req.user = {};
-      req.user._id = decoded.id;
-      req.user.UserName = decoded.username;
-      next();
-    });
-  } else {
-    res.json({ message: "Incorrect Token Given", isLoggedIn: false });
-  }
-};
 changeUserPassword = async (req, res) => {
   const body = req.body;
 
@@ -196,46 +151,36 @@ changeUserPassword = async (req, res) => {
         message: "User not found!",
       });
     }
-    console.log(user);
-    var x = "$2b$10$zBxIyN3CXf1sjX10yilLs.Kr6GB9ehk6AcVFiRY6Dq1db4ri4pPoS";
-    console.log(x);
-    bcrypt
-    .compare(body.oldPassword,user.Password)
-    .then(async(isCorrect) => {
+    bcrypt.compare(body.oldPassword, user.Password).then(async (isCorrect) => {
       if (isCorrect) {
-        user.Password =  await bcrypt.hash(body.newPassword, 10);
-        
-        console.log("YESSS");
-        }
-    
-    
-    user
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          id: user.id,
-          message: "Password updated!",
+        user.Password = await bcrypt.hash(body.newPassword, 10);
+      }
+
+      user
+        .save()
+        .then(() => {
+          return res.status(200).json({
+            success: true,
+            id: user.id,
+            message: "Password updated!",
+          });
+        })
+        .catch((error) => {
+          return res.status(404).json({
+            error,
+            message: "Password not updated!",
+          });
         });
-      })
-      .catch((error) => {
-        return res.status(404).json({
-          error,
-          message: "Password not updated!",
-        });
-      });
+    });
   });
-});}
+};
 
 module.exports = {
   updateUser,
   deleteUser,
-  checkEmail,
-  checkUserName,
   createUser,
   changeUserPassword,
   getUser,
   getUserById,
   login,
-  verifyJwT,
 };
