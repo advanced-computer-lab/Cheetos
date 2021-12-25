@@ -311,23 +311,13 @@ sendReservationDetailsP = (req, res) => {
   const arrFlight = body.arrFlight;
 
   Reservation.findOne({ _id: req.params.id }, (err, reservation) => {
-    console.log(reservation);
     if (err) {
       return res.status(400).json({ success: false, error: err });
     }
-
-    //  if (!reservation) {
-    //    return res
-    //      .status(404)
-    //      .json({ success: false, error: "Reservation not found" });
-    //  }
-    //return res.status(200).json({ success: true, data: reservation});
-
     User.findById(reservation.UserId, " FirstName Email", (err, user) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(user.Email);
         let mailTransporter = nodemailer.createTransport({
           service: "hotmail",
           auth: {
@@ -339,66 +329,79 @@ sendReservationDetailsP = (req, res) => {
         for (let i = 0; i < reservation.Reservation.length / 2; i++) {
           mail =
             mail +
-            " with the following details " +
             "\n" +
-            "ticket number: " +
+            " <strong>Ticket Number: </strong>" +
             (i + 1) +
+            "<br/>" +
             "\n" +
-            "Passenger First Name:  " +
+            " <strong>Passenger First Name: </strong> " +
             reservation.Reservation[i].PassengerFirstName +
+            "<br/>" +
             "\n" +
             "\n " +
-            "Passenger LastName : " +
+            "<strong>Passenger LastName: </strong>" +
             reservation.Reservation[i].PassengerLastName +
-            // "\n "+"Flight id : "+reservation.Reservation[i].FlightId +
+            "<br/>" +
             "\n " +
-            "Passenger Type : " +
+            "<strong>Passenger Type: </strong>" +
             reservation.Reservation[i].PassengerType +
+            "<br/>" +
             "\n " +
-            "Passenger PassportNumber : " +
+            "<strong>Passenger PassportNumber: </strong>" +
             reservation.Reservation[i].PassengerPassportNumber +
+            "<br/>" +
             "\n " +
-            "Cabin Class : " +
+            "<strong>Cabin Class: </strong>" +
             reservation.Reservation[i].CabinClass +
+            "<br/>" +
             "\n " +
-            "Chosen Seat :" +
+            "<strong>Chosen Seat: </strong>" +
             reservation.Reservation[i].ChosenSeat;
           mail =
             mail +
+            "<br/>" +
             "\n " +
-            "Departure Flight number: " +
+            "<strong>Departure Flight number: </strong>" +
             deptFlight.FlightNumber +
+            "<br/>" +
             "\n" +
-            "Departure Date: " +
+            "<strong>Departure Date: </strong>" +
             deptFlight.DepartureDate +
+            "<br/>" +
             "\n" +
-            "Departure Time: " +
+            "<strong>Departure Time: </strong>" +
             deptFlight.DepartureTime +
+            "<br/>" +
             "\n" +
-            "Arrival Date: " +
+            "<strong>Arrival Date: </strong>" +
             deptFlight.ArrivalDate +
+            "<br/>" +
             "\n" +
-            "Arrival Time: " +
+            "<strong>Arrival Time: </strong>" +
             deptFlight.ArrivalTime +
+            "<br/>" +
             "\n" +
-            "Departure Airport: " +
+            "<strong>Departure Airport: </strong>" +
             deptFlight.DepartureAirport +
+            "<br/>" +
             "\n" +
-            "Arrival Airpirt: " +
+            "<strong>Arrival Airport: </strong>" +
             deptFlight.ArrivalAirport +
+            "<br/>" +
             "\n" +
-            "Departure Terminal: " +
+            "<strong>Departure Terminal: </strong>" +
             deptFlight.DepartureTerminal +
+            "<br/>" +
             "\n" +
-            "Arrival Terminal: " +
+            "<strong>Arrival Terminal: </strong>" +
             deptFlight.ArrivalTerminal +
+            "<br/>" +
             "\n" +
-            "Departure trip Duration: " +
+            "<strong>Departure trip Duration: </strong>" +
             deptFlight.TripDuration +
-            "\n" +
-            +"\n " +
-            "\n " +
-            "\n ";
+            "<br/>" +
+            "<br/>" +
+            "<br/>";
         }
 
         for (
@@ -409,55 +412,71 @@ sendReservationDetailsP = (req, res) => {
           mail =
             mail +
             "\n" +
-            "Ticket Number: " +
+            "<br/>" +
+            "<strong>Ticket Number: </strong>" +
             (i + 1) +
             "\n" +
-            "Passenger First Name:  " +
+            "<br/>" +
+            "<strong>Passenger First Name:  </strong>" +
             reservation.Reservation[i].PassengerFirstName +
             "\n" +
-            "Passenger LastName : " +
+            "<br/>" +
+            "<strong>Passenger LastName: </strong>" +
             reservation.Reservation[i].PassengerLastName +
-            // "\n "+"Flight id : "+reservation.Reservation[i].FlightId +
             "\n " +
-            "Passenger Type : " +
+            "<br/>" +
+            "<strong>Passenger Type: </strong>" +
             reservation.Reservation[i].PassengerType +
             "\n " +
-            "Passenger PassportNumber : " +
+            "<br/>" +
+            "<strong>Passenger PassportNumber: </strong>" +
             reservation.Reservation[i].PassengerPassportNumber +
             "\n " +
-            "Cabin Class : " +
+            "<br/>" +
+            "<strong>Cabin Class: </strong>" +
             reservation.Reservation[i].CabinClass +
             "\n " +
-            "Chosen Seat :" +
+            "<br/>" +
+            "<strong>Chosen Seat: </strong>" +
             reservation.Reservation[i].ChosenSeat +
-            "Arrival Flight number: " +
+            "<br/>" +
+            "<strong>Arrival Flight number: </strong>" +
             arrFlight.FlightNumber +
             "\n" +
-            "Departure Date: " +
+            "<br/>" +
+            "<strong>Departure Date: </strong>" +
             arrFlight.DepartureDate +
             "\n" +
-            "Departure Time: " +
+            "<br/>" +
+            "<strong>Departure Time: </strong>" +
             arrFlight.DepartureTime +
             "\n" +
-            "Arrival Date: " +
+            "<br/>" +
+            "<strong>Arrival Date: </strong>" +
             arrFlight.ArrivalDate +
             "\n" +
-            "Arrival Time: " +
+            "<br/>" +
+            "<strong>Arrival Time: </strong>" +
             arrFlight.ArrivalTime +
             "\n" +
-            "Departure Airport: " +
+            "<br/>" +
+            "<strong>Departure Airport: </strong>" +
             arrFlight.DepartureAirport +
             "\n" +
-            "Arrival Airpirt: " +
+            "<br/>" +
+            "<strong>Arrival Airport: </strong>" +
             arrFlight.ArrivalAirport +
             "\n" +
-            "Departure Terminal: " +
+            "<br/>" +
+            "<strong>Departure Terminal: </strong>" +
             arrFlight.DepartureTerminal +
             "\n" +
-            "Arrival Terminal: " +
+            "<br/>" +
+            "<strong>Arrival Terminal: </strong>" +
             arrFlight.ArrivalTerminal +
             "\n" +
-            "Arrival trip Duration: " +
+            "<br/>" +
+            "<strong>Arrival trip Duration: </strong>" +
             arrFlight.TripDuration +
             "\n";
         }
@@ -465,15 +484,23 @@ sendReservationDetailsP = (req, res) => {
           from: "cheetosmym1@outlook.com",
           to: user.Email,
           subject: "Flight Confirmation",
-          text:
+          //text:
+          html:
             "Dear " +
             user.FirstName +
-            " , \n   This email serves as a notification that your reservation was booked sucessfully." +
+            " ," +
+            "<br/>" +
+            "&nbsp;&nbsp; This email serves as a notification that your reservation was booked sucessfully." +
             "with confirmation number " +
             reservation._id +
             " with the following details " +
+            "<br/>" +
+            "<br/>" +
             mail +
-            " total Price : " +
+            "<br/>" +
+            "<br/>" +
+            "<br/>" +
+            " <strong>Total Price: </strong>" +
             reservation.TotalPrice,
         };
         mailTransporter.sendMail(mailDetails, function (err, data) {
