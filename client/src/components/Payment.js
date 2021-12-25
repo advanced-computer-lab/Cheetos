@@ -80,8 +80,14 @@ const fromDollarToCent = amount => parseInt(amount * 100);
         Reservation: JSON.parse(sessionStorage.getItem("ticketsArr"))
     }
     console.log("reservation object--->" , reservation )
+    let payload = {
+        depFlight : deptFlight, 
+        arrFLight : arrFlight
+    }
     await api.confirmFlight(reservation).then(
-        alert("successsssssssssssssssssssssssssss")
+       await api.payReservation(reservation._id , payload).then(
+           alert("mail sent successfuly") 
+       )
     )
 }
 
