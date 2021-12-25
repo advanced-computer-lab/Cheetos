@@ -14,9 +14,10 @@ This is the Sign Up page where the user can sign up for the website.
 
 ![WhatsApp Image 2021-12-25 at 8 51 47 PM](https://user-images.githubusercontent.com/89047287/147393345-6752077d-49d5-4f5b-bf88-bf5b16a76719.jpeg)
 
-The user can search for flights using search criteria including Departure Airport, Arrival Airport, Departure Date, Arrival Date 
+The user can search for flights using search criteria including Departure Airport, Arrival Airport, Departure Date, Arrival Date and Cabin Class. 
 
 ![WhatsApp Image 2021-12-25 at 8 51 46 PM](https://user-images.githubusercontent.com/89047287/147393447-cf04e288-2455-4a24-93ee-3a7bf6ab4a6d.jpeg)
+
 
 ![WhatsApp Image 2021-12-25 at 8 51 46 PM (1)](https://user-images.githubusercontent.com/89047287/147393449-9b630e56-4095-425a-a009-32ea54b16fe8.jpeg)
 
