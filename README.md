@@ -35,6 +35,10 @@ This project was implemented using MERN stack,so for someone to use/edit this pr
 * Install VS Code or any similar IDE https://code.visualstudio.com/download 
 * Install NodeJs  https://nodejs.org/en/download/ 
 
+### API References that we included are:
+* NodeMailer: https://nodemailer.com/about/
+* Stripe: https://stripe.com/docs/api 
+
 ### How was our project tested:
 There were two ways used for testing. As for testing backend alone,  it was by sending requests using postman. For testing the frontend alone, dummy values were used to make sure that the desired functionalities were executed correctly .When frontend and backend were both ready we connected them and tested the whole system and its functionalities and requirements.
 
