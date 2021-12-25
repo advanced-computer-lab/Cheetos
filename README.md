@@ -6,10 +6,10 @@
 This project was implemented using MERN stack,so for someone to use/edit this project they need a basic understanding of React.js, HTML,& CSS which were used for the frontend and Node.js  which was used for the backend in addition to JavaScript.
 
 ### Useful Extra Features:
-The user can email himself/herself their reservation itinerary at any time.
-The reserved seats can be edited at any time even after paying for the flight reservation.
-The departure/return flights can be changed at any time even after paying for the reservation(taking into account that the price difference will have to be paid).
-The users can view all their previous bookings or history at any time using “My bookings”.
+* The user can email himself/herself their reservation itinerary at any time.
+* The reserved seats can be edited at any time even after paying for the flight reservation.
+* The departure/return flights can be changed at any time even after paying for the reservation(taking into account that the price difference will have to be paid).
+* The users can view all their previous bookings or history at any time using “My bookings”.
 
 ### How to download, install and run the project and needed software to run the project:
 Install VS Code or any similar IDE https://code.visualstudio.com/download 
