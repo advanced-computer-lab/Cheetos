@@ -109,7 +109,7 @@ export default class HorizontalLinearStepper extends React.Component {
                     <React.Fragment>
                         <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
                         {activeStep == 0 ? 
-                        <div style = {{height : '55vh' , backgroundColor : 'darkred'}}>
+                        <div style = {{height : '55vh' , backgroundColor : 'blue'}}>
                            {/* your div of choice here  */}
 
 
@@ -142,7 +142,7 @@ export default class HorizontalLinearStepper extends React.Component {
                                 onClick={handleBack}
                                 sx={{ mr: 1 }}
                             >
-                                Back
+                                Back 
                             </Button>
                             <Box sx={{ flex: '1 1 auto' }} />
                             { 
