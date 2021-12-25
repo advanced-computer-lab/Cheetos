@@ -17,7 +17,7 @@ const fromDollarToCent = (amount) => parseInt(amount * 100);
 async function successPayment(data) {
   alert("Payment Successful");
   const { deptFlight, arrFlight, deptCabin, arrCabin, adults, children } =
-    JSON.parse(sessionStorage.getItem("deal"));
+    JSON.parse(sessionStorage.getItem("deal"));  
   let deptSeats = JSON.parse(sessionStorage.getItem("deptSeats"));
   let arrSeats = JSON.parse(sessionStorage.getItem("arrSeats"));
   let passengersInfo = JSON.parse(sessionStorage.getItem("passengersInfo"));

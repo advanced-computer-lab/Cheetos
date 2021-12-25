@@ -35,7 +35,7 @@ export default class Trip extends Component {
         const totalPrice = deptPrice + retPrice;
         return (
             <>
-                <div className="trip-card ">
+                <div className="booking-card ">
                     <div style={{ width: '70%', marginTop: '5px' }} >
 
                         <div className="trip-flight"  >

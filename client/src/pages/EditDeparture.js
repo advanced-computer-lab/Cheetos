@@ -208,6 +208,7 @@ class EditDeparture extends Component {
         activeStep: 0,
         skipped: new Set(),
         step: 0,
+        seatsWarningModal:false,
     }
     /*
     to search i need a flight's dep and arr airport( from storage) ,
@@ -319,6 +320,11 @@ class EditDeparture extends Component {
     5. display remember flightarr and filteredArr 
     6. no results card ?*/
 
+    handleModalShow() {
+        this.setState({
+            seatsWarningModal: this.state.seatsWarningModal ? false : true,
+        });
+    }
 
     render() {
         const { searchResults, flightsArr, depDateSearch, cabinSearch,
@@ -338,6 +344,7 @@ class EditDeparture extends Component {
                 const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
                 if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
                     alert("you must choose all seats")
+                    this.setState({seatsWarningModal: true})
                 } else {
                     let newSkipped = skipped;
                     if (isStepSkipped(activeStep)) {
@@ -392,6 +399,7 @@ class EditDeparture extends Component {
 
         };
         return (
+            <>
             <div className="flex-col" style = {{gap : '0'}}>
                 <MyHeader />
                 {/* <SingleFlightConfirm departureDate={"02-12-2021"} arrivalDate={"18-12-2021"} departureTime={"03:10"} arrivalTime={"03:10"} seat={"A1"} cabin={"EconomySeats"} price={"112"} /> */}
@@ -579,6 +587,16 @@ class EditDeparture extends Component {
 
 
             </div>
+
+            <Modal centered show={this.state.seatsWarningModal} onHide={this.handleModalShow.bind(this)} dialogClassName="my-modal">
+                    <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Heads up!!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>You must choose all seats to continue</Modal.Body>
+                   
+                </Modal>
+
+            </>
         )
     }
 }
