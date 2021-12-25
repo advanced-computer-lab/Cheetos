@@ -28,9 +28,11 @@ class Reservation extends Component {
         resId: "",
         deptSeats: [],
         arrSeats: [],
+        seatsWarningModal: false,
 
 
     }
+   
     componentWillUnmount() {
         sessionStorage.removeItem("deptSeats")
         sessionStorage.removeItem("arrSeats")
@@ -51,6 +53,13 @@ class Reservation extends Component {
         }
 
     }
+
+    handleSeatWarningShow() {
+        this.setState({
+            seatsWarningModal: this.state.seatsWarningModal ? false : true,
+        });
+    }
+
     handleSeatsConfirm(deptSeats, arrSeats) {
         this.setState({
             deptSeats: deptSeats,
@@ -99,6 +108,7 @@ class Reservation extends Component {
         })
     }
     render() {
+        
         const { step, deptSeats, arrSeats, showModal, activeStep, skipped } = this.state
         const isStepOptional = (step) => {
             return step === 1;
@@ -114,7 +124,8 @@ class Reservation extends Component {
                 //choosing seats 
                 const { adults, children } = JSON.parse(sessionStorage.getItem('deal'));
                 if (this.state.arrSeats.length < Number(adults) + Number(children) || this.state.deptSeats.length < Number(adults) + Number(children)) {
-                    alert("you must choose all seats")
+                    // alert("you must choose all seats")
+                    this.setState({seatsWarningModal: true})
                 } else {
                     let newSkipped = skipped;
                     if (isStepSkipped(activeStep)) {
@@ -175,6 +186,7 @@ class Reservation extends Component {
         const { startDate } = this.state
         const { deptFlight, arrFlight, deptCabin, arrCabin, totalPrice } = sessionStorage.getItem('deal')
         return (
+            <>
             <div style={{ backgroundColor: "background-color: rgba(0, 0, 0, 0.575)" }}>
                 <MyHeader />
                 <Box sx={{ width: '100%' }}>
@@ -306,6 +318,18 @@ class Reservation extends Component {
 
                 </Modal>
             </div>
+
+
+            <Modal centered show={this.state.seatsWarningModal} onHide={this.handleSeatWarningShow.bind(this)} dialogClassName="my-modal">
+                    <Modal.Header closeButton >
+                        <Modal.Title style={{fontWeight:"600"}}>Heads up!!</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>You must choose all seats to continue</Modal.Body>
+                  
+                     
+                </Modal>
+
+            </>
         )
     }
 }

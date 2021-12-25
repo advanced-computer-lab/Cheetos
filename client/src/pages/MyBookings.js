@@ -9,6 +9,7 @@ import '../style/booking.css';
 import '../style/trip.css';
 import Modal from "react-bootstrap/Modal";
 import DeleteIcon from '@mui/icons-material/Delete';
+import MailIcon from '@mui/icons-material/Mail';
 
 class MyBookings extends Component {
     state = {
@@ -76,6 +77,11 @@ class MyBookings extends Component {
             showModal:false
         })
     }
+
+    handleSendEmail(){
+
+    }
+
     async handleDelete() {
         await api.deleteReservationById(this.state.confirmation).then(
             // alert("flight with conf num is deleted " , this.props.confirmationNum)  , 
@@ -112,16 +118,25 @@ class MyBookings extends Component {
 
     async componentDidMount() {
         const userId = localStorage.getItem('userId');
-        console.log("user id in bookinggg", userId);
-        await api.getReservationsById(userId).then(reservations => {
-            let arr = reservations.data.data
-            for (let i = 0; i < arr.length; i++) {
-                console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah " , this.customFilter(arr[i].Reservation));
-            }
-            this.setState({
-                bookingsArr: reservations.data.data
-            }, () => console.log("reservations are ------->", reservations.data.data))
-        })
+        if(!userId ){
+            this.props.history.push('/');
+        }
+        // else if (userId && localStorage.getItem('type')){
+        //     this.props.history.push('/admin');
+        // }
+        else{
+            console.log("user id in bookinggg", userId);
+            await api.getReservationsById(userId).then(reservations => {
+                let arr = reservations.data.data
+                for (let i = 0; i < arr.length; i++) {
+                    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaah " , this.customFilter(arr[i].Reservation));
+                }
+                this.setState({
+                    bookingsArr: reservations.data.data
+                }, () => console.log("reservations are ------->", reservations.data.data))
+            })
+        }
+        
 
     }
     render() {
@@ -140,21 +155,39 @@ class MyBookings extends Component {
                             <div className='flex-row' style={{justifyContent: "space-between"}}>
                                 <p className='emphasis'> Confirmation Number : {b._id.toUpperCase()}</p>
                                 
-                                <Button
-                                onClick={this.handleModalShow.bind(this,b._id)}
-                                style={{
-                                    backgroundColor: "rgb(201, 6, 6)",
-                                    width: "10px",
-                                    padding:"0",
-                                    height: "5vh",
-                                    fontSize: "small",
-                                    borderRadius:"10px"
 
-                                }}
-                                variant="contained"
-                                                        >
-                                <DeleteIcon/>
-                                </Button>
+                                <div className="reservation-buttons">
+                                    <Button
+                                    onClick={this.handleSendEmail.bind(this)}
+                                    style={{
+                                        backgroundColor: "#37a1e2",
+                                        width: "10px",
+                                        padding:"0",
+                                        height: "5vh",
+                                        fontSize: "small",
+                                        borderRadius:"10px"
+                                    }}
+                                    variant="contained"
+                                                            >
+                                    <MailIcon/>
+                                    </Button>
+                                    <Button
+                                    onClick={this.handleModalShow.bind(this,b._id)}
+                                    style={{
+                                        backgroundColor: "rgb(201, 6, 6)",
+                                        width: "10px",
+                                        padding:"0",
+                                        height: "5vh",
+                                        fontSize: "small",
+                                        borderRadius:"10px"
+                                    }}
+                                    variant="contained"
+                                                            >
+                                    <DeleteIcon/>
+                                    </Button>
+                                </div>
+
+                               
                             </div>
 
                          

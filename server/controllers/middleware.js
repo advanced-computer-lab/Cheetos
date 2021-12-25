@@ -26,7 +26,7 @@ authorizeToken = async (req, res, next) => {
   req.token = token;
   const verified = jwt.verify(token, process.env.JWT_SECRET);
   console.log("VERIFIED ", verified);
-  await User.findOne({ _id: verified.id }).then((user) => {
+  await User.findOne({ _id: verified.userId }).then((user) => {
     if (user.admin) {
       next();
     } else {

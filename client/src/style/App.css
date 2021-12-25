@@ -324,4 +324,9 @@ body::-webkit-scrollbar-thumb:hover {
 .MuiStepLabel-label{
   color:black;
 }
-
+.reservation-buttons{
+  display: flex;
+  width: 30%;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}

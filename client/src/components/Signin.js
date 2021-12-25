@@ -45,7 +45,18 @@ class Signin extends Component {
              console.log("al rag3ly mn login" , res.data.data) ; 
              localStorage.setItem('token',res.data.token)
              localStorage.setItem('userId', res.data.data.userId);
-             this.props.history.goBack() 
+             localStorage.setItem('type', res.data.type)
+
+             console.log(localStorage.getItem('type', res.data.type),"in sign in ")
+             
+             if(res.data.type){
+                 this.props.history.push('/admin')
+             }
+             else{
+                this.props.history.goBack() 
+             }
+
+           
          }).catch((err) => {
              console.log("login heho ", err);
 
