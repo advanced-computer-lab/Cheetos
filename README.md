@@ -5,6 +5,7 @@
 ### Why have we implemented this project?
 Boomerang Airline Reservation System was created to make it easier for users to reserve round trips through different options and airlines and be able to choose the best routes or flights according to their preferences.
 
+### Screenshots
 
 ### Used Frameworks:
 This project was implemented using MERN stack,so for someone to use/edit this project they need a basic understanding of React.js, HTML,& CSS which were used for the frontend and Node.js  which was used for the backend in addition to JavaScript.
