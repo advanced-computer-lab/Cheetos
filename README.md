@@ -35,7 +35,7 @@ This project was implemented using MERN stack,so for someone to use/edit this pr
 * The departure/return flights can be changed at any time even after paying for the reservation(taking into account that the price difference will have to be paid).
 * The users can view all their previous bookings or history at any time using “My bookings”.
 
-###Some Code Examples
+### Some Code Examples
 Veryfing Token for the user 
 “`verifyJwT = (req, res, next) => {
   const token = req.headers["x-access-token"]?.split(" ")[1];
