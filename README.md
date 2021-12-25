@@ -15,7 +15,7 @@ This project was implemented using MERN stack,so for someone to use/edit this pr
 * The departure/return flights can be changed at any time even after paying for the reservation(taking into account that the price difference will have to be paid).
 * The users can view all their previous bookings or history at any time using “My bookings”.
 
-### SOftwares that need to be downloaded:
+### Softwares that need to be downloaded:
 * Install VS Code or any similar IDE https://code.visualstudio.com/download 
 * Install NodeJs  https://nodejs.org/en/download/ 
 
@@ -25,17 +25,17 @@ There were two ways used for testing. As for testing backend alone,  it was by s
 
 ### Step-by-step guide on how to use and run this project:
 * Clone the full-stack branch in the repository on your VS Code 
-*Create your own .env file which includes: 
+* Create your own .env file which includes: 
 mongoURI = //your mongoDB URL
 PORT = //your server port number to run the server
 PORTA = //your client port number to run the user interface
 JWT_SECRET = //any string of your choice to use in hashing the users’ passwords
-*In your VS Code terminal in order to run the server you’ll run the following commands
+* In your VS Code terminal in order to run the server you’ll run the following commands
 “cd Cheetos”
 “cd server”
 “npm i”
 “node app.js”
-*In your VS Code terminal in order to run the client you’ll run the following commands
+* In your VS Code terminal in order to run the client you’ll run the following commands
 “cd Cheetos”
 “cd client”
 “npm i”
