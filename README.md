@@ -37,7 +37,8 @@ This project was implemented using MERN stack,so for someone to use/edit this pr
 
 ### Some Code Examples
 Veryfing Token for the user 
-```verifyJwT = (req, res, next) => {
+```javascript
+verifyJwT = (req, res, next) => {
   const token = req.headers["x-access-token"]?.split(" ")[1];
   console.log(token);
   if (token) {
