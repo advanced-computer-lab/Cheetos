@@ -2,6 +2,8 @@ const stripe = require("../../stripe");
 const express = require("express");
 const router = express.Router();
 
+const middleware = require("../../controllers/middleware");
+
 const postStripeCharge = (res) => (stripeErr, stripeRes) => {
   if (stripeErr) {
     res.status(500).send({ error: stripeErr });
@@ -17,7 +19,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", middleware.verifyJwT, (req, res) => {
   stripe.charges.create(req.body, postStripeCharge(res));
 });
 

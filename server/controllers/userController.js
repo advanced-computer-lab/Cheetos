@@ -21,10 +21,6 @@ updateUser = async (req, res) => {
     }
     console.log(user);
 
-    //user.UserName = body.UserName;
-
-    //user.Password = body.Password;
-
     user.FirstName = body.FirstName;
 
     user.LastName = body.LastName;
@@ -65,45 +61,20 @@ deleteUser = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
-checkEmail = async (req, res) => { const user = req.body; //Check if email already exists
-   let existingUser = await User.findOne({ Email: user.Email }); 
-   if (existingUser) 
-   { 
-     return res.json({ invalidEmail: true, message: "Email already exists" });
-   } 
-   return res.json({ invalidEmail: false });
-  };
-
-   checkUserName = async (req, res) => { 
-     //Check if username already exists
-      const user = req.body; 
-      let existingUser = await User.findOne({ UserName: user.UserName }); 
-      if (existingUser) { 
-        return res.json({ invalidUsername: true, message: "Username already exists", }); 
-      } 
-      return res.json({ invalidUsername: false });
-    };
-
 createUser = async (req, res) => {
   const user = req.body;
 
-  
+  let existingEmail = await User.findOne({ Email: user.Email });
+  let existingUserName = await User.findOne({ UserName: user.UserName });
 
-  let existingEmail = await User.findOne({ Email: user.Email }); 
-  let existingUserName = await User.findOne({ UserName: user.UserName }); 
-
-  if(existingEmail && existingUserName){
-    return res.status(400).send({message: "invalid"})
+  if (existingEmail && existingUserName) {
+    return res.status(400).send({ message: "invalid" });
+  } else if (existingEmail) {
+    return res.status(400).send({ message: "invalid email" });
+  } else if (existingUserName) {
+    return res.status(400).send({ message: "invalid username" });
   }
 
-  else if (existingEmail) { 
-    return res.status(400).send({message: "invalid email"})
-  } 
-
-  else if (existingUserName) {  
-    return res.status(400).send({message: "invalid username"})
-  } 
-    
   user.Password = await bcrypt.hash(req.body.Password, 10);
 
   User.create(user)
@@ -132,101 +103,78 @@ getUserById = async (req, res) => {
   }).catch((err) => console.log(err));
 };
 
-login = (req, res) => {
+login = async (req, res) => {
   const userLoggingIn = req.body;
-  User.findOne({ UserName: userLoggingIn.UserName }).then((dbUser) => {
+  console.log("LOGIN ");
+  await User.findOne({ UserName: userLoggingIn.UserName }).then((dbUser) => {
     if (!dbUser) {
-      res.status(400).send({message: "invalid username"})
-    }
-    else{
-    bcrypt
-      .compare(userLoggingIn.Password, dbUser.Password)
-      .then((isCorrect) => {
-        if (isCorrect) {
-          const payload = {
-            userId: dbUser._id,
-            username: dbUser.UserName,
-          };
-          jwt.sign(
-            payload,
-            process.env.JWT_SECRET,
-            { expiresIn: "10h" },
-            (err, token) => {
-              if (err) {
-                return res.json({ message: "line 151 f controller" });
+      res.status(400).send({ message: "invalid username" });
+    } else {
+      bcrypt
+        .compare(userLoggingIn.Password, dbUser.Password)
+        .then((isCorrect) => {
+          if (isCorrect) {
+            const payload = {
+              userId: dbUser._id,
+              username: dbUser.UserName,
+            };
+            jwt.sign(
+              payload,
+              process.env.JWT_SECRET,
+              { expiresIn: "10h" },
+              (err, token) => {
+                if (err) {
+                  return res.json({ message: "line 151 f controller" });
+                }
+                return res.json({
+                  message: "Success",
+                  token: "Bearer " + token,
+                  data: payload,
+                });
               }
-              return res.json({ message: "Success", token: "Bearer " + token  , data : payload});
-            }
-          );
-        } else {
-          res.status(400).send({message: "invalid password"})
-        }
-      });}
+            );
+          } else {
+            res.status(400).send({ message: "invalid password" });
+          }
+        });
+    }
   });
 };
-
-verifyJwT = (req, res, next) => {
-  const token = req.headers["x-access-token"].split(" ")[1];
-  console.log(token);
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err)
-        return res.json({
-          isLoggedIn: false,
-          message: "Failed To Authenticate",
-        });
-      req.user = {};
-      req.user._id = decoded.id;
-      req.user.UserName = decoded.username;
-      next();
-    });
-  } else {
-    res.json({ message: "Incorrect Token Given", isLoggedIn: false });
-  }
-};
-
 
 changeUserPassword = async (req, res) => {
   const body = req.body;
 
   if (!body) {
-    return res.status(400).send({message: "invalid"})
+    return res.status(400).send({ message: "invalid" });
   }
 
-  User.findOne({ _id: req.params.id}, (err, user) => {
+  User.findOne({ _id: req.params.id }, (err, user) => {
     if (err) {
-      return res.status(400).send({message: "invalid"})
+      return res.status(400).send({ message: "invalid" });
     }
-    console.log(user);
-    // var x = "$2b$10$zBxIyN3CXf1sjX10yilLs.Kr6GB9ehk6AcVFiRY6Dq1db4ri4pPoS";
-    // console.log(x);
-    bcrypt
-    .compare(body.oldPassword,user.Password)
-    .then(async(isCorrect) => {
+    bcrypt.compare(body.oldPassword, user.Password).then(async (isCorrect) => {
       if (isCorrect) {
-        user.Password =  await bcrypt.hash(body.newPassword, 10);
-        
-        console.log("YESSS");
-        }
-      else{
-        return res.status(400).send({message : "incorrect"})
+        user.Password = await bcrypt.hash(body.newPassword, 10);
       }
-    
-    
-    user
-      .save()
-      .then(() => {
-        return res.status(200).json({
-          success: true,
-          id: user.id,
-          message: "Password updated!",
+
+      user
+        .save()
+        .then(() => {
+          return res.status(200).json({
+            success: true,
+            id: user.id,
+            message: "Password updated!",
+          });
+        })
+        .catch((error) => {
+          return res.status(404).json({
+            error,
+            message: "Password not updated!",
+          });
         });
-      })
-      .catch((error) => {
-       return res.status(404).send({message:"pass not updated"})
-      });
+    });
   });
-});}
+};
 
 module.exports = {
   updateUser,
@@ -236,7 +184,4 @@ module.exports = {
   getUser,
   getUserById,
   login,
-  verifyJwT,
-  checkEmail,
-  checkUserName,
 };
