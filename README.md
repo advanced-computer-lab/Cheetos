@@ -27,7 +27,7 @@ The user can search for flights using search criteria including Departure Airpor
 ![WhatsApp Image 2021-12-25 at 8 51 45 PM](https://user-images.githubusercontent.com/89047287/147393455-f12fc2b4-5cf0-4b0f-a09a-c35bda97f432.jpeg)
 
 ### Used Frameworks:
-This project was implemented using MERN stack,so for someone to use/edit this project they need a basic understanding of React.js, HTML,& CSS which were used for the frontend and Node.js  which was used for the backend in addition to JavaScript.
+This project was implemented using MERN stack,so for someone to use/edit this project they need a basic understanding of React.js, HTML & CSS which were used for the frontend and Node.js  which was used for the backend in addition to JavaScript and Express Js and MongoDB Atlas was used for the database.
 
 ### Useful Extra Features:
 * The user can email himself/herself their reservation itinerary at any time.
