@@ -101,8 +101,12 @@ class MyBookings extends Component {
                 <div className="trip-search-results">
                     {
                         bookingsArr ? bookingsArr.map((b) => (
+
                             b.Reservation ? this.customFilter(b.Reservation).map((t) => (
                                 <Booking confirmationNum={b._id} userId={b.UserId} reservation={t} />
+
+
+                                
                             )) : ""
                         )) : "" }
                 </div>
