@@ -21,6 +21,8 @@ The user can search for flights using search criteria including Departure Airpor
 
 ![WhatsApp Image 2021-12-25 at 8 51 46 PM (1)](https://user-images.githubusercontent.com/89047287/147393449-9b630e56-4095-425a-a009-32ea54b16fe8.jpeg)
 
+When selecting the flight, additional information about the flight is displayed to the user including baggage allowance.
+
 ![WhatsApp Image 2021-12-25 at 8 51 45 PM](https://user-images.githubusercontent.com/89047287/147393455-f12fc2b4-5cf0-4b0f-a09a-c35bda97f432.jpeg)
 
 ### Used Frameworks:
