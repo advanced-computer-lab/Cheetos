@@ -10,7 +10,7 @@ This is the Sign In page where the user can enter their username and password.
 
 ![WhatsApp Image 2021-12-25 at 8 51 46 PM (2)](https://user-images.githubusercontent.com/89047287/147393310-ee9964b4-e9b4-4070-9c6d-2f4fb9a7c409.jpeg)
 
-This is the Sign Up page where the user can sign up for the website.
+This is the Sign Up page where the user can sign up for the website. 
 
 ![WhatsApp Image 2021-12-25 at 8 51 47 PM](https://user-images.githubusercontent.com/89047287/147393345-6752077d-49d5-4f5b-bf88-bf5b16a76719.jpeg)
 
