@@ -534,9 +534,9 @@ class EditDeparture extends Component {
 
                                     {/* //search */}
                                     <div className="flex-col">
-                                        <div className="search-bar search-bar-box" style={{ justifyContent: "center"  }}>
-                                            <Form.Group style={{ width: "20%" }} className="mb-2">
-                                                <Form.Label style={{ color: "white", fontWeight: "bold" }}>Departure Date</Form.Label>
+                                        <div className="search-bar-box" style={{ justifyContent: "center"  }}>
+                                            <Form.Group style={{ width: "40%" }} className="mb-2">
+                                                <Form.Label style={{  fontWeight: "600" }} className='mb-0'>Departure Date</Form.Label>
                                                 <Form.Control
                                                     type="date"
                                                     placeholder="Departure date"
@@ -548,8 +548,8 @@ class EditDeparture extends Component {
                                                 // maxDate={new Date("12-12-2021")}
                                                 />
                                             </Form.Group>
-                                            <Form.Group style={{ width: "20%" }} className="mb-2">
-                                                <Form.Label style={{ color: "white", fontWeight: "bold" }}>Cabin Class</Form.Label>
+                                            <Form.Group style={{ width: "40%" }} className="mb-2">
+                                                <Form.Label style={{  fontWeight: "600" }} className='mb-0'>Cabin Class</Form.Label>
                                                 <Form.Select
                                                     value={cabinSearch}
                                                     name="cabinSearch"
@@ -562,7 +562,7 @@ class EditDeparture extends Component {
                                                 </Form.Select>
                                             </Form.Group>
                                             <div >
-                                                <Button style={{ width: "auto", height: "39px", marginTop: "22px", padding: "1rem" }}
+                                                <Button style={{ width: "auto", height: "37px", marginTop: "18px", padding: "1rem" }}
                                                     onClick={this.andSearch.bind(this)} variant="contained" >
                                                     <SearchIcon style={{ fontSize: "30px" }} />{" "}
                                                 </Button>
