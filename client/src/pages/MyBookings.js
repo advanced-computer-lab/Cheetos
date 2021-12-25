@@ -10,6 +10,7 @@ import '../style/trip.css';
 import Modal from "react-bootstrap/Modal";
 import DeleteIcon from '@mui/icons-material/Delete';
 import MailIcon from '@mui/icons-material/Mail';
+import BookingReservation from '../components/BookingReservation';
 
 class MyBookings extends Component {
     state = {
@@ -151,59 +152,12 @@ class MyBookings extends Component {
                     
 
                         {   bookingsArr ? bookingsArr.map((b) => (
-                        <div className='reservation-containor'>
-                            <div className='flex-row' style={{justifyContent: "space-between"}}>
-                                <p className='emphasis'> Confirmation Number : {b._id.toUpperCase()}</p>
-                                
-
-                                <div className="reservation-buttons">
-                                    <Button
-                                    onClick={this.handleSendEmail.bind(this)}
-                                    style={{
-                                        backgroundColor: "#37a1e2",
-                                        width: "10px",
-                                        padding:"0",
-                                        height: "5vh",
-                                        fontSize: "small",
-                                        borderRadius:"10px"
-                                    }}
-                                    variant="contained"
-                                                            >
-                                    <MailIcon/>
-                                    </Button>
-                                    <Button
-                                    onClick={this.handleModalShow.bind(this,b._id)}
-                                    style={{
-                                        backgroundColor: "rgb(201, 6, 6)",
-                                        width: "10px",
-                                        padding:"0",
-                                        height: "5vh",
-                                        fontSize: "small",
-                                        borderRadius:"10px"
-                                    }}
-                                    variant="contained"
-                                                            >
-                                    <DeleteIcon/>
-                                    </Button>
-                                </div>
-
-                               
-                            </div>
-
-                         
-                            
-                                   { b.Reservation ? this.customFilter(b.Reservation).map((t) => (
-                                        <Booking  userId={b.UserId} reservation={t} />
-                                        )) : ""}
-
-                        </div>
-                               
+                  
+                              <BookingReservation confirmation={b.id} b ={b}/>
                            
                            
                            )) : "" }
 
-                        
-                    
                 </div>
             </div>
 

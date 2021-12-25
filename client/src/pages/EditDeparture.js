@@ -453,10 +453,10 @@ class EditDeparture extends Component {
             }
     
             console.log("my update flight is ", updateFlight);
-            await api.editReservation(reservation._id, updateFlight).then((res) => {
-                alert("doneeeeeee edit")
-            }
-            )
+            // await api.editReservation(reservation._id, updateFlight).then((res) => {
+            //     alert("doneeeeeee edit")
+            // }
+            // )
         }
         const handleReset = () => {
             this.setState({
@@ -529,7 +529,7 @@ class EditDeparture extends Component {
 
                                     {/* //search */}
                                     <div className="flex-col">
-                                        <div className="search-bar search-bar-box" style={{ justifyContent: "center" }}>
+                                        <div className="search-bar search-bar-box" style={{ justifyContent: "center"  }}>
                                             <Form.Group style={{ width: "20%" }} className="mb-2">
                                                 <Form.Label style={{ color: "white", fontWeight: "bold" }}>Departure Date</Form.Label>
                                                 <Form.Control

@@ -184,6 +184,7 @@ class Home extends Component {
             console.log(flights)
             this.setState({
                 flightArr: flights.data,
+                
 
             })
         }).then(
@@ -265,18 +266,19 @@ class Home extends Component {
                     { tripArr && tripArr.length > 0 ? 
                         tripArr.map((t) => <Trip deptFlight={t[0]} arrFlight={t[1]} deptCabin={this.deptCabin} arrCabin={this.arrCabin} adults={this.adultCount} children={this.childCount} userId={this.state.userId} />)
 
-                       : 
+                       :
+                // this.state.empty? 
+                //        <>
+                //        <div className="no-result">
+                //        <SearchIcon style={{ fontSize: "5rem" }} />
+                //        <h2>Please Enter All Search Fields to find A relevant result</h2>
+                //        <h6 style={{ color: "grey" }}>Airports may not have regularly scheduled flights or there may be restrictions that impact routes.
+                //        </h6>
+                //    </div>
+                //    </>: 
                        
                        <NoResults deptAirport = {this.state.deptAirport} arrAirport = {this.state.arrAirport} deptDate = {this.state.deptDate} arrDate = {this.state.retDate} />
-                    /*this.state.empty? 
-                       <>
-                       <div className="no-result">
-                       <SearchIcon style={{ fontSize: "5rem" }} />
-                       <h2>Please Enter All Search Fields to find A relevant result</h2>
-                       <h6 style={{ color: "grey" }}>Airports may not have regularly scheduled flights or there may be restrictions that impact routes.
-                       </h6>
-                   </div>
-                   </>:   */
+                    /*  */
                      
                         
               }  </div>
