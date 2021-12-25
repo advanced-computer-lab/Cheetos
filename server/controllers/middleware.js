@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 verifyJwT = (req, res, next) => {
-  const token = req.headers["x-access-token"]?.split(" ")[1];
+  const token = req.headers["x-access-token"].split(" ")[1];
   console.log(token);
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
@@ -22,7 +22,7 @@ verifyJwT = (req, res, next) => {
 };
 
 authorizeToken = async (req, res, next) => {
-  const token = req.headers["x-access-token"]?.split(" ")[1];
+  const token = req.headers["x-access-token"].split(" ")[1];
   req.token = token;
   const verified = jwt.verify(token, process.env.JWT_SECRET);
   console.log("VERIFIED ", verified);
